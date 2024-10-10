@@ -28,8 +28,37 @@ function getAvailableMoves(board: (string | null)[]): number[] {
 }
 
 function cpuMove(board: (string | null)[]): number {
+  const bestMove = minimax(board, 'X');
+  return bestMove.index;
+}
+
+function minimax(board: (string | null)[], player: 'X' | 'O'): { score: number; index: number } {
   const availableMoves = getAvailableMoves(board);
-  return availableMoves[Math.floor(Math.random() * availableMoves.length)];
+
+  if (checkWinner(board) === 'O') {
+    return { score: -10, index: -1 };
+  } else if (checkWinner(board) === 'X') {
+    return { score: 10, index: -1 };
+  } else if (availableMoves.length === 0) {
+    return { score: 0, index: -1 };
+  }
+
+  const moves = availableMoves.map((index) => {
+    const newBoard = [...board];
+    newBoard[index] = player;
+
+    const score = minimax(newBoard, player === 'X' ? 'O' : 'X').score;
+
+    return { score, index };
+  });
+
+  if (player === 'X') {
+    const bestMove = moves.reduce((best, move) => (move.score > best.score ? move : best));
+    return bestMove;
+  } else {
+    const bestMove = moves.reduce((best, move) => (move.score < best.score ? move : best));
+    return bestMove;
+  }
 }
 
 export default function Game() {
