@@ -38,7 +38,7 @@ export default function Game() {
     isGameOver: false
   });
 
-  const [message, setMessage] = useState("Your turn (O)");
+  const [result, setResult] = useState<string | null>(null);
 
   const handleCellClick = (index: number) => {
     if (state.board[index] || state.isGameOver) return;
@@ -49,13 +49,13 @@ export default function Game() {
     let winner = checkWinner(newBoard);
     if (winner) {
       setState({ board: newBoard, isGameOver: true });
-      setMessage("You win!");
+      setResult("You win!");
       return;
     }
 
     if (getAvailableMoves(newBoard).length === 0) {
       setState({ board: newBoard, isGameOver: true });
-      setMessage("It's a draw!");
+      setResult("It's a draw!");
       return;
     }
 
@@ -65,13 +65,12 @@ export default function Game() {
     winner = checkWinner(newBoard);
     if (winner) {
       setState({ board: newBoard, isGameOver: true });
-      setMessage("CPU wins!");
+      setResult("CPU wins!");
     } else if (getAvailableMoves(newBoard).length === 0) {
       setState({ board: newBoard, isGameOver: true });
-      setMessage("It's a draw!");
+      setResult("It's a draw!");
     } else {
       setState({ board: newBoard, isGameOver: false });
-      setMessage("Your turn (O)");
     }
   };
 
@@ -80,18 +79,18 @@ export default function Game() {
       board: Array(9).fill(null),
       isGameOver: false
     });
-    setMessage("Your turn (O)");
+    setResult(null);
   };
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
-      <h1 className="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
-      <div className="mb-4">{message}</div>
-      <div className="grid grid-cols-3 gap-2 mb-8">
+    <main className="p-4 flex flex-col items-center min-h-screen bg-black text-white">
+      <h1 className="text-4xl font-bold mb-4">Tic-Tac-Toe</h1>
+      {state.isGameOver && result && <div className="mb-4">{result}</div>}
+      <div className="grid grid-cols-3 gap-2 mb-4">
         {state.board.map((cell, index) => (
           <button
             key={index}
-            className="w-24 h-24 bg-gray-800 text-4xl font-bold flex items-center justify-center border-2 border-gray-600"
+            className="w-20 h-20 bg-gray-800 text-4xl flex items-center justify-center border border-gray-600"
             onClick={() => handleCellClick(index)}
             disabled={cell !== null || state.isGameOver}
           >
