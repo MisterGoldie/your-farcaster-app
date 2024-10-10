@@ -115,17 +115,26 @@ export default function Game() {
     <main className="p-4 flex flex-col items-center min-h-screen bg-black text-white">
       <h1 className="text-4xl font-bold mb-4">Tic-Tac-Toe</h1>
       {state.isGameOver && result && <div className="mb-4">{result}</div>}
-      <div className="grid grid-cols-3 gap-2 mb-4">
-        {state.board.map((cell, index) => (
-          <button
-            key={index}
-            className="w-20 h-20 bg-gray-800 text-4xl flex items-center justify-center border border-gray-600"
-            onClick={() => handleCellClick(index)}
-            disabled={cell !== null || state.isGameOver}
-          >
-            {cell}
-          </button>
-        ))}
+      <div className="relative w-80 h-80 mb-4">
+        {/* Horizontal lines */}
+        <div className="absolute top-1/3 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-2/3 left-0 right-0 h-1 bg-white"></div>
+        {/* Vertical lines */}
+        <div className="absolute top-0 bottom-0 left-1/3 w-1 bg-white"></div>
+        <div className="absolute top-0 bottom-0 left-2/3 w-1 bg-white"></div>
+        {/* Game cells */}
+        <div className="grid grid-cols-3 gap-0 w-full h-full">
+          {state.board.map((cell, index) => (
+            <button
+              key={index}
+              className="w-full h-full flex items-center justify-center text-6xl font-bold"
+              onClick={() => handleCellClick(index)}
+              disabled={cell !== null || state.isGameOver}
+            >
+              {cell}
+            </button>
+          ))}
+        </div>
       </div>
       {state.isGameOver && (
         <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-purple-600 transition-colors">
