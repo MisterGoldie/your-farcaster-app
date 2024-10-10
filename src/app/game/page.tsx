@@ -112,22 +112,22 @@ export default function Game() {
   };
 
   return (
-    <main className="p-4 flex flex-col items-center min-h-screen bg-black text-white">
-      <h1 className="text-4xl font-bold mb-4">Tic-Tac-Toe</h1>
-      {state.isGameOver && result && <div className="mb-4">{result}</div>}
-      <div className="relative w-80 h-80 mb-4">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
+      <h1 className="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
+      {state.isGameOver && result && <div className="mb-8 text-2xl">{result}</div>}
+      <div className="relative w-96 h-96 mb-8">
         {/* Horizontal lines */}
-        <div className="absolute top-1/3 left-0 right-0 h-1 bg-white"></div>
-        <div className="absolute top-2/3 left-0 right-0 h-1 bg-white"></div>
+        <div className="absolute top-1/3 left-0 right-0 h-0.5 bg-white"></div>
+        <div className="absolute top-2/3 left-0 right-0 h-0.5 bg-white"></div>
         {/* Vertical lines */}
-        <div className="absolute top-0 bottom-0 left-1/3 w-1 bg-white"></div>
-        <div className="absolute top-0 bottom-0 left-2/3 w-1 bg-white"></div>
+        <div className="absolute top-0 bottom-0 left-1/3 w-0.5 bg-white"></div>
+        <div className="absolute top-0 bottom-0 left-2/3 w-0.5 bg-white"></div>
         {/* Game cells */}
         <div className="grid grid-cols-3 gap-0 w-full h-full">
           {state.board.map((cell, index) => (
             <button
               key={index}
-              className="w-full h-full flex items-center justify-center text-6xl font-bold"
+              className="w-full h-full flex items-center justify-center text-7xl font-bold"
               onClick={() => handleCellClick(index)}
               disabled={cell !== null || state.isGameOver}
             >
@@ -137,11 +137,11 @@ export default function Game() {
         </div>
       </div>
       {state.isGameOver && (
-        <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-purple-600 transition-colors">
+        <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
           New Game
         </button>
       )}
-      <Link href="/" className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-purple-600 transition-colors">
+      <Link href="/" className="bg-purple-500 text-white px-6 py-3 rounded mt-4 text-xl hover:bg-purple-600 transition-colors">
         Back to Home
       </Link>
     </main>

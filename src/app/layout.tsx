@@ -1,8 +1,8 @@
-import './globals.css'
+import { Metadata } from 'next'
 
-export const metadata = {
-  title: 'POD Play Tic-Tac-Toe',
-  description: 'A Tic-Tac-Toe game presented by /thepod',
+export const metadata: Metadata = {
+  title: 'Tic-Tac-Toe Game',
+  description: 'A simple Tic-Tac-Toe game',
 }
 
 export default function RootLayout({
@@ -14,8 +14,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Rubik+Wet+Paint&display=swap" rel="stylesheet" />
       </head>
       <body>{children}</body>
     </html>
