@@ -6,6 +6,7 @@ const pacifico = Pacifico({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-pacifico', // Add this line
 })
 
 export const metadata = {
@@ -19,13 +20,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <style jsx global>{`
-          .font-pacifico {
-            font-family: ${pacifico.style.fontFamily};
-          }
-        `}</style>
+    <html lang="en" className={`${inter.className} ${pacifico.variable}`}>
+      <body>
         <header className="bg-gray-100 p-4">
           <nav>
             {/* Add navigation items here */}
