@@ -1,14 +1,19 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   return (
     <main className="p-4">
-      <h1 className="text-4xl font-bold mb-4 text-yellow-500 font-rock-salt">
-        Welcome to Goldie's Future Mini App
-      </h1>
-      <p className="mb-4">This is a basic structure that can be adapted into a mini app.</p>
-      <Link href="/about" className="text-blue-500 hover:underline">
-        About Us
+      <h1 className="text-4xl font-bold mb-4">Welcome to POD Play Tic-Tac-Toe</h1>
+      <Image 
+        src="https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif" 
+        alt="POD Play"
+        width={500}
+        height={500}
+      />
+      <p className="my-4">Welcome to POD Play presented by /thepod 🕹️. Think you can win a game of Tic-Tac-Toe?</p>
+      <Link href="/howtoplay" className="bg-blue-500 text-white px-4 py-2 rounded">
+        Start
       </Link>
     </main>
   )

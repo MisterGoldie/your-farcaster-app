@@ -1,17 +1,11 @@
 import './globals.css'
-import { Inter, Rock_Salt } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-const rockSalt = Rock_Salt({ 
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-rock-salt',
-})
 
 export const metadata = {
-  title: "Goldie's Future Mini App",
-  description: 'A simple mini app built with Next.js',
+  title: "POD Play Tic-Tac-Toe",
+  description: 'A Tic-Tac-Toe game presented by /thepod',
 }
 
 export default function RootLayout({
@@ -20,16 +14,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.className} ${rockSalt.variable}`}>
-      <body>
-        <header className="bg-gray-100 p-4">
-          <nav>
-            {/* Add navigation items here */}
-          </nav>
+    <html lang="en">
+      <body className={inter.className}>
+        <header>
+          {/* Add any common header elements here */}
         </header>
         {children}
-        <footer className="bg-gray-100 p-4 mt-8">
-          <p>© 2023 Goldie's Future Mini App</p>
+        <footer>
+          <p>Frame by @goldie & @themrsazon, powered by @moxie.eth</p>
         </footer>
       </body>
     </html>
