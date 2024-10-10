@@ -14,13 +14,13 @@ export default function Game() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
       <h1 className="text-4xl font-bold mb-8">Tic-Tac-Toe</h1>
       <div className="grid grid-cols-3 gap-2 mb-8">
         {board.map((cell, index) => (
           <button
             key={index}
-            className="w-24 h-24 bg-white text-4xl font-bold flex items-center justify-center border-2 border-gray-300"
+            className="w-24 h-24 bg-gray-800 text-4xl font-bold flex items-center justify-center border-2 border-gray-600"
             onClick={() => handleClick(index)}
           >
             {cell}
