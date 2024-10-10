@@ -18,10 +18,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={rockSalt.className}>
-        {children}
-      </body>
+    <html lang="en" className={rockSalt.className}>
+      <body>{children}</body>
     </html>
   )
 }
