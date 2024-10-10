@@ -28,6 +28,6 @@ body {
 
 @layer base {
   h1 {
-    font-family: var(--font-pacifico);
+    font-family: var(--font-rock-salt);
   }
 }

@@ -8,11 +8,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        pacifico: ['var(--font-pacifico)'],
+        'rock-salt': ['var(--font-rock-salt)'],
       },
       colors: {
         yellow: {
-          500: '#EFB810', // you can adjust this color code to your preferred shade of gold
+          500: '#EFB810', // You can adjust this color code to your preferred shade of gold
         },
       },
     },

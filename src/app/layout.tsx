@@ -1,12 +1,12 @@
 import './globals.css'
-import { Inter, Pacifico } from 'next/font/google'
+import { Inter, Rock_Salt } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
-const pacifico = Pacifico({ 
+const rockSalt = Rock_Salt({ 
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-pacifico', // Add this line
+  variable: '--font-rock-salt',
 })
 
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.className} ${pacifico.variable}`}>
+    <html lang="en" className={`${inter.className} ${rockSalt.variable}`}>
       <body>
         <header className="bg-gray-100 p-4">
           <nav>
