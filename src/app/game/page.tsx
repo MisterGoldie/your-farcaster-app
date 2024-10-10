@@ -137,11 +137,11 @@ export default function Game() {
         </div>
       </div>
       {state.isGameOver && (
-        <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors" style={{ fontFamily: "'Butcherman', cursive" }}>
+        <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors butcherman-regular">
           New Game
         </button>
       )}
-      <Link href="/" className="bg-purple-500 text-white px-6 py-3 rounded mt-4 text-xl hover:bg-purple-600 transition-colors" style={{ fontFamily: "'Butcherman', cursive" }}>
+      <Link href="/" className="bg-purple-500 text-white px-6 py-3 rounded mt-4 text-xl hover:bg-purple-600 transition-colors butcherman-regular">
         Back to Home
       </Link>
     </main>

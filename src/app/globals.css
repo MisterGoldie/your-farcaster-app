@@ -38,3 +38,9 @@ body {
 .readable-text {
   font-family: Arial, sans-serif;
 }
+
+.butcherman-regular {
+  font-family: "Butcherman", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
