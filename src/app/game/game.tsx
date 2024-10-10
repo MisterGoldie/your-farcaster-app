@@ -52,7 +52,7 @@ export default function Game() {
       setState(prevState => ({ ...prevState, isGameOver: true }))
       router.push('/next?result=draw')
     } else if (state.currentPlayer === 'X') {
-      // Computer's turn
+      // Computer turn
       setTimeout(() => {
         const emptyIndices = state.board.reduce((acc: number[], cell, index) => 
           cell === null ? [...acc, index] : acc, [])
