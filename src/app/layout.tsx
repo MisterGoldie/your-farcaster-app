@@ -1,11 +1,4 @@
 import './globals.css'
-import { Rock_Salt } from 'next/font/google'
-
-const rockSalt = Rock_Salt({
-  weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-})
 
 export const metadata = {
   title: 'POD Play Tic-Tac-Toe',
@@ -18,7 +11,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={rockSalt.className}>
+    <html lang="en">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet" />
+      </head>
       <body>{children}</body>
     </html>
   )

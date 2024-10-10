@@ -4,7 +4,9 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <main className="p-4 flex flex-col items-center">
-      <p className="my-4 text-center text-xl">Welcome to POD Play presented by /thepod 🕹️</p>
+      <p className="my-4 text-center text-xl" style={{ fontFamily: "'Rock Salt', cursive" }}>
+        Welcome to POD Play presented by /thepod 🕹️
+      </p>
       
       <div style={{ width: '500px', height: '500px', position: 'relative', margin: '20px 0' }}>
         <Image 
@@ -15,7 +17,7 @@ export default function Home() {
         />
       </div>
       
-      <Link href="/howtoplay" className="bg-blue-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-blue-600 transition-colors">
+      <Link href="/howtoplay" className="bg-blue-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-blue-600 transition-colors" style={{ fontFamily: "'Rock Salt', cursive" }}>
         Start
       </Link>
     </main>

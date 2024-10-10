@@ -26,11 +26,12 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: 'Rock Salt', cursive !important;
 }
 
 /* Ensure all text uses the Rock Salt font */
 * {
-  font-family: 'Rock Salt', cursive;
+  font-family: 'Rock Salt', cursive !important;
 }
 
 /* Optional: You might want to use a different font for certain elements for better readability */
