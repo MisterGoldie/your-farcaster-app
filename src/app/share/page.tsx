@@ -41,15 +41,17 @@ export default function Share() {
         <p>Total Games Played: {playerData.totalGamesPlayed}</p>
         <p>/thepod Fan Tokens owned: {playerData.thepodTokens.toFixed(2)}</p>
       </div>
-      <Link href="/game" className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
-        Play Again
-      </Link>
-      <a href="https://moxie-frames.airstack.xyz/stim?t=cid_thepod" className="bg-purple-500 text-white px-4 py-2 rounded mr-2">
-        /thepod FT
-      </a>
-      <button onClick={shareGame} className="bg-green-500 text-white px-4 py-2 rounded">
-        Share Game
-      </button>
+      <div className="flex flex-wrap gap-4 mt-4">
+        <Link href="/game" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors">
+          Play Again
+        </Link>
+        <a href="https://moxie-frames.airstack.xyz/stim?t=cid_thepod" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors">
+          /thepod FT
+        </a>
+        <button onClick={shareGame} className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors">
+          Share Game
+        </button>
+      </div>
     </main>
   )
 }

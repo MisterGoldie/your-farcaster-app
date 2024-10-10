@@ -4,8 +4,11 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <main className="p-4 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-4 text-center">Welcome to POD Play</h1>
-      <div style={{ width: '500px', height: '500px', position: 'relative' }}>
+      <p className="my-4 text-center text-xl" style={{ fontFamily: "'Rock Salt', cursive" }}>
+        Welcome to POD Play presented by /thepod 🕹️
+      </p>
+      
+      <div style={{ width: '500px', height: '500px', position: 'relative', margin: '20px 0' }}>
         <Image 
           src="https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif" 
           alt="POD Play"
@@ -13,8 +16,8 @@ export default function Home() {
           objectFit="contain"
         />
       </div>
-      <p className="my-4 text-center">Welcome to POD Play presented by /thepod 🕹️</p>
-      <Link href="/howtoplay" className="bg-purple-500 text-white px-4 py-2 rounded text-center">
+      
+      <Link href="/howtoplay" className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-purple-600 transition-colors" style={{ fontFamily: "'Rock Salt', cursive" }}>
         Start
       </Link>
     </main>
