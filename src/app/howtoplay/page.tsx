@@ -12,7 +12,7 @@ export default function HowToPlay() {
           width={500}
           height={500}
         />
-        <Link href="/game" className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-blue-600 transition-colors">
+        <Link href="/game" className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-purple-600 transition-colors">
           Start Game
         </Link>
       </div>
