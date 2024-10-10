@@ -30,7 +30,9 @@ export default function Next() {
   return (
     <main className="p-4">
       <h1 className="text-4xl font-bold mb-4">Game Result</h1>
-      <Image src={gifUrl} alt="Game Result" width={500} height={500} />
+      <div style={{ width: '500px', height: '500px', position: 'relative' }}>
+        <Image src={gifUrl} alt="Game Result" layout="fill" objectFit="contain" />
+      </div>
       <p className="my-4">{message}</p>
       <Link href="/game" className="bg-blue-500 text-white px-4 py-2 rounded mr-2">
         New Game
