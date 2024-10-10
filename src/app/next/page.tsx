@@ -3,8 +3,9 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Suspense } from 'react'
 
-export default function Next() {
+function NextContent() {
   const searchParams = useSearchParams()
   const result = searchParams.get('result')
 
@@ -41,5 +42,13 @@ export default function Next() {
         Your Stats
       </Link>
     </main>
+  )
+}
+
+export default function Next() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NextContent />
+    </Suspense>
   )
 }
