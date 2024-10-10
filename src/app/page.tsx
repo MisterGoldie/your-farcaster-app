@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function Home() {
   return (
     <main className="p-4 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-4 text-center">Welcome to POD Play</h1>
+      {/* Removed the h1 element */}
       <div style={{ width: '500px', height: '500px', position: 'relative' }}>
         <Image 
           src="https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif" 
