@@ -14,7 +14,7 @@ export default function Home() {
         />
       </div>
       <p className="my-4 text-center">Welcome to POD Play presented by /thepod 🕹️</p>
-      <Link href="/howtoplay" className="bg-blue-500 text-white px-4 py-2 rounded text-center">
+      <Link href="/howtoplay" className="bg-purple-500 text-white px-4 py-2 rounded text-center">
         Start
       </Link>
     </main>

@@ -104,7 +104,7 @@ export default function Game() {
           New Game
         </button>
       )}
-      <Link href="/" className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+      <Link href="/" className="mt-4 bg-purple-500 text-white px-4 py-2 rounded">
         Back to Home
       </Link>
     </main>
