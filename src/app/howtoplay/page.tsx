@@ -4,7 +4,7 @@ import Image from 'next/image'
 export default function HowToPlay() {
   return (
     <main className="p-4 flex flex-col items-center">
-      <h1 className="text-4xl font-bold mb-4 text-center" style={{ fontFamily: "'Butcherman', cursive" }}>How to Play Tic-Tac-Toe</h1>
+      <h1 className="text-4xl font-bold mb-4 text-center">How to Play Tic-Tac-Toe</h1>
       <div className="flex flex-col items-center">
         <Image 
           src="https://bafybeifzk7uojcicnh6yhnqvoldkpzuf32sullm34ela266xthbidca6ny.ipfs.w3s.link/HowToPlay%20(1).png" 

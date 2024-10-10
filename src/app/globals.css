@@ -26,21 +26,10 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  font-family: 'Rock Salt', cursive !important;
+  font-family: 'Frijole', cursive !important;
 }
 
-/* Ensure all text uses the Rock salt font */
+/* Ensure all text uses the Frijole font */
 * {
-  font-family: 'Rock Salt', cursive !important;
-}
-
-/* Optional: You might want to use a different font for certain elements for better readability */
-.readable-text {
-  font-family: Arial, sans-serif;
-}
-
-.butcherman-regular {
-  font-family: "Butcherman", system-ui;
-  font-weight: 400;
-  font-style: normal;
+  font-family: 'Frijole', cursive !important;
 }
