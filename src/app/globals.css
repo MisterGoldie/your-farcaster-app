@@ -1,6 +1,8 @@
+/* eslint-disable */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* eslint-enable */
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -24,6 +26,7 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  font-family: 'Rock Salt', cursive;
 }
 
 h1, h2, h3, h4, h5, h6 {
