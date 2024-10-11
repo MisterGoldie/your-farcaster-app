@@ -53,7 +53,7 @@ function Cell({ position, onClick, value }: CellProps) {
           color="#00ff00"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/Creepster-Regular.ttf"
+          font={undefined}
         >
           X
         </Text>
@@ -226,7 +226,7 @@ function Board() {
         color="#ff6600"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/Creepster-Regular.ttf"
+        font={undefined}
       >
         Time: {timeLeft}s
       </Text>
@@ -239,7 +239,7 @@ function Board() {
           color="#ff6600"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/Creepster-Regular.ttf"
+          font={undefined}
         >
           {winner ? `${winner === 'O' ? 'Pumpkins' : 'X'} win!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
         </Text>
