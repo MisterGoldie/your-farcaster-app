@@ -1,143 +1,81 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
-type GameState = {
-  board: (string | null)[];
-  isGameOver: boolean;
-}
-
-const WINNING_COMBINATIONS = [
-  [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-  [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-  [0, 4, 8], [2, 4, 6]             // Diagonal
-];
-
-function checkWinner(board: (string | null)[]): string | null {
-  for (let combo of WINNING_COMBINATIONS) {
-    if (board[combo[0]] && board[combo[0]] === board[combo[1]] && board[combo[0]] === board[combo[2]]) {
-      return board[combo[0]];
-    }
-  }
-  return null;
-}
-
-function getAvailableMoves(board: (string | null)[]): number[] {
-  return board.reduce((acc, cell, index) => cell === null ? [...acc, index] : acc, [] as number[]);
-}
-
-function cpuMove(board: (string | null)[]): number {
-  const bestMove = minimax(board, 'X');
-  return bestMove.index;
-}
-
-function minimax(board: (string | null)[], player: 'X' | 'O'): { score: number; index: number } {
-  const availableMoves = getAvailableMoves(board);
-
-  if (checkWinner(board) === 'O') {
-    return { score: -10, index: -1 };
-  } else if (checkWinner(board) === 'X') {
-    return { score: 10, index: -1 };
-  } else if (availableMoves.length === 0) {
-    return { score: 0, index: -1 };
-  }
-
-  const moves = availableMoves.map((index) => {
-    const newBoard = [...board];
-    newBoard[index] = player;
-
-    const score = minimax(newBoard, player === 'X' ? 'O' : 'X').score;
-
-    return { score, index };
-  });
-
-  if (player === 'X') {
-    const bestMove = moves.reduce((best, move) => (move.score > best.score ? move : best));
-    return bestMove;
-  } else {
-    const bestMove = moves.reduce((best, move) => (move.score < best.score ? move : best));
-    return bestMove;
-  }
-}
+const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: false })
 
 export default function Game() {
-  const [state, setState] = useState<GameState>({
-    board: Array(9).fill(null),
-    isGameOver: false
-  });
-
-  const [result, setResult] = useState<string | null>(null);
+  const [state, setState] = useState({
+    board: Array(27).fill(null),
+    isXNext: true,
+    isGameOver: false,
+  })
 
   const handleCellClick = (index: number) => {
-    if (state.board[index] || state.isGameOver) return;
+    if (state.board[index] || state.isGameOver) return
 
-    const newBoard = [...state.board];
-    newBoard[index] = 'O';
+    const newBoard = [...state.board]
+    newBoard[index] = state.isXNext ? 'X' : 'O'
 
-    let winner = checkWinner(newBoard);
-    if (winner) {
-      setState({ board: newBoard, isGameOver: true });
-      setResult("You win!");
-      return;
+    setState({
+      board: newBoard,
+      isXNext: !state.isXNext,
+      isGameOver: checkWinner(newBoard) !== null || newBoard.every(Boolean),
+    })
+  }
+
+  const checkWinner = (board: (string | null)[]) => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6],
+    ]
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i]
+      if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+        return board[a]
+      }
     }
-
-    if (getAvailableMoves(newBoard).length === 0) {
-      setState({ board: newBoard, isGameOver: true });
-      setResult("It's a draw!");
-      return;
-    }
-
-    const cpuMoveIndex = cpuMove(newBoard);
-    newBoard[cpuMoveIndex] = 'X';
-
-    winner = checkWinner(newBoard);
-    if (winner) {
-      setState({ board: newBoard, isGameOver: true });
-      setResult("CPU wins!");
-    } else if (getAvailableMoves(newBoard).length === 0) {
-      setState({ board: newBoard, isGameOver: true });
-      setResult("It's a draw!");
-    } else {
-      setState({ board: newBoard, isGameOver: false });
-    }
-  };
+    return null
+  }
 
   const resetGame = () => {
     setState({
       board: Array(9).fill(null),
-      isGameOver: false
-    });
-    setResult(null);
-  };
+      isXNext: true,
+      isGameOver: false,
+    })
+  }
+
+  const winner = checkWinner(state.board)
+  const result = winner ? `Winner: ${winner}` : state.isGameOver ? 'Draw!' : null
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white font-['Frijole']">
       <h1 className="text-4xl mb-8">Tic-Tac-Toe</h1>
       {state.isGameOver && result && <div className="mb-8 text-2xl">{result}</div>}
-      <div className="relative w-96 h-96 mb-8">
-        {/* Horizontal lines */}
-        <div className="absolute top-1/3 left-0 right-0 h-0.5 bg-white"></div>
-        <div className="absolute top-2/3 left-0 right-0 h-0.5 bg-white"></div>
-        {/* Vertical lines */}
-        <div className="absolute top-0 bottom-0 left-1/3 w-0.5 bg-white"></div>
-        <div className="absolute top-0 bottom-0 left-2/3 w-0.5 bg-white"></div>
-        {/* Game cells */}
-        <div className="grid grid-cols-3 gap-0 w-full h-full">
-          {state.board.map((cell, index) => (
-            <button
-              key={index}
-              className="w-full h-full flex items-center justify-center text-7xl"
-              onClick={() => handleCellClick(index)}
-              disabled={cell !== null || state.isGameOver}
-            >
-              {cell}
-            </button>
-          ))}
-        </div>
+      <TicTacToe3D />
+      <div className="mt-8 grid grid-cols-3 gap-2">
+        {state.board.map((cell, index) => (
+          <button
+            key={index}
+            className="w-20 h-20 flex items-center justify-center text-4xl bg-purple-800 hover:bg-purple-700"
+            onClick={() => handleCellClick(index)}
+            disabled={cell !== null || state.isGameOver}
+          >
+            {cell}
+          </button>
+        ))}
       </div>
       {state.isGameOver && (
-        <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
+        <button onClick={resetGame} className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-xl hover:bg-purple-600 transition-colors">
           New Game
         </button>
       )}
