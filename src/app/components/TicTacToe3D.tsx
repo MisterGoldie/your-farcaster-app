@@ -40,13 +40,19 @@ function Board() {
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
 
-  useEffect(() => {
-    // Make the CPU start with a random move
+  const restartGame = () => {
     const initialCPUMove = Math.floor(Math.random() * 9);
     const initialBoard = Array(9).fill(null);
     initialBoard[initialCPUMove] = 'X';
     setBoard(initialBoard);
     setIsONext(true);
+    setGameOver(false);
+    setTimeLeft(15);
+    setTimerStarted(false);
+  }
+
+  useEffect(() => {
+    restartGame();
   }, []);
 
   useFrame(() => {
@@ -129,8 +135,8 @@ function Board() {
   }
 
   const getCPUMove = (board: (string | null)[]) => {
-    // % chance to make a random move
-    if (Math.random() < 0.3) {
+    // 50% chance to make a random move
+    if (Math.random() < 0.5) {
       const emptySpots = board.reduce((acc, cell, index) => {
         if (!cell) acc.push(index);
         return acc;
@@ -181,13 +187,6 @@ function Board() {
     }
 
     return -1 // No move available
-  }
-
-  const restartGame = () => {
-    setBoard(Array(9).fill(null))
-    setIsONext(false)
-    setGameOver(false)
-    setTimeLeft(15)
   }
 
   const winner = checkWinner(board)
