@@ -6,7 +6,7 @@ export default function HowToPlay() {
       <div className="max-w-4xl w-full bg-black bg-opacity-50 rounded-lg shadow-lg p-6 sm:p-10">
         <div className="relative w-full max-w-md mx-auto mb-8">
           <img 
-            src="https://bafybeicodlej4oiq6fq5lfztym5tvgndslczfqyvquvpamdloqvjrf7lly.ipfs.w3s.link/image%2019.png"
+            src="https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF"
             alt="How to Play"
             className="w-full h-auto rounded-lg"
           />
