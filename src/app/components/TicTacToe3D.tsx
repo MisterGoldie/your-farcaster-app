@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Box, Line } from '@react-three/drei'
+import { Line } from '@react-three/drei'
 import * as THREE from 'three'
 
 function Board() {
@@ -8,27 +8,19 @@ function Board() {
 
   useFrame(() => {
     if (boardRef.current) {
-      boardRef.current.rotation.x += 0.005
-      boardRef.current.rotation.y += 0.005
+      boardRef.current.rotation.y += 0.005 // Slow rotation around Y-axis
     }
   })
 
   return (
     <group ref={boardRef}>
-      {/* Grid lines */}
+      {/* Horizontal lines */}
       <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="white" lineWidth={5} />
       <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="white" lineWidth={5} />
+      
+      {/* Vertical lines */}
       <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="white" lineWidth={5} />
       <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="white" lineWidth={5} />
-
-      {/* Cells */}
-      {[-1, 0, 1].map((x) =>
-        [-1, 0, 1].map((y) => (
-          <Box key={`${x}-${y}`} position={[x, y, 0]} args={[0.9, 0.9, 0.1]}>
-            <meshStandardMaterial color="black" opacity={0.5} transparent />
-          </Box>
-        ))
-      )}
     </group>
   )
 }

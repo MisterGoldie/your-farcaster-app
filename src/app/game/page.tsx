@@ -62,7 +62,7 @@ export default function Game() {
       <h1 className="text-4xl mb-8">Tic-Tac-Toe</h1>
       {state.isGameOver && result && <div className="mb-8 text-2xl">{result}</div>}
       <TicTacToe3D />
-      <div className="mt-8 grid grid-cols-3 gap-2">
+      <div className="mt-8 grid grid-cols-3 gap-2"> 
         {state.board.map((cell, index) => (
           <button
             key={index}
@@ -85,3 +85,5 @@ export default function Game() {
     </main>
   )
 }
+
+//
