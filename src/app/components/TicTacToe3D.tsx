@@ -230,7 +230,7 @@ function Board() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="w-full h-full relative">
+    <>
       <Canvas camera={{ position: [0, 0, 8], fov: 50 }}>
         <color attach="background" args={['#000000']} />
         <ambientLight intensity={0.5} />
@@ -239,12 +239,12 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
         <button onClick={onRestart} className="bg-orange-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
-          Restart Game
+          Play Again
         </button>
         <button onClick={onBackToHome} className="bg-orange-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
-          Back to Home
+          Home
         </button>
       </div>
-    </div>
+    </>
   )
 }

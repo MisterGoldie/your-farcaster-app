@@ -1,5 +1,6 @@
 import './globals.css'
 import { Metadata } from 'next'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: 'POD Play Tic-Tac-Toe',
@@ -13,13 +14,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet" />
-      </head>
-      <body>{children}</body>
+      <body>
+        <div className="w-full h-screen flex items-center justify-center bg-black p-4">
+          <div className="w-full h-full max-w-[500px] max-h-[800px] border-4 border-white rounded-lg overflow-hidden relative">
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   )
 }
