@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text, Stars } from '@react-three/drei'
+import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -43,16 +43,15 @@ function Cell({ position, onClick, value }: CellProps) {
     <group position={position}>
       <mesh onClick={onClick}>
         <boxGeometry args={[0.9, 0.9, 0.1]} />
-        <meshStandardMaterial color="#2c0d0d" opacity={0.7} transparent />
+        <meshStandardMaterial color="black" opacity={0.1} transparent />
       </mesh>
       {value && (
         <Text
           position={[0, 0, 0.06]}
           fontSize={0.5}
-          color={value === 'O' ? '#ff6600' : '#00ff00'}
+          color="white"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/Creepster-Regular.ttf"
         >
           {value}
         </Text>
@@ -64,7 +63,7 @@ function Cell({ position, onClick, value }: CellProps) {
 function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isONext, setIsONext] = useState(false)
+  const [isXNext, setIsXNext] = useState(true)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
 
@@ -92,10 +91,10 @@ function Board() {
   }, [gameOver])
 
   useEffect(() => {
-    if (!isONext && !gameOver) {
+    if (!isXNext && !gameOver) {
       setTimeout(makeCPUMove, 500)
     }
-  }, [isONext, gameOver])
+  }, [isXNext, gameOver])
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -118,12 +117,12 @@ function Board() {
   }
 
   const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isONext) return
+    if (board[index] || gameOver || !isXNext) return
 
     const newBoard = [...board]
-    newBoard[index] = 'O'
+    newBoard[index] = 'X'
     setBoard(newBoard)
-    setIsONext(false)
+    setIsXNext(false)
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
@@ -134,9 +133,9 @@ function Board() {
     const cpuMove = getCPUMove(board)
     if (cpuMove !== -1) {
       const newBoard = [...board]
-      newBoard[cpuMove] = 'X'
+      newBoard[cpuMove] = 'O'
       setBoard(newBoard)
-      setIsONext(true)
+      setIsXNext(true)
       if (checkWinner(newBoard) || newBoard.every(Boolean)) {
         setGameOver(true)
       }
@@ -188,7 +187,7 @@ function Board() {
 
   const restartGame = () => {
     setBoard(Array(9).fill(null))
-    setIsONext(false)
+    setIsXNext(false)
     setGameOver(false)
     setTimeLeft(15)
   }
@@ -199,10 +198,10 @@ function Board() {
   return (
     <group ref={boardRef}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#ff6600" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#ff6600" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#ff6600" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#ff6600" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="white" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="white" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="white" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="white" lineWidth={5} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -222,10 +221,9 @@ function Board() {
       <Text
         position={[0, 2, 0]}
         fontSize={0.3}
-        color="#ff6600"
+        color="white"
         anchorX="center"
         anchorY="middle"
-        font="/fonts/Creepster-Regular.ttf"
       >
         Time: {timeLeft}s
       </Text>
@@ -235,10 +233,9 @@ function Board() {
         <Text
           position={[0, 0, 1]}
           fontSize={0.5}
-          color="#ff6600"
+          color="white"
           anchorX="center"
           anchorY="middle"
-          font="/fonts/Creepster-Regular.ttf"
         >
           {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
         </Text>
