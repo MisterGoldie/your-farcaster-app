@@ -144,7 +144,7 @@ function Board() {
     if (emptySpots.length === 0) return -1; // No move available
 
     // 70% chance to make a random move
-    if (Math.random() < 0.7) {
+    if (Math.random() < 0.3) {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)];
     }
 
