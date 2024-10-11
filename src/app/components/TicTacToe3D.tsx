@@ -186,6 +186,13 @@ function Board() {
     return -1 // No move available
   }
 
+  const restartGame = () => {
+    setBoard(Array(9).fill(null))
+    setIsONext(false)
+    setGameOver(false)
+    setTimeLeft(15)
+  }
+
   const winner = checkWinner(board)
   const isDraw = !winner && board.every(Boolean)
 
@@ -218,7 +225,7 @@ function Board() {
         color="#ff6600"
         anchorX="center"
         anchorY="middle"
-        font={undefined}
+        font="/fonts/Creepster-Regular.ttf"
       >
         Time: {timeLeft}s
       </Text>
@@ -231,7 +238,7 @@ function Board() {
           color="#ff6600"
           anchorX="center"
           anchorY="middle"
-          font={undefined}
+          font="/fonts/Creepster-Regular.ttf"
         >
           {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
         </Text>
@@ -247,6 +254,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <color attach="background" args={['#1a0505']} />
         <ambientLight intensity={0.2} />
         <pointLight position={[10, 10, 10]} color="#ff6600" />
+        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <Board />
       </Canvas>
       <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '20px' }}>

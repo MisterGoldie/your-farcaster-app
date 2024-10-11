@@ -51,10 +51,3 @@ body {
     font-size: 18px;
   }
 }
-
-@font-face {
-  font-family: 'Creepster';
-  src: url('/fonts/Creepster-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
