@@ -142,9 +142,6 @@ function Board() {
       }
     }
 
-    // Take center if available
-    if (!board[4]) return 4
-
     // Take a corner
     const corners = [0, 2, 6, 8]
     const availableCorners = corners.filter(i => !board[i])
@@ -157,6 +154,16 @@ function Board() {
     const availableSides = sides.filter(i => !board[i])
     if (availableSides.length > 0) {
       return availableSides[Math.floor(Math.random() * availableSides.length)]
+    }
+
+    // Take any available spot
+    const emptySpots = board.reduce((acc, cell, index) => {
+      if (!cell) acc.push(index)
+      return acc
+    }, [] as number[])
+  
+    if (emptySpots.length > 0) {
+      return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
     return -1 // No move available
