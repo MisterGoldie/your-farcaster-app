@@ -5,7 +5,6 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4 sm:p-8">
       <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole'] text-center">
-        POD Play
       </h1>
       
       <p className="text-lg sm:text-xl mb-6 text-center max-w-md">
