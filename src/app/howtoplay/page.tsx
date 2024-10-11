@@ -4,7 +4,6 @@ export default function HowToPlay() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="max-w-4xl w-full bg-black bg-opacity-50 rounded-lg shadow-lg p-6 sm:p-10">
-        <h1 className="text-2xl sm:text-4xl font-bold mb-6 text-center text-white">How to Play Tic-Tac-Toe</h1>
         <div className="relative w-full max-w-md mx-auto mb-8">
           <img 
             src="https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF"
