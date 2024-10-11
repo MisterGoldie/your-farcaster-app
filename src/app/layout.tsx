@@ -19,7 +19,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet" />
       </head>
-      <body>{children}</body>
+      <body>
+        <div className="border-4 border-white min-h-screen">
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
