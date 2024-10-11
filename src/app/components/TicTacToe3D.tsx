@@ -46,15 +46,15 @@ function Cell({ position, onClick, value }: CellProps) {
         <meshStandardMaterial color="black" opacity={0.1} transparent />
       </mesh>
       {value && (
-        <Html center>
-          {value === 'O' ? (
-            <span className="material-symbols-outlined" style={{ fontSize: '40px', color: 'white' }}>
-              skull
-            </span>
-          ) : (
-            <span style={{ fontSize: '40px', color: 'white' }}>{value}</span>
-          )}
-        </Html>
+        <Text
+          position={[0, 0, 0.06]}
+          fontSize={0.5}
+          color="white"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {value}
+        </Text>
       )}
     </group>
   )
