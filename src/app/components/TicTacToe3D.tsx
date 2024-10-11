@@ -35,17 +35,14 @@ function Cell({ position, onClick, value }: CellProps) {
 function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isONext, setIsONext] = useState(false)
+  const [isXNext, setIsXNext] = useState(true)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
 
   const restartGame = () => {
-    const initialCPUMove = Math.floor(Math.random() * 9);
-    const initialBoard = Array(9).fill(null);
-    initialBoard[initialCPUMove] = 'X';
-    setBoard(initialBoard);
-    setIsONext(true);
+    setBoard(Array(9).fill(null));
+    setIsXNext(true);
     setGameOver(false);
     setTimeLeft(15);
     setTimerStarted(false);
@@ -79,10 +76,10 @@ function Board() {
   }, [timerStarted, gameOver])
 
   useEffect(() => {
-    if (!isONext && !gameOver) {
+    if (!isXNext && !gameOver) {
       setTimeout(makeCPUMove, 500)
     }
-  }, [isONext, gameOver])
+  }, [isXNext, gameOver])
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -105,19 +102,21 @@ function Board() {
   }
 
   const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isONext) return
+    if (board[index] || gameOver || !isXNext) return
 
     if (!timerStarted) {
       setTimerStarted(true)
     }
 
     const newBoard = [...board]
-    newBoard[index] = 'O'
+    newBoard[index] = 'X'
     setBoard(newBoard)
-    setIsONext(false)
+    setIsXNext(false)
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
+    } else {
+      setTimeout(makeCPUMove, 500)
     }
   }
 
@@ -125,9 +124,9 @@ function Board() {
     const cpuMove = getCPUMove(board)
     if (cpuMove !== -1) {
       const newBoard = [...board]
-      newBoard[cpuMove] = 'X'
+      newBoard[cpuMove] = 'O'
       setBoard(newBoard)
-      setIsONext(true)
+      setIsXNext(true)
       if (checkWinner(newBoard) || newBoard.every(Boolean)) {
         setGameOver(true)
       }
