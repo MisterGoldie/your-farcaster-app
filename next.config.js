@@ -16,7 +16,6 @@ const nextConfig = {
   images: {
     domains: [
       'bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link',
-      // Add other necessary domains here
     ],
   },
 }
