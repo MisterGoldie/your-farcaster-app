@@ -1,14 +1,11 @@
-const ContentSecurityPolicy = `
-  default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline';
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' data:;
-  font-src 'self';
-  connect-src 'self' https://*.vercel.app;
-  worker-src 'self' blob:;
-`;
-
-module.exports = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  images: {
+    domains: [
+      'bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link',
+      'bafybeifzk7uojcicnh6yhnqvoldkpzuf32sullm34ela266xthbidca6ny.ipfs.w3s.link'
+    ],
+  },
   async headers() {
     return [
       {
@@ -16,10 +13,18 @@ module.exports = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
-          }
-        ]
-      }
-    ];
-  }
-};
+            value: "default-src 'self'; connect-src 'self' https://* wss://ws-us3.pusher.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.ipfs.w3s.link; frame-src 'self' https://vercel.live;"
+          },
+        ],
+      },
+    ]
+  },
+  webpack: (config) => {
+    config.externals.push({
+      'react-native-config': 'react-native-config',
+    })
+    return config
+  },
+}
+
+module.exports = nextConfig
