@@ -2,7 +2,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Frijole&display=swap');
 /* eslint-enable */
 
 :root {
@@ -20,14 +19,19 @@
 }
 
 body {
-  font-family: "Frijole", system-ui;
-  font-weight: 400;
-  font-style: normal;
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-family: 'Frijole', cursive;
 }
 
 /* Ensure all text uses the Frijole font */
 * {
-  font-family: 'Frijole', !important;
+  font-family: 'Frijole', cursive !important;
 }
 
 @media (max-width: 640px) {
