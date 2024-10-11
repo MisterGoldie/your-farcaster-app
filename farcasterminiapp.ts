@@ -1,8 +1,26 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+type ComposerActionFormResponse = {
+  type: 'form';
+  title: string;
+  url: string;
+};
+
+type ComposerActionMetadata = {
+  type: 'composer';
+  name: string;
+  icon: string;
+  description: string;
+  aboutUrl: string;
+  imageUrl: string;
+  action: {
+    type: string;
+  };
+};
+
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ComposerActionFormResponse | ComposerActionMetadata>
 ) {
   if (req.method === 'GET') {
     res.status(200).json({

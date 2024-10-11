@@ -63,9 +63,10 @@ function Cell({ position, onClick, value }: CellProps) {
 function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isXNext, setIsXNext] = useState(true)
+  const [isONext, setIsONext] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
+  const [gameStarted, setGameStarted] = useState(false)
 
   useFrame(() => {
     if (boardRef.current) {
@@ -74,7 +75,7 @@ function Board() {
   })
 
   useEffect(() => {
-    if (!gameOver) {
+    if (gameStarted && !gameOver) {
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
@@ -88,13 +89,13 @@ function Board() {
 
       return () => clearInterval(timer)
     }
-  }, [gameOver])
+  }, [gameStarted, gameOver])
 
   useEffect(() => {
-    if (!isXNext && !gameOver) {
+    if (!isONext && !gameOver) {
       setTimeout(makeCPUMove, 500)
     }
-  }, [isXNext, gameOver])
+  }, [isONext, gameOver])
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -117,12 +118,16 @@ function Board() {
   }
 
   const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isXNext) return
+    if (board[index] || gameOver || !isONext) return
+
+    if (!gameStarted) {
+      setGameStarted(true)
+    }
 
     const newBoard = [...board]
-    newBoard[index] = 'X'
+    newBoard[index] = 'O'
     setBoard(newBoard)
-    setIsXNext(false)
+    setIsONext(false)
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
@@ -135,7 +140,7 @@ function Board() {
       const newBoard = [...board]
       newBoard[cpuMove] = 'O'
       setBoard(newBoard)
-      setIsXNext(true)
+      setIsONext(true)
       if (checkWinner(newBoard) || newBoard.every(Boolean)) {
         setGameOver(true)
       }
@@ -187,9 +192,10 @@ function Board() {
 
   const restartGame = () => {
     setBoard(Array(9).fill(null))
-    setIsXNext(false)
+    setIsONext(false)
     setGameOver(false)
     setTimeLeft(15)
+    setGameStarted(false)
   }
 
   const winner = checkWinner(board)
@@ -225,7 +231,7 @@ function Board() {
         anchorX="center"
         anchorY="middle"
       >
-        Time: {timeLeft}s
+        {gameStarted ? `Time: ${timeLeft}s` : 'Click to start'}
       </Text>
 
       {/* Game over text */}
