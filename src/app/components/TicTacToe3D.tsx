@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
-import { Line, Text } from '@react-three/drei'
+import { Canvas, useFrame } from '@react-three/fiber'
+import { Line, Text, Stars } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -45,17 +45,16 @@ function Cell({ position, onClick, value }: CellProps) {
         <boxGeometry args={[0.9, 0.9, 0.1]} />
         <meshStandardMaterial color="#2c0d0d" opacity={0.7} transparent />
       </mesh>
-      {value === 'O' && <Pumpkin position={[0, 0, 0.1]} />}
-      {value === 'X' && (
+      {value && (
         <Text
           position={[0, 0, 0.06]}
           fontSize={0.5}
-          color="#00ff00"
+          color={value === 'O' ? '#ff6600' : '#00ff00'}
           anchorX="center"
           anchorY="middle"
-          font={undefined}
+          font="/fonts/Creepster-Regular.ttf"
         >
-          X
+          {value}
         </Text>
       )}
     </group>
@@ -226,7 +225,7 @@ function Board() {
         color="#ff6600"
         anchorX="center"
         anchorY="middle"
-        font={undefined}
+        font="/fonts/Creepster-Regular.ttf"
       >
         Time: {timeLeft}s
       </Text>
@@ -239,9 +238,9 @@ function Board() {
           color="#ff6600"
           anchorX="center"
           anchorY="middle"
-          font={undefined}
+          font="/fonts/Creepster-Regular.ttf"
         >
-          {winner ? `${winner === 'O' ? 'Pumpkins' : 'X'} win!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
+          {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
         </Text>
       )}
     </group>
@@ -255,6 +254,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <color attach="background" args={['#1a0505']} />
         <ambientLight intensity={0.2} />
         <pointLight position={[10, 10, 10]} color="#ff6600" />
+        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
         <Board />
       </Canvas>
       <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '20px' }}>
