@@ -35,7 +35,7 @@ export default function Game() {
   }, [])
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen text-orange-500 font-['Creepster']">
+    <main className="flex flex-col items-center justify-center min-h-screen text-orange-500 font-['Frijole']">
       <h1 className="text-6xl mb-8 text-orange-500 shadow-lg shadow-orange-500/50">Spooky Tic-Tac-Toe</h1>
       <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
     </main>
