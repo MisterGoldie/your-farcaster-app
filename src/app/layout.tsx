@@ -19,11 +19,9 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet" />
       </head>
-      <body>
-        <div className="flex justify-center items-center min-h-screen bg-black p-4">
-          <div className="border-4 border-white p-4 rounded-lg max-w-4xl w-full">
-            {children}
-          </div>
+      <body className="bg-black flex items-center justify-center min-h-screen p-4">
+        <div className="border-4 border-white rounded-lg p-2 max-w-md w-full">
+          {children}
         </div>
       </body>
     </html>
