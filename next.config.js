@@ -7,7 +7,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; connect-src 'self' https://* https://vercel.live wss://ws-us3.pusher.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://vercel.live; media-src 'self' https://bafybeiec5czbnll2ochunnvjnky2mijpoqrplpadob4ojuc7ebfmuk2yma.ipfs.w3s.link;"
+            value: "default-src 'self'; connect-src 'self' https://* wss://ws-us3.pusher.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; frame-src 'self' https://vercel.live; media-src 'self' https://bafybeiec5czbnll2ochunnvjnky2mijpoqrplpadob4ojuc7ebfmuk2yma.ipfs.w3s.link;"
           },
         ],
       },
