@@ -17,7 +17,7 @@ export default function Home() {
         />
       </div>
       
-      <Link href="/howtoplay" className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-orange-600 transition-colors">
+      <Link href="/howtoplay" className="bg-purple-500 text-white px-6 py-3 rounded mt-8 text-center text-lg hover:bg-purple-600 transition-colors">
         Start
       </Link>
     </main>

@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text, Html } from '@react-three/drei'
+import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -203,10 +203,10 @@ function Board() {
   return (
     <group ref={boardRef}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="white" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="white" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="white" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="white" lineWidth={5} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -259,10 +259,10 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <Board />
       </Canvas>
       <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex gap-5">
-        <button onClick={onRestart} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-orange-600 transition-colors">
+        <button onClick={onRestart} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
           Restart Game
         </button>
-        <button onClick={onBackToHome} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-orange-600 transition-colors">
+        <button onClick={onBackToHome} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
           Back to Home
         </button>
       </div>
