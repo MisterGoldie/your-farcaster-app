@@ -9,34 +9,6 @@ type CellProps = {
   value: string | null
 }
 
-function Pumpkin({ position }: { position: [number, number, number] }) {
-  return (
-    <group position={position}>
-      <mesh>
-        <sphereGeometry args={[0.4, 16, 16]} />
-        <meshStandardMaterial color="#ff6600" />
-      </mesh>
-      <mesh position={[0, 0.3, 0]}>
-        <cylinderGeometry args={[0.1, 0.1, 0.2, 8]} />
-        <meshStandardMaterial color="#4CAF50" />
-      </mesh>
-      {/* Eyes */}
-      <mesh position={[-0.15, 0.1, 0.3]}>
-        <sphereGeometry args={[0.08, 8, 8]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      <mesh position={[0.15, 0.1, 0.3]}>
-        <sphereGeometry args={[0.08, 8, 8]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      {/* Mouth */}
-      <mesh position={[0, -0.1, 0.3]}>
-        <boxGeometry args={[0.3, 0.1, 0.1]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-    </group>
-  )
-}
 
 function Cell({ position, onClick, value }: CellProps) {
   return (
@@ -203,10 +175,10 @@ function Board() {
   return (
     <group ref={boardRef}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="white" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="white" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="white" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="white" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="purple" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="purple" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="purple" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="purple" lineWidth={5} />
 
       {/* Cells */}
       {board.map((value, index) => (
