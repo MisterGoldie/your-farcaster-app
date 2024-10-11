@@ -138,7 +138,7 @@ function Board() {
     const cpuMove = getCPUMove(board)
     if (cpuMove !== -1) {
       const newBoard = [...board]
-      newBoard[cpuMove] = 'O'
+      newBoard[cpuMove] = 'X'
       setBoard(newBoard)
       setIsONext(true)
       if (checkWinner(newBoard) || newBoard.every(Boolean)) {
