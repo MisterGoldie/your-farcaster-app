@@ -10,7 +10,7 @@ export default function Home() {
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif" />
         <meta property="fc:frame:button:1" content="Play Tic-Tac-Toe" />
-        <meta property="fc:frame:post_url" content="https://your-farcaster-app.vercel.app/api/frame" />
+        <meta property="fc:frame:post_url" content="https://your-farcaster-app.vercel.app/api/compose" />
       </head>
       <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
         <div className="max-w-4xl w-full bg-black bg-opacity-50 rounded-lg shadow-lg p-6 sm:p-10">
