@@ -7,7 +7,7 @@ export default function HowToPlay() {
         <h1 className="text-2xl sm:text-4xl font-bold mb-6 text-center text-white">How to Play Tic-Tac-Toe</h1>
         <div className="relative w-full max-w-md mx-auto mb-8">
           <img 
-            src="https://bafybeifzk7uojcicnh6yhnqvoldkpzuf32sullm34ela266xthbidca6ny.ipfs.w3s.link/HowToPlay%20(1).png"
+            src="https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF"
             alt="How to Play"
             className="w-full h-auto rounded-lg"
           />
