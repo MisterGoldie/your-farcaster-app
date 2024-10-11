@@ -251,17 +251,15 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
   return (
     <div style={{ width: '100%', height: '600px', position: 'relative' }}>
       <Canvas camera={{ position: [0, 0, 5] }}>
-        <color attach="background" args={['#1a0505']} />
-        <ambientLight intensity={0.2} />
-        <pointLight position={[10, 10, 10]} color="#ff6600" />
-        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} />
         <Board />
       </Canvas>
       <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '20px' }}>
-        <button onClick={onRestart} className="bg-orange-600 text-white px-6 py-3 rounded text-xl hover:bg-orange-700 transition-colors font-['Creepster']">
+        <button onClick={onRestart} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
           Restart Game
         </button>
-        <button onClick={onBackToHome} className="bg-orange-600 text-white px-6 py-3 rounded text-xl hover:bg-orange-700 transition-colors font-['Creepster']">
+        <button onClick={onBackToHome} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
           Back to Home
         </button>
       </div>
