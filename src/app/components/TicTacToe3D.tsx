@@ -52,8 +52,9 @@ function Cell({ position, onClick, value }: CellProps) {
           color="white"
           anchorX="center"
           anchorY="middle"
+          font={value === 'O' ? '/fonts/MaterialSymbolsOutlined.woff' : undefined}
         >
-          {value}
+          {value === 'O' ? 'skull' : value}
         </Text>
       )}
     </group>

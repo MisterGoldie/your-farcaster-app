@@ -23,6 +23,10 @@ const nextConfig = {
     config.externals.push({
       'react-native-config': 'react-native-config',
     })
+    config.module.rules.push({
+      test: /\.(woff|woff2|eot|ttf|otf)$/i,
+      type: 'asset/resource',
+    })
     return config
   },
 }
