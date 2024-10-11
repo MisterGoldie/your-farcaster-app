@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
+import React, { useRef, useState, useEffect } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -35,21 +35,13 @@ function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isXNext, setIsXNext] = useState(true)
+  const [gameOver, setGameOver] = useState(false)
 
   useFrame(() => {
     if (boardRef.current) {
       boardRef.current.rotation.y += 0.005
     }
   })
-
-  const handleCellClick = (index: number) => {
-    if (board[index] || checkWinner(board)) return
-
-    const newBoard = [...board]
-    newBoard[index] = isXNext ? 'X' : 'O'
-    setBoard(newBoard)
-    setIsXNext(!isXNext)
-  }
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -69,6 +61,75 @@ function Board() {
       }
     }
     return null
+  }
+
+  const handleCellClick = (index: number) => {
+    if (board[index] || gameOver) return
+
+    const newBoard = [...board]
+    newBoard[index] = 'X'
+    setBoard(newBoard)
+    setIsXNext(false)
+
+    if (checkWinner(newBoard) || newBoard.every(Boolean)) {
+      setGameOver(true)
+    } else {
+      // CPU move
+      setTimeout(() => {
+        const cpuMove = getCPUMove(newBoard)
+        if (cpuMove !== -1) {
+          newBoard[cpuMove] = 'O'
+          setBoard([...newBoard])
+          setIsXNext(true)
+          if (checkWinner(newBoard) || newBoard.every(Boolean)) {
+            setGameOver(true)
+          }
+        }
+      }, 500)
+    }
+  }
+
+  const getCPUMove = (board: (string | null)[]) => {
+    // Check for winning move
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        const testBoard = [...board]
+        testBoard[i] = 'O'
+        if (checkWinner(testBoard) === 'O') {
+          return i
+        }
+      }
+    }
+
+    // Check for blocking move
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        const testBoard = [...board]
+        testBoard[i] = 'X'
+        if (checkWinner(testBoard) === 'X') {
+          return i
+        }
+      }
+    }
+
+    // Take center if available
+    if (!board[4]) return 4
+
+    // Take a corner
+    const corners = [0, 2, 6, 8]
+    const availableCorners = corners.filter(i => !board[i])
+    if (availableCorners.length > 0) {
+      return availableCorners[Math.floor(Math.random() * availableCorners.length)]
+    }
+
+    // Take any available side
+    const sides = [1, 3, 5, 7]
+    const availableSides = sides.filter(i => !board[i])
+    if (availableSides.length > 0) {
+      return availableSides[Math.floor(Math.random() * availableSides.length)]
+    }
+
+    return -1 // No move available
   }
 
   const winner = checkWinner(board)
