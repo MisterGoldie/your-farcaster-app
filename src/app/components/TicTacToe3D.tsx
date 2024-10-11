@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
 import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -9,22 +9,53 @@ type CellProps = {
   value: string | null
 }
 
+function Pumpkin({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      <mesh>
+        <sphereGeometry args={[0.4, 16, 16]} />
+        <meshStandardMaterial color="#ff6600" />
+      </mesh>
+      <mesh position={[0, 0.3, 0]}>
+        <cylinderGeometry args={[0.1, 0.1, 0.2, 8]} />
+        <meshStandardMaterial color="#4CAF50" />
+      </mesh>
+      {/* Eyes */}
+      <mesh position={[-0.15, 0.1, 0.3]}>
+        <sphereGeometry args={[0.08, 8, 8]} />
+        <meshStandardMaterial color="#000000" />
+      </mesh>
+      <mesh position={[0.15, 0.1, 0.3]}>
+        <sphereGeometry args={[0.08, 8, 8]} />
+        <meshStandardMaterial color="#000000" />
+      </mesh>
+      {/* Mouth */}
+      <mesh position={[0, -0.1, 0.3]}>
+        <boxGeometry args={[0.3, 0.1, 0.1]} />
+        <meshStandardMaterial color="#000000" />
+      </mesh>
+    </group>
+  )
+}
+
 function Cell({ position, onClick, value }: CellProps) {
   return (
     <group position={position}>
       <mesh onClick={onClick}>
         <boxGeometry args={[0.9, 0.9, 0.1]} />
-        <meshStandardMaterial color="black" opacity={0.1} transparent />
+        <meshStandardMaterial color="#2c0d0d" opacity={0.7} transparent />
       </mesh>
-      {value && (
+      {value === 'O' && <Pumpkin position={[0, 0, 0.1]} />}
+      {value === 'X' && (
         <Text
           position={[0, 0, 0.06]}
           fontSize={0.5}
-          color="white"
+          color="#00ff00"
           anchorX="center"
           anchorY="middle"
+          font="/fonts/Creepster-Regular.ttf"
         >
-          {value}
+          X
         </Text>
       )}
     </group>
@@ -169,10 +200,10 @@ function Board() {
   return (
     <group ref={boardRef}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="white" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="white" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="white" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="white" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#ff6600" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#ff6600" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#ff6600" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#ff6600" lineWidth={5} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -192,9 +223,10 @@ function Board() {
       <Text
         position={[0, 2, 0]}
         fontSize={0.3}
-        color="white"
+        color="#ff6600"
         anchorX="center"
         anchorY="middle"
+        font="/fonts/Creepster-Regular.ttf"
       >
         Time: {timeLeft}s
       </Text>
@@ -204,11 +236,12 @@ function Board() {
         <Text
           position={[0, 0, 1]}
           fontSize={0.5}
-          color="white"
+          color="#ff6600"
           anchorX="center"
           anchorY="middle"
+          font="/fonts/Creepster-Regular.ttf"
         >
-          {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
+          {winner ? `${winner === 'O' ? 'Pumpkins' : 'X'} win!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
         </Text>
       )}
     </group>
@@ -222,7 +255,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <color attach="background" args={['#1a0505']} />
         <ambientLight intensity={0.2} />
         <pointLight position={[10, 10, 10]} color="#ff6600" />
-        {/* Removed Stars component as it's not defined */}
         <Board />
       </Canvas>
       <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '20px' }}>
