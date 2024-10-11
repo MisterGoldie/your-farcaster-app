@@ -251,6 +251,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
   return (
     <div style={{ width: '100%', height: '600px', position: 'relative' }}>
       <Canvas camera={{ position: [0, 0, 5] }}>
+        <color attach="background" args={['#000000']} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <Board />
