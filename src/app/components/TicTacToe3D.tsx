@@ -156,6 +156,13 @@ function Board() {
     return -1 // No move available
   }
 
+  const restartGame = () => {
+    setBoard(Array(9).fill(null))
+    setIsONext(false)
+    setGameOver(false)
+    setTimeLeft(15)
+  }
+
   const winner = checkWinner(board)
   const isDraw = !winner && board.every(Boolean)
 
@@ -208,14 +215,22 @@ function Board() {
   )
 }
 
-export default function TicTacToe3D() {
+export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div style={{ width: '100%', height: '600px' }}>
+    <div style={{ width: '100%', height: '600px', position: 'relative' }}>
       <Canvas camera={{ position: [0, 0, 5] }}>
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <Board />
       </Canvas>
+      <div style={{ position: 'absolute', bottom: '20px', left: '50%', transform: 'translateX(-50%)', display: 'flex', gap: '20px' }}>
+        <button onClick={onRestart} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
+          Restart Game
+        </button>
+        <button onClick={onBackToHome} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
+          Back to Home
+        </button>
+      </div>
     </div>
   )
 }
