@@ -20,7 +20,7 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <div className="border-4 border-white min-h-screen">
+        <div className="border-4 border-white m-4 min-h-[calc(100vh-2rem)]">
           {children}
         </div>
       </body>
