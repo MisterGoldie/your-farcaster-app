@@ -35,14 +35,14 @@ function Cell({ position, onClick, value }: CellProps) {
 function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isXNext, setIsXNext] = useState(true)
+  const [isONext, setIsONext] = useState(true)  // Changed to isONext
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
 
   const restartGame = () => {
     setBoard(Array(9).fill(null));
-    setIsXNext(true);
+    setIsONext(true);  // O starts first
     setGameOver(false);
     setTimeLeft(15);
     setTimerStarted(false);
@@ -52,34 +52,69 @@ function Board() {
     restartGame();
   }, []);
 
-  useFrame(() => {
-    if (boardRef.current) {
-      boardRef.current.rotation.y += 0.005
-    }
-  })
-
   useEffect(() => {
     if (timerStarted && !gameOver) {
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
-            clearInterval(timer)
-            setGameOver(true)
-            return 0
+            clearInterval(timer);
+            setGameOver(true);
+            return 0;
           }
-          return prevTime - 1
-        })
-      }, 1000)
+          return prevTime - 1;
+        });
+      }, 1000);
 
-      return () => clearInterval(timer)
+      return () => clearInterval(timer);
     }
-  }, [timerStarted, gameOver])
+  }, [timerStarted, gameOver]);
 
-  useEffect(() => {
-    if (!isXNext && !gameOver) {
-      setTimeout(makeCPUMove, 500)
+  const handleCellClick = (index: number) => {
+    if (board[index] || gameOver || !isONext) return;  // Changed to !isONext
+
+    if (!timerStarted) {
+      setTimerStarted(true);
     }
-  }, [isXNext, gameOver])
+
+    const newBoard = [...board];
+    newBoard[index] = 'O';  // User plays 'O'
+    setBoard(newBoard);
+    setIsONext(false);  // CPU's turn next
+
+    if (checkWinner(newBoard) || newBoard.every(Boolean)) {
+      setGameOver(true);
+    } else {
+      setTimeout(makeCPUMove, 500);
+    }
+  }
+
+  const makeCPUMove = () => {
+    if (gameOver) return;
+
+    const cpuMove = getCPUMove(board);
+    if (cpuMove !== -1) {
+      const newBoard = [...board];
+      newBoard[cpuMove] = 'X';  // CPU plays 'X'
+      setBoard(newBoard);
+      setIsONext(true);  // User's turn next
+
+      if (checkWinner(newBoard) || newBoard.every(Boolean)) {
+        setGameOver(true);
+      }
+    }
+  }
+
+  const getCPUMove = (board: (string | null)[]) => {
+    const emptySpots = board.reduce((acc, cell, index) => {
+      if (!cell) acc.push(index);
+      return acc;
+    }, [] as number[]);
+    
+    if (emptySpots.length === 0) return -1;
+
+    // Simple random move
+    return emptySpots[Math.floor(Math.random() * emptySpots.length)];
+  }
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -101,76 +136,11 @@ function Board() {
     return null
   }
 
-  const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isXNext) return
-
-    if (!timerStarted) {
-      setTimerStarted(true)
+  useFrame(() => {
+    if (boardRef.current) {
+      boardRef.current.rotation.y += 0.005
     }
-
-    const newBoard = [...board]
-    newBoard[index] = 'X'
-    setBoard(newBoard)
-    setIsXNext(false)
-
-    if (checkWinner(newBoard) || newBoard.every(Boolean)) {
-      setGameOver(true)
-    } else {
-      setTimeout(makeCPUMove, 500)
-    }
-  }
-
-  const makeCPUMove = () => {
-    const cpuMove = getCPUMove(board)
-    if (cpuMove !== -1) {
-      const newBoard = [...board]
-      newBoard[cpuMove] = 'O'
-      setBoard(newBoard)
-      setIsXNext(true)
-      if (checkWinner(newBoard) || newBoard.every(Boolean)) {
-        setGameOver(true)
-      }
-    }
-  }
-
-  const getCPUMove = (board: (string | null)[]) => {
-    // Get all empty spots
-    const emptySpots = board.reduce((acc, cell, index) => {
-      if (!cell) acc.push(index);
-      return acc;
-    }, [] as number[]);
-    
-    if (emptySpots.length === 0) return -1; // No move available
-
-    // 70% chance to make a random move
-    if (Math.random() < 0.3) {
-      return emptySpots[Math.floor(Math.random() * emptySpots.length)];
-    }
-
-    // Check for winning move
-    for (let i of emptySpots) {
-      const testBoard = [...board];
-      testBoard[i] = 'X';
-      if (checkWinner(testBoard) === 'X') {
-        return i;
-      }
-    }
-
-    // Check for blocking move
-    for (let i of emptySpots) {
-      const testBoard = [...board];
-      testBoard[i] = 'O';
-      if (checkWinner(testBoard) === 'O') {
-        return i;
-      }
-    }
-
-    // If no winning or blocking move, make a random move
-    return emptySpots[Math.floor(Math.random() * emptySpots.length)];
-  }
-
-  const winner = checkWinner(board)
-  const isDraw = !winner && board.every(Boolean)
+  })
 
   return (
     <group ref={boardRef}>
@@ -206,7 +176,7 @@ function Board() {
       </Text>
 
       {/* Game over text */}
-      {(winner || isDraw || timeLeft === 0) && (
+      {gameOver && (
         <Text
           position={[0, 0, 1]}
           fontSize={0.3}
@@ -214,7 +184,7 @@ function Board() {
           anchorX="center"
           anchorY="middle"
         >
-          {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
+          {checkWinner(board) ? `${checkWinner(board)} wins!` : 'Draw!'}
         </Text>
       )}
     </group>
