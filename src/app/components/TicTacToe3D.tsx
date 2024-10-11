@@ -66,7 +66,7 @@ function Board() {
   const [isONext, setIsONext] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
-  const [gameStarted, setGameStarted] = useState(false)
+  const [timerStarted, setTimerStarted] = useState(false)
 
   useFrame(() => {
     if (boardRef.current) {
@@ -75,7 +75,7 @@ function Board() {
   })
 
   useEffect(() => {
-    if (gameStarted && !gameOver) {
+    if (timerStarted && !gameOver) {
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
           if (prevTime <= 1) {
@@ -89,7 +89,7 @@ function Board() {
 
       return () => clearInterval(timer)
     }
-  }, [gameStarted, gameOver])
+  }, [timerStarted, gameOver])
 
   useEffect(() => {
     if (!isONext && !gameOver) {
@@ -120,8 +120,8 @@ function Board() {
   const handleCellClick = (index: number) => {
     if (board[index] || gameOver || !isONext) return
 
-    if (!gameStarted) {
-      setGameStarted(true)
+    if (!timerStarted) {
+      setTimerStarted(true)
     }
 
     const newBoard = [...board]
@@ -195,7 +195,6 @@ function Board() {
     setIsONext(false)
     setGameOver(false)
     setTimeLeft(15)
-    setGameStarted(false)
   }
 
   const winner = checkWinner(board)
@@ -231,7 +230,7 @@ function Board() {
         anchorX="center"
         anchorY="middle"
       >
-        {gameStarted ? `Time: ${timeLeft}s` : 'Click to start'}
+        {timerStarted ? `Time: ${timeLeft}s` : 'Make a move to start'}
       </Text>
 
       {/* Game over text */}
