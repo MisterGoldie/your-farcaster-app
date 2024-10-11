@@ -26,10 +26,28 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
-  font-family: 'Frijole', cursive !important;
+  font-family: 'Frijole', cursive;
 }
 
 /* Ensure all text uses the Frijole font */
 * {
   font-family: 'Frijole', cursive !important;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1025px) {
+  html {
+    font-size: 18px;
+  }
 }
