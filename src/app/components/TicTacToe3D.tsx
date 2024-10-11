@@ -175,10 +175,10 @@ function Board() {
   return (
     <group ref={boardRef}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="purple" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="purple" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="purple" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="purple" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="orange" lineWidth={5} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -231,10 +231,10 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <Board />
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
-        <button onClick={onRestart} className="bg-purple-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
+        <button onClick={onRestart} className="bg-orange-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
           Restart Game
         </button>
-        <button onClick={onBackToHome} className="bg-purple-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
+        <button onClick={onBackToHome} className="bg-orange-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
           Back to Home
         </button>
       </div>
