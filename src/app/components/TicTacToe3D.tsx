@@ -35,14 +35,14 @@ function Cell({ position, onClick, value }: CellProps) {
 function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isONext, setIsONext] = useState(true)  // Changed to isONext
+  const [isUserTurn, setIsUserTurn] = useState(true)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
 
   const restartGame = () => {
     setBoard(Array(9).fill(null));
-    setIsONext(true);  // O starts first
+    setIsUserTurn(true);
     setGameOver(false);
     setTimeLeft(15);
     setTimerStarted(false);
@@ -70,7 +70,7 @@ function Board() {
   }, [timerStarted, gameOver]);
 
   const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isONext) return;  // Changed to !isONext
+    if (board[index] || gameOver || !isUserTurn) return;
 
     if (!timerStarted) {
       setTimerStarted(true);
@@ -79,7 +79,7 @@ function Board() {
     const newBoard = [...board];
     newBoard[index] = 'O';  // User plays 'O'
     setBoard(newBoard);
-    setIsONext(false);  // CPU's turn next
+    setIsUserTurn(false);
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true);
@@ -96,7 +96,7 @@ function Board() {
       const newBoard = [...board];
       newBoard[cpuMove] = 'X';  // CPU plays 'X'
       setBoard(newBoard);
-      setIsONext(true);  // User's turn next
+      setIsUserTurn(true);
 
       if (checkWinner(newBoard) || newBoard.every(Boolean)) {
         setGameOver(true);
