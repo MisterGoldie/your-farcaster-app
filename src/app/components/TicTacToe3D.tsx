@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text } from '@react-three/drei'
+import { Line, Text, Html } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -46,16 +46,15 @@ function Cell({ position, onClick, value }: CellProps) {
         <meshStandardMaterial color="black" opacity={0.1} transparent />
       </mesh>
       {value && (
-        <Text
-          position={[0, 0, 0.06]}
-          fontSize={0.5}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          font={value === 'O' ? '/fonts/MaterialSymbolsOutlined.woff' : undefined}
-        >
-          {value === 'O' ? 'skull' : value}
-        </Text>
+        <Html center>
+          {value === 'O' ? (
+            <span className="material-symbols-outlined" style={{ fontSize: '40px', color: 'white' }}>
+              skull
+            </span>
+          ) : (
+            <span style={{ fontSize: '40px', color: 'white' }}>{value}</span>
+          )}
+        </Html>
       )}
     </group>
   )
