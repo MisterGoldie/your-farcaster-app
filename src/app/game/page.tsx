@@ -19,9 +19,11 @@ export default function Game() {
   }
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white font-['Frijole']">
-      <h1 className="text-4xl mb-8">3D Tic-Tac-Toe</h1>
-      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
+      <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole']">3D Tic-Tac-Toe</h1>
+      <div className="w-full max-w-md aspect-square">
+        <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+      </div>
     </main>
   )
 }

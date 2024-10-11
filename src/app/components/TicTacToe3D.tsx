@@ -48,7 +48,7 @@ function Cell({ position, onClick, value }: CellProps) {
       {value && (
         <Text
           position={[0, 0, 0.06]}
-          fontSize={0.5}
+          fontSize={0.4}
           color="white"
           anchorX="center"
           anchorY="middle"
@@ -224,8 +224,8 @@ function Board() {
 
       {/* Timer */}
       <Text
-        position={[0, 2, 0]}
-        fontSize={0.3}
+        position={[0, 1.8, 0]}
+        fontSize={0.2}
         color="white"
         anchorX="center"
         anchorY="middle"
@@ -237,7 +237,7 @@ function Board() {
       {(winner || isDraw || timeLeft === 0) && (
         <Text
           position={[0, 0, 1]}
-          fontSize={0.5}
+          fontSize={0.3}
           color="white"
           anchorX="center"
           anchorY="middle"
@@ -251,18 +251,18 @@ function Board() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="w-full h-[600px] relative">
+    <div className="w-full h-full relative">
       <Canvas camera={{ position: [0, 0, 5] }}>
         <color attach="background" args={['#000000']} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
         <Board />
       </Canvas>
-      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex gap-5">
-        <button onClick={onRestart} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
+        <button onClick={onRestart} className="bg-purple-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
           Restart Game
         </button>
-        <button onClick={onBackToHome} className="bg-purple-500 text-white px-6 py-3 rounded text-xl hover:bg-purple-600 transition-colors">
+        <button onClick={onBackToHome} className="bg-purple-500 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-purple-600 transition-colors">
           Back to Home
         </button>
       </div>
