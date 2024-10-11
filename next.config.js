@@ -1,11 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  images: {
-    domains: [
-      'bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link',
-      'bafybeifzk7uojcicnh6yhnqvoldkpzuf32sullm34ela266xthbidca6ny.ipfs.w3s.link'
-    ],
-  },
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  font-src 'self';
+`;
+
+module.exports = {
   async headers() {
     return [
       {
@@ -13,12 +14,10 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live blob:; worker-src 'self' blob:; connect-src 'self' https://*.vercel.app;"
-          },
-        ],
-      },
+            value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
+          }
+        ]
+      }
     ];
-  },
-}
-
-module.exports = nextConfig
+  }
+};
