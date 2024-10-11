@@ -20,8 +20,10 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet" />
       </head>
       <body>
-        <div className="border-4 border-white m-4 min-h-[calc(100vh-2rem)]">
-          {children}
+        <div className="flex justify-center items-center min-h-screen bg-black p-4">
+          <div className="border-4 border-white p-4 rounded-lg max-w-4xl w-full">
+            {children}
+          </div>
         </div>
       </body>
     </html>
