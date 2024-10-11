@@ -135,58 +135,39 @@ function Board() {
   }
 
   const getCPUMove = (board: (string | null)[]) => {
-    // 50% chance to make a random move
-    if (Math.random() < 0.5) {
-      const emptySpots = board.reduce((acc, cell, index) => {
-        if (!cell) acc.push(index);
-        return acc;
-      }, [] as number[]);
-      
-      if (emptySpots.length > 0) {
-        return emptySpots[Math.floor(Math.random() * emptySpots.length)];
-      }
+    // Get all empty spots
+    const emptySpots = board.reduce((acc, cell, index) => {
+      if (!cell) acc.push(index);
+      return acc;
+    }, [] as number[]);
+    
+    if (emptySpots.length === 0) return -1; // No move available
+
+    // 70% chance to make a random move
+    if (Math.random() < 0.7) {
+      return emptySpots[Math.floor(Math.random() * emptySpots.length)];
     }
 
     // Check for winning move
-    for (let i = 0; i < 9; i++) {
-      if (!board[i]) {
-        const testBoard = [...board]
-        testBoard[i] = 'X'
-        if (checkWinner(testBoard) === 'X') {
-          return i
-        }
+    for (let i of emptySpots) {
+      const testBoard = [...board];
+      testBoard[i] = 'X';
+      if (checkWinner(testBoard) === 'X') {
+        return i;
       }
     }
 
     // Check for blocking move
-    for (let i = 0; i < 9; i++) {
-      if (!board[i]) {
-        const testBoard = [...board]
-        testBoard[i] = 'O'
-        if (checkWinner(testBoard) === 'O') {
-          return i
-        }
+    for (let i of emptySpots) {
+      const testBoard = [...board];
+      testBoard[i] = 'O';
+      if (checkWinner(testBoard) === 'O') {
+        return i;
       }
     }
 
-    // Take center if available
-    if (!board[4]) return 4
-
-    // Take a corner
-    const corners = [0, 2, 6, 8]
-    const availableCorners = corners.filter(i => !board[i])
-    if (availableCorners.length > 0) {
-      return availableCorners[Math.floor(Math.random() * availableCorners.length)]
-    }
-
-    // Take any available side
-    const sides = [1, 3, 5, 7]
-    const availableSides = sides.filter(i => !board[i])
-    if (availableSides.length > 0) {
-      return availableSides[Math.floor(Math.random() * availableSides.length)]
-    }
-
-    return -1 // No move available
+    // If no winning or blocking move, make a random move
+    return emptySpots[Math.floor(Math.random() * emptySpots.length)];
   }
 
   const winner = checkWinner(board)
