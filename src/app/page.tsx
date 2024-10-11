@@ -14,7 +14,7 @@ export default function Home() {
       
       <div className="w-full max-w-xs sm:max-w-sm md:max-w-md aspect-square relative mb-8">
         <Image 
-          src="https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif" 
+          src="https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF" 
           alt="POD Play"
           layout="fill"
           objectFit="contain"
