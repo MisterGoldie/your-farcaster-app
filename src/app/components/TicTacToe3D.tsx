@@ -180,12 +180,12 @@ function Board() {
   const isDraw = !winner && board.every(Boolean)
 
   return (
-    <group ref={boardRef} scale={[1.5, 1.5, 1.5]}>
+    <group ref={boardRef} scale={[1.2, 1.2, 1.2]}>
       {/* Grid lines */}
-      <Line points={[-1.5, -1.5, 0, 1.5, -1.5, 0]} color="orange" lineWidth={8} />
-      <Line points={[-1.5, 1.5, 0, 1.5, 1.5, 0]} color="orange" lineWidth={8} />
-      <Line points={[-1.5, -1.5, 0, -1.5, 1.5, 0]} color="orange" lineWidth={8} />
-      <Line points={[1.5, -1.5, 0, 1.5, 1.5, 0]} color="orange" lineWidth={8} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="orange" lineWidth={5} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -203,7 +203,7 @@ function Board() {
 
       {/* Timer */}
       <Text
-        position={[0, 2.2, 0]}
+        position={[0, 2, 0]}
         fontSize={0.3}
         color="white"
         anchorX="center"
@@ -215,7 +215,7 @@ function Board() {
       {/* Game over text */}
       {(winner || isDraw || timeLeft === 0) && (
         <Text
-          position={[0, 0, 1.5]}
+          position={[0, 0, 1]}
           fontSize={0.4}
           color="white"
           anchorX="center"
@@ -231,7 +231,7 @@ function Board() {
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
     <>
-      <Canvas camera={{ position: [0, 0, 6], fov: 60 }}>
+      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
         <color attach="background" args={['#000000']} />
         <ambientLight intensity={0.5} />
         <pointLight position={[10, 10, 10]} />
