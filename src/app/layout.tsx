@@ -21,9 +21,7 @@ export default function RootLayout({
       </head>
       <body className="bg-black flex items-center justify-center min-h-screen">
         <div className="w-full max-w-md px-4">
-          <div className="border-4 border-purple rounded-lg p-4">
-            {children}
-          </div>
+          {children}
         </div>
       </body>
     </html>
