@@ -19,8 +19,10 @@ export default function Game() {
   }
 
   return (
-    <main className="h-screen bg-black text-white">
-      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+    <main className="min-h-screen bg-black text-white">
+      <div className="w-full h-screen max-w-md mx-auto">
+        <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+      </div>
     </main>
   )
 }
