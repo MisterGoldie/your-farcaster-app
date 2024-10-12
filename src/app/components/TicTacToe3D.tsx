@@ -216,7 +216,6 @@ function Board() {
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
-        font="/path/to/Frijole-Regular.ttf"  // Make sure to include the Frijole font file
       >
         TIC-TAC-TOE
       </Text>
