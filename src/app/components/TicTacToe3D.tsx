@@ -208,7 +208,7 @@ function Board() {
   const isDraw = !winner && board.every(Boolean)
 
   return (
-    <group ref={boardRef} scale={[1.2, 1.2, 1.2]}>
+    <group ref={boardRef} scale={[1, 1, 1]}>
       {/* Grid lines */}
       <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#000000" lineWidth={5} />
       <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#000000" lineWidth={5} />
@@ -216,8 +216,8 @@ function Board() {
       <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#000000" lineWidth={5} />
 
       {/* Floating bats */}
-      <Bat position={[-2, 2, -1]} />
-      <Bat position={[2, -2, -1]} />
+      <Bat position={[-1.8, 1.8, -1]} />
+      <Bat position={[1.8, -1.8, -1]} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -235,8 +235,8 @@ function Board() {
 
       {/* Timer */}
       <Text
-        position={[0, 2, 0]}
-        fontSize={0.3}
+        position={[0, 1.8, 0]}
+        fontSize={0.25}
         color="#000000"
         anchorX="center"
         anchorY="middle"
@@ -262,18 +262,21 @@ function Board() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="h-full w-full bg-orange-600"> {/* Darker orange background */}
-      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#CC5500']} /> {/* Darker orange for Canvas */}
-        <ambientLight intensity={0.3} />
-        <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-        <Board />
-      </Canvas>
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
-        <button onClick={onRestart} className="bg-orange-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-700 transition-colors">
+    <div className="h-screen w-full bg-orange-600 flex flex-col justify-between py-4"> {/* Added flex and padding */}
+      <h1 className="text-white text-3xl font-bold text-center mb-2">TIC-TAC-TOE</h1> {/* Added title */}
+      <div className="flex-grow relative"> {/* Wrapper for Canvas */}
+        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+          <color attach="background" args={['#CC5500']} />
+          <ambientLight intensity={0.3} />
+          <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
+          <Board />
+        </Canvas>
+      </div>
+      <div className="flex justify-center gap-4 mt-4"> {/* Adjusted margin */}
+        <button onClick={onRestart} className="bg-orange-700 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-800 transition-colors">
           Play Again
         </button>
-        <button onClick={onBackToHome} className="bg-orange-600 text-white font-bold px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-700 transition-colors">
+        <button onClick={onBackToHome} className="bg-orange-700 text-white font-bold px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-800 transition-colors">
           Home
         </button>
       </div>
