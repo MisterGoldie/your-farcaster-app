@@ -1,17 +1,16 @@
 'use client'
 
-import { useState } from 'react'
-import dynamic from 'next/dynamic'
+import React from 'react'
 import { useRouter } from 'next/navigation'
-
-const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: false })
+import TicTacToe3D from '../components/TicTacToe3D'
+import { UserProvider } from '@/app/context/UserContext'
 
 export default function Game() {
-  const [key, setKey] = useState(0)
   const router = useRouter()
 
   const handleRestart = () => {
-    setKey(prevKey => prevKey + 1)
+    // Add restart logic here
+    console.log('Restarting game')
   }
 
   const handleBackToHome = () => {
@@ -19,9 +18,12 @@ export default function Game() {
   }
 
   return (
-    <main className="h-[100svh] bg-black text-white overflow-hidden">
-      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
-    </main>
+    <UserProvider>
+      <TicTacToe3D 
+        onRestart={handleRestart} 
+        onBackToHome={handleBackToHome}
+      />
+    </UserProvider>
   )
 }
 
