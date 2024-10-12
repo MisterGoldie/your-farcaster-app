@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
       fanTokenResult.balance
     );
 
-    return NextResponse.json({
+    const response = NextResponse.json({
       name: username,
       profileImage,
       podScore,
@@ -39,6 +39,13 @@ export async function GET(req: NextRequest) {
       totalGamesPlayed,
       thepodTokens: fanTokenResult.balance
     });
+
+    response.headers.set(
+      'Content-Security-Policy',
+      "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live blob:; worker-src blob:; connect-src 'self' https://api.airstack.xyz; img-src 'self' data: https:;"
+    );
+
+    return response;
   } catch (error) {
     console.error('Error fetching player data:', error);
     return NextResponse.json({ error: 'Failed to fetch player data' }, { status: 500 });
