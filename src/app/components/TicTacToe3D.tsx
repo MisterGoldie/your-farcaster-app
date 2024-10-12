@@ -34,11 +34,30 @@ function Cell({ position, onClick, value }: CellProps) {
 
 function Bat({ position }: { position: [number, number, number] }) {
   const batRef = useRef<THREE.Group>(null)
+  const speed = useRef({
+    x: Math.random() * 0.02 - 0.01,
+    y: Math.random() * 0.02 - 0.01,
+    z: Math.random() * 0.02 - 0.01
+  })
 
   useFrame((state) => {
     if (batRef.current) {
-      batRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2) * 0.2
-      batRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.1
+      batRef.current.rotation.x += speed.current.x
+      batRef.current.rotation.y += speed.current.y
+      batRef.current.rotation.z += speed.current.z
+
+      batRef.current.position.x = position[0] + Math.sin(state.clock.elapsedTime * 0.5) * 0.2
+      batRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.7) * 0.2
+      batRef.current.position.z = position[2] + Math.sin(state.clock.elapsedTime * 0.3) * 0.2
+
+      // Randomly change direction occasionally
+      if (Math.random() < 0.01) {
+        speed.current = {
+          x: Math.random() * 0.02 - 0.01,
+          y: Math.random() * 0.02 - 0.01,
+          z: Math.random() * 0.02 - 0.01
+        }
+      }
     }
   })
 
@@ -218,6 +237,7 @@ function Board() {
       {/* Floating bats */}
       <Bat position={[-1.8, 1.8, -1]} />
       <Bat position={[1.8, -1.8, -1]} />
+      <Bat position={[0, 2, -1.5]} /> {/* New bat */}
 
       {/* Cells */}
       {board.map((value, index) => (
