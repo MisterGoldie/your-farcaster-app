@@ -265,9 +265,11 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
-          <span className="material-symbols-outlined absolute top-2 left-2 text-white text-3xl">
-            skull
-          </span>
+          <img 
+            src="/icons/skull_24dp_FFFFFF_FILL0_wght400_GRAD0_opsz24.svg" 
+            alt="Skull icon" 
+            className="absolute top-2 left-2 w-6 h-6"
+          />
           <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
               TIC-TAC-TOE
