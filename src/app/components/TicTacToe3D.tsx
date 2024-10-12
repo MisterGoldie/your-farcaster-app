@@ -263,9 +263,9 @@ function Board() {
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
-      <div className="w-full max-w-md aspect-square bg-white rounded-lg p-1">
+      <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col">
-          <div className="bg-orange-700 py-1">
+          <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
               TIC-TAC-TOE
             </h1>
@@ -278,11 +278,11 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
               <Board />
             </Canvas>
           </div>
-          <div className="flex justify-center gap-4 py-2 bg-orange-700">
-            <button onClick={onRestart} className="bg-orange-800 text-white px-3 py-1 rounded text-sm hover:bg-orange-900 transition-colors">
+          <div className="flex justify-center gap-4 py-3 bg-orange-700">
+            <button onClick={onRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
               Play Again
             </button>
-            <button onClick={onBackToHome} className="bg-orange-800 text-white px-3 py-1 rounded text-sm hover:bg-orange-900 transition-colors">
+            <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
               Home
             </button>
           </div>
