@@ -265,7 +265,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
-          <span className="material-symbols-outlined absolute top-2 left-2 text-white text-2xl">
+          <span className="material-symbols-outlined absolute top-2 left-2 text-white text-3xl">
             skull
           </span>
           <div className="bg-orange-700 py-2">
