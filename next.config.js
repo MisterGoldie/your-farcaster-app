@@ -13,7 +13,7 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; worker-src 'self' blob:; connect-src 'self' https://vercel.live; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline';"
+            value: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://vercel.live; worker-src 'self' blob:; connect-src 'self' https://vercel.live; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;"
           }
         ]
       }
