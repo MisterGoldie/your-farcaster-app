@@ -208,14 +208,15 @@ function Board() {
   const isDraw = !winner && board.every(Boolean)
 
   return (
-    <group ref={boardRef} scale={[1, 1, 1]}>
+    <group ref={boardRef} scale={[0.8, 0.8, 0.8]} position={[0, -0.5, 0]}>
       {/* Tic-Tac-Toe text */}
       <Text
         position={[0, 2.2, 0]}
-        fontSize={0.4}
+        fontSize={0.5}
         color="#FFFFFF"
         anchorX="center"
         anchorY="middle"
+        font="/fonts/Frijole-Regular.ttf"  // Make sure this path is correct
       >
         TIC-TAC-TOE
       </Text>
@@ -273,26 +274,24 @@ function Board() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="h-screen w-full bg-black flex flex-col justify-center items-center p-4">
-      <div className="w-full h-full max-w-md flex flex-col justify-center items-center">
-        <div className="w-full aspect-[3/4] bg-white rounded-lg p-2">
-          <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col">
-            <div className="flex-grow relative">
-              <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-                <color attach="background" args={['#CC5500']} />
-                <ambientLight intensity={0.3} />
-                <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-                <Board />
-              </Canvas>
-            </div>
-            <div className="flex justify-center gap-4 py-4 bg-orange-700">
-              <button onClick={onRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
-                Play Again
-              </button>
-              <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
-                Home
-              </button>
-            </div>
+    <div className="w-full h-screen flex flex-col items-center justify-center bg-black p-4">
+      <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-2">
+        <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col">
+          <div className="flex-grow relative">
+            <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+              <color attach="background" args={['#CC5500']} />
+              <ambientLight intensity={0.5} />
+              <pointLight position={[10, 10, 10]} intensity={0.8} />
+              <Board />
+            </Canvas>
+          </div>
+          <div className="flex justify-center gap-4 py-4 bg-orange-700">
+            <button onClick={onRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
+              Play Again
+            </button>
+            <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
+              Home
+            </button>
           </div>
         </div>
       </div>
