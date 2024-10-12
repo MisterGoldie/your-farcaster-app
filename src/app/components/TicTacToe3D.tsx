@@ -264,7 +264,7 @@ function Board() {
 const fogShader = {
   uniforms: {
     'time': { value: 0 },
-    'color': { value: new THREE.Color(0xFF8C00) }, // Change this to a darker orange
+    'color': { value: new THREE.Color(0x330000) },
     'fogDensity': { value: 0.05 }
   },
   vertexShader: `
@@ -313,9 +313,9 @@ function AnimatedFog() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="h-screen w-screen bg-orange-500">
+    <>
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#FFA500']} />
+        <color attach="background" args={['#1a0000']} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
         <AnimatedFog />
@@ -329,6 +329,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
           Home
         </button>
       </div>
-    </div>
+    </>
   )
 }
