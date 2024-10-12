@@ -32,40 +32,27 @@ function Cell({ position, onClick, value }: CellProps) {
   )
 }
 
-function Bat({ position }: { position: [number, number, number] }) {
-  const batRef = useRef<THREE.Group>(null)
-
-  useFrame((state) => {
-    if (batRef.current) {
-      batRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2) * 0.2
-      batRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.1
-    }
-  })
-
+function Skull({ position }: { position: [number, number, number] }) {
   return (
-    <group ref={batRef} position={position}>
-      {/* Body */}
+    <group position={position}>
+      {/* Skull */}
       <mesh>
-        <sphereGeometry args={[0.15, 32, 32]} />
-        <meshStandardMaterial color="#222222" />
-      </mesh>
-      {/* Wings */}
-      <mesh rotation={[0, 0, Math.PI / 4]}>
-        <boxGeometry args={[0.5, 0.01, 0.2]} />
-        <meshStandardMaterial color="#222222" />
-      </mesh>
-      <mesh rotation={[0, 0, -Math.PI / 4]}>
-        <boxGeometry args={[0.5, 0.01, 0.2]} />
-        <meshStandardMaterial color="#222222" />
+        <sphereGeometry args={[0.2, 32, 32]} />
+        <meshStandardMaterial color="#ffffff" />
       </mesh>
       {/* Eyes */}
-      <mesh position={[0.05, 0.05, 0.12]}>
-        <sphereGeometry args={[0.02, 16, 16]} />
-        <meshStandardMaterial color="#ff0000" />
+      <mesh position={[-0.07, 0.05, 0.15]}>
+        <sphereGeometry args={[0.05, 16, 16]} />
+        <meshStandardMaterial color="#000000" />
       </mesh>
-      <mesh position={[-0.05, 0.05, 0.12]}>
-        <sphereGeometry args={[0.02, 16, 16]} />
-        <meshStandardMaterial color="#ff0000" />
+      <mesh position={[0.07, 0.05, 0.15]}>
+        <sphereGeometry args={[0.05, 16, 16]} />
+        <meshStandardMaterial color="#000000" />
+      </mesh>
+      {/* Nose */}
+      <mesh position={[0, -0.02, 0.2]}>
+        <coneGeometry args={[0.03, 0.06, 16]} />
+        <meshStandardMaterial color="#000000" />
       </mesh>
     </group>
   )
@@ -215,9 +202,9 @@ function Board() {
       <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
       <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
 
-      {/* Floating bats */}
-      <Bat position={[-2, 2, -1]} />
-      <Bat position={[2, -2, -1]} />
+      {/* Floating skulls */}
+      <Skull position={[-2, 2, -1]} />
+      <Skull position={[2, -2, -1]} />
 
       {/* Cells */}
       {board.map((value, index) => (
