@@ -19,10 +19,8 @@ export default function Game() {
   }
 
   return (
-    <main className="h-screen w-screen bg-black text-white overflow-hidden flex items-center justify-center">
-      <div className="w-full h-full max-w-md aspect-[9/16] bg-orange-600 rounded-3xl overflow-hidden shadow-lg flex flex-col">
-        <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
-      </div>
+    <main className="h-[100svh] bg-black text-white overflow-hidden">
+      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
     </main>
   )
 }

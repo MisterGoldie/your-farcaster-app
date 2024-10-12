@@ -21,7 +21,9 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body className="bg-black flex items-center justify-center min-h-screen">
-        {children}
+        <div className="w-full max-w-md px-4">
+          {children}
+        </div>
       </body>
     </html>
   )
