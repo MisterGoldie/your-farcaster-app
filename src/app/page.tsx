@@ -26,7 +26,7 @@ export default function Home() {
       
       <Link 
         href="/howtoplay" 
-        className="bg-orange-700 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-purple-600 transition-colors"
+        className="bg-orange-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-purple-600 transition-colors"
       >
         Start Game
       </Link>
