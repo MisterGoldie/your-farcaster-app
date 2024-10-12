@@ -20,9 +20,11 @@ export default function Game() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
-      <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole']">Tic-Tac-Toe</h1>
-      <div className="w-full max-w-md aspect-square">
-        <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+      <div className="w-full max-w-md">
+        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole'] text-center">Tic-Tac-Toe</h1>
+        <div className="aspect-square">
+          <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+        </div>
       </div>
     </main>
   )
