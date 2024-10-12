@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
-import { Line, Text, Sphere } from '@react-three/drei'
+import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -28,6 +28,45 @@ function Cell({ position, onClick, value }: CellProps) {
           {value}
         </Text>
       )}
+    </group>
+  )
+}
+
+function Bat({ position }: { position: [number, number, number] }) {
+  const batRef = useRef<THREE.Group>(null)
+
+  useFrame((state) => {
+    if (batRef.current) {
+      batRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 2) * 0.2
+      batRef.current.position.y = position[1] + Math.sin(state.clock.elapsedTime * 3) * 0.1
+    }
+  })
+
+  return (
+    <group ref={batRef} position={position}>
+      {/* Body */}
+      <mesh>
+        <sphereGeometry args={[0.15, 32, 32]} />
+        <meshStandardMaterial color="#222222" />
+      </mesh>
+      {/* Wings */}
+      <mesh rotation={[0, 0, Math.PI / 4]}>
+        <boxGeometry args={[0.5, 0.01, 0.2]} />
+        <meshStandardMaterial color="#222222" />
+      </mesh>
+      <mesh rotation={[0, 0, -Math.PI / 4]}>
+        <boxGeometry args={[0.5, 0.01, 0.2]} />
+        <meshStandardMaterial color="#222222" />
+      </mesh>
+      {/* Eyes */}
+      <mesh position={[0.05, 0.05, 0.12]}>
+        <sphereGeometry args={[0.02, 16, 16]} />
+        <meshStandardMaterial color="#ff0000" />
+      </mesh>
+      <mesh position={[-0.05, 0.05, 0.12]}>
+        <sphereGeometry args={[0.02, 16, 16]} />
+        <meshStandardMaterial color="#ff0000" />
+      </mesh>
     </group>
   )
 }
@@ -176,13 +215,9 @@ function Board() {
       <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
       <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
 
-      {/* Floating pumpkins */}
-      <Sphere position={[-2, 2, -1]} args={[0.2, 16, 16]}>
-        <meshStandardMaterial color="#ff6600" />
-      </Sphere>
-      <Sphere position={[2, -2, -1]} args={[0.2, 16, 16]}>
-        <meshStandardMaterial color="#ff6600" />
-      </Sphere>
+      {/* Floating bats */}
+      <Bat position={[-2, 2, -1]} />
+      <Bat position={[2, -2, -1]} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -283,7 +318,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <color attach="background" args={['#1a0000']} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-        <fog attach="fog" args={['#330000', 3, 10]} />
+        <AnimatedFog />
         <Board />
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
