@@ -20,7 +20,7 @@ function Cell({ position, onClick, value }: CellProps) {
       {value && (
         <Text
           position={[0, 0, 0.06]}
-          fontSize={0.4}
+          fontSize={0.6} //PIECES SIZE
           color="white"
           anchorX="center"
           anchorY="middle"
@@ -182,10 +182,10 @@ function Board() {
   return (
     <group ref={boardRef}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="orange" lineWidth={8} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="orange" lineWidth={8} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="orange" lineWidth={8} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="orange" lineWidth={8} />
 
       {/* Cells */}
       {board.map((value, index) => (
