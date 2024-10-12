@@ -15,13 +15,13 @@ function Cell({ position, onClick, value }: CellProps) {
     <group position={position}>
       <mesh onClick={onClick}>
         <boxGeometry args={[0.9, 0.9, 0.1]} />
-        <meshStandardMaterial color="#ff6600" opacity={0.3} transparent />
+        <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
       {value && (
         <Text
           position={[0, 0, 0.06]}
           fontSize={0.6}
-          color={value === 'X' ? '#00ff00' : '#ff00ff'}
+          color="#000000"
           anchorX="center"
           anchorY="middle"
         >
@@ -210,10 +210,10 @@ function Board() {
   return (
     <group ref={boardRef} scale={[1.2, 1.2, 1.2]}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#8b00ff" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#8b00ff" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#000000" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#000000" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#000000" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#000000" lineWidth={5} />
 
       {/* Floating bats */}
       <Bat position={[-2, 2, -1]} />
@@ -237,7 +237,7 @@ function Board() {
       <Text
         position={[0, 2, 0]}
         fontSize={0.3}
-        color="#00ff00"
+        color="#000000"
         anchorX="center"
         anchorY="middle"
       >
@@ -249,7 +249,7 @@ function Board() {
         <Text
           position={[0, 0, 1]}
           fontSize={0.4}
-          color="#ff0000"
+          color="#000000"
           anchorX="center"
           anchorY="middle"
         >
@@ -262,9 +262,9 @@ function Board() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="h-full w-full bg-orange-500"> {/* Orange background */}
+    <div className="h-full w-full bg-orange-600"> {/* Darker orange background */}
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#FFA500']} /> {/* Orange background for Canvas */}
+        <color attach="background" args={['#CC5500']} /> {/* Darker orange for Canvas */}
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
         <Board />
