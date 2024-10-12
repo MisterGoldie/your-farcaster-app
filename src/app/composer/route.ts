@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json({ 
     type: 'form',
     title: 'POD Play Tic-Tac-Toe',
-    url: 'https://your-farcaster-app.vercel.app', // Replace with your actual deployed URL
+    url: 'https://your-farcaster-app.vercel.app', // Replace with yo actual deployed URL
   } as ComposerActionFormResponse);
 }
 
