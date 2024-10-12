@@ -42,7 +42,7 @@ function Board() {
 
   useFrame(() => {
     if (boardRef.current) {
-      boardRef.current.rotation.y += 0.005
+      boardRef.current.rotation.y += 0.007 //ROTATION SPEED
     }
   })
 
@@ -120,53 +120,42 @@ function Board() {
   }
 
   const getCPUMove = (board: (string | null)[]) => {
-    // Check for winning move
-    for (let i = 0; i < 9; i++) {
-      if (!board[i]) {
-        const testBoard = [...board]
-        testBoard[i] = 'X'
-        if (checkWinner(testBoard) === 'X') {
-          return i
-        }
-      }
-    }
-
-    // Check for blocking Move
-    for (let i = 0; i < 9; i++) {
-      if (!board[i]) {
-        const testBoard = [...board]
-        testBoard[i] = 'O'
-        if (checkWinner(testBoard) === 'O') {
-          return i
-        }
-      }
-    }
-
-    // Take a corner
-    const corners = [0, 2, 6, 8]
-    const availableCorners = corners.filter(i => !board[i])
-    if (availableCorners.length > 0) {
-      return availableCorners[Math.floor(Math.random() * availableCorners.length)]
-    }
-
-    // Take any available side
-    const sides = [1, 3, 5, 7]
-    const availableSides = sides.filter(i => !board[i])
-    if (availableSides.length > 0) {
-      return availableSides[Math.floor(Math.random() * availableSides.length)]
-    }
-
-    // Take any available spot
     const emptySpots = board.reduce((acc, cell, index) => {
       if (!cell) acc.push(index)
       return acc
     }, [] as number[])
-  
-    if (emptySpots.length > 0) {
+
+    if (emptySpots.length === 0) return -1 // No move available
+
+    // 30% chance to make a random move
+    if (Math.random() < 0.3) {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
-    return -1 // No move available
+    // Check for winning move (70% chance to take it)
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        const testBoard = [...board]
+        testBoard[i] = 'X'
+        if (checkWinner(testBoard) === 'X' && Math.random() < 0.7) {
+          return i
+        }
+      }
+    }
+
+    // Check for blocking Move (50% chance to block)
+    for (let i = 0; i < 9; i++) {
+      if (!board[i]) {
+        const testBoard = [...board]
+        testBoard[i] = 'O'
+        if (checkWinner(testBoard) === 'O' && Math.random() < 0.5) {
+          return i
+        }
+      }
+    }
+
+    // Take any available spot
+    return emptySpots[Math.floor(Math.random() * emptySpots.length)]
   }
 
   const restartGame = () => {
