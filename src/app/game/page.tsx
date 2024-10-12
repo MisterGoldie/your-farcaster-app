@@ -22,7 +22,7 @@ export default function Game() {
     <main className="min-h-screen bg-black text-white">
       <div className="w-full h-screen max-w-md mx-auto">
         <h1 className="text-2xl sm:text-4xl pt-4 font-['Frijole'] text-center">Tic-Tac-Toe</h1>
-        <div className="h-[calc(100vh-4rem)]">
+        <div className="h-[calc(100vh-5rem)]">
           <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
         </div>
       </div>
