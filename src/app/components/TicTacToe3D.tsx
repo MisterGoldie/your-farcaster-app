@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect, useMemo } from 'react'
-import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
+import React, { useRef, useState, useEffect } from 'react'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -260,65 +260,13 @@ function Board() {
   )
 }
 
-// Custom shader for animated fog
-const fogShader = {
-  uniforms: {
-    'time': { value: 0 },
-    'color': { value: new THREE.Color(0x330000) },
-    'fogDensity': { value: 0.05 }
-  },
-  vertexShader: `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-  fragmentShader: `
-    uniform float time;
-    uniform vec3 color;
-    uniform float fogDensity;
-    varying vec2 vUv;
-    
-    float rand(vec2 co) {
-      return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-    }
-    
-    void main() {
-      vec2 position = vUv * 10.0;
-      float noise = rand(position + time * 0.1);
-      float fog = smoothstep(0.0, fogDensity, noise);
-      gl_FragColor = vec4(color, fog);
-    }
-  `
-}
-
-function AnimatedFog() {
-  const fogMaterial = useRef<THREE.ShaderMaterial>(null)
-  const { viewport } = useThree()
-
-  useFrame(({ clock }) => {
-    if (fogMaterial.current) {
-      fogMaterial.current.uniforms.time.value = clock.getElapsedTime()
-    }
-  })
-
-  return (
-    <mesh position={[0, 0, -5]}>
-      <planeGeometry args={[viewport.width, viewport.height]} />
-      <shaderMaterial ref={fogMaterial} args={[fogShader]} transparent />
-    </mesh>
-  )
-}
-
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <>
+    <div className="h-full w-full bg-orange-500"> {/* Orange background */}
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#1a0000']} />
+        <color attach="background" args={['#FFA500']} /> {/* Orange background for Canvas */}
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-        <AnimatedFog />
         <Board />
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
@@ -329,6 +277,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
           Home
         </button>
       </div>
-    </>
+    </div>
   )
 }
