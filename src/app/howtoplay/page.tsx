@@ -8,7 +8,7 @@ export default function HowToPlay() {
         <div className="w-full max-w-md aspect-square relative mb-8">
           <Image 
             src="https://bafybeicodlej4oiq6fq5lfztym5tvgndslczfqyvquvpamdloqvjrf7lly.ipfs.w3s.link/image%2019.png"
-            alt="How to Play"
+            alt=""
             fill
             style={{ objectFit: 'contain' }}
             priority
