@@ -14,10 +14,25 @@ export default function Share() {
     thepodTokens: 2.5
   })
 
-  // In a real app, you'd fetch this data from your API
   useEffect(() => {
-    // Fetch player data here
-  }, [])
+    const fetchPlayerData = async () => {
+      // Fetch FID from your authentication system
+      const fid = 'YOUR_FID_HERE'; // Replace with actual FID
+
+      try {
+        const response = await fetch(`/api/player?fid=${fid}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch player data');
+        }
+        const data = await response.json();
+        setPlayerData(data);
+      } catch (error) {
+        console.error('Error fetching player data:', error);
+      }
+    };
+
+    fetchPlayerData();
+  }, []);
 
   const shareGame = () => {
     const shareText = 'Welcome to POD Play presented by /thepod 🕹️. Think you can win a game of Tic-Tac-Toe? Frame by @goldie & @themrsazon, powered by @moxie.eth'
