@@ -1,35 +1,33 @@
 'use client'
 
-import Link from 'next/link'
-import Image from 'next/image'
+import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 
-export default function Home() {
+const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: false })
+
+export default function Game() {
+  const [key, setKey] = useState(0)
+  const router = useRouter()
+
+  const handleRestart = () => {
+    setKey(prevKey => prevKey + 1)
+  }
+
+  const handleBackToHome = () => {
+    router.push('/')
+  }
+
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4 sm:p-8">
-      <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole'] text-center">
-        POD Play Tic-Tac-Toe
-      </h1>
-      
-      <p className="text-lg sm:text-xl mb-6 text-center max-w-md">
-        Welcome to POD Play presented by /thepod 🕹️
-      </p>
-      
-      <div className="w-full max-w-xs sm:max-w-sm md:max-w-md aspect-square relative mb-8">
-        <Image 
-          src="https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF" 
-          alt="POD Play"
-          layout="fill"
-          objectFit="contain"
-          priority
-        />
+    <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4">
+      <div className="w-full max-w-md">
+        <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole'] text-center">Tic-Tac-Toe</h1>
+        <div className="aspect-square">
+          <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+        </div>
       </div>
-      
-      <Link 
-        href="/howtoplay" 
-        className="bg-orange-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-purple-700 transition-colors"
-      >
-        Start Game
-      </Link>
     </main>
   )
 }
+
+////
