@@ -264,7 +264,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
   return (
     <div className="h-screen w-full bg-black flex flex-col justify-center items-center p-4">
       <div className="w-full h-full max-w-md flex flex-col justify-center items-center">
-        <div className="w-full h-[calc(100vh-5rem)] bg-white rounded-lg p-2">
+        <div className="w-full h-[calc(100vh-7rem)] bg-white rounded-lg p-2"> 
           <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col">
             <div className="flex-grow relative">
               <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
