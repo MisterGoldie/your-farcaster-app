@@ -286,7 +286,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
           {/* Updated SVG positioning */}
-          <div className="absolute top-2 left-2 z-10">
+          <div className="absolute top-3 left-2 z-10">
             <svg
               className="w-6 h-6"
               xmlns="http://www.w3.org/2000/svg"
