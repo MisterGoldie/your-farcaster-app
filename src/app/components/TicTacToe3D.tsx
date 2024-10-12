@@ -230,7 +230,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <button onClick={onRestart} className="bg-purple-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-purple-700 transition-colors">
           Play Again
         </button>
-        <button onClick={onBackToHome} className="bg-orange-500 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-600 transition-colors">
+        <button onClick={onBackToHome} className="bg-orange-700 text-white font-bold px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-800 transition-colors">
           Home
         </button>
       </div>
