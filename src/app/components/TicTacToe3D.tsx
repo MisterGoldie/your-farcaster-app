@@ -209,6 +209,18 @@ function Board() {
 
   return (
     <group ref={boardRef} scale={[1, 1, 1]}>
+      {/* Tic-Tac-Toe text */}
+      <Text
+        position={[0, 2.2, 0]}
+        fontSize={0.4}
+        color="#FFFFFF"
+        anchorX="center"
+        anchorY="middle"
+        font="/path/to/Frijole-Regular.ttf"  // Make sure to include the Frijole font file
+      >
+        TIC-TAC-TOE
+      </Text>
+
       {/* Grid lines */}
       <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#000000" lineWidth={5} />
       <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#000000" lineWidth={5} />
