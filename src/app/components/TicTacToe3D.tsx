@@ -263,8 +263,7 @@ function Board() {
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
     <div className="h-screen w-full bg-black flex flex-col justify-center items-center p-4">
-      <div className="w-full max-w-md aspect-square bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
-        <h1 className="text-white text-3xl font-bold text-center py-2 bg-orange-700">TIC-TAC-TOE</h1>
+      <div className="w-full h-full max-w-md bg-orange-600 rounded-lg overflow-hidden flex flex-col">
         <div className="flex-grow relative">
           <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
             <color attach="background" args={['#CC5500']} />
