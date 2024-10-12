@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import React, { useRef, useState, useEffect, useMemo } from 'react'
+import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
 import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
@@ -260,24 +260,75 @@ function Board() {
   )
 }
 
+// Custom shader for animated fog
+const fogShader = {
+  uniforms: {
+    'time': { value: 0 },
+    'color': { value: new THREE.Color(0xFF8C00) }, // Change this to a darker orange
+    'fogDensity': { value: 0.05 }
+  },
+  vertexShader: `
+    varying vec2 vUv;
+    void main() {
+      vUv = uv;
+      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+    }
+  `,
+  fragmentShader: `
+    uniform float time;
+    uniform vec3 color;
+    uniform float fogDensity;
+    varying vec2 vUv;
+    
+    float rand(vec2 co) {
+      return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    }
+    
+    void main() {
+      vec2 position = vUv * 10.0;
+      float noise = rand(position + time * 0.1);
+      float fog = smoothstep(0.0, fogDensity, noise);
+      gl_FragColor = vec4(color, fog);
+    }
+  `
+}
+
+function AnimatedFog() {
+  const fogMaterial = useRef<THREE.ShaderMaterial>(null)
+  const { viewport } = useThree()
+
+  useFrame(({ clock }) => {
+    if (fogMaterial.current) {
+      fogMaterial.current.uniforms.time.value = clock.getElapsedTime()
+    }
+  })
+
+  return (
+    <mesh position={[0, 0, -5]}>
+      <planeGeometry args={[viewport.width, viewport.height]} />
+      <shaderMaterial ref={fogMaterial} args={[fogShader]} transparent />
+    </mesh>
+  )
+}
+
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <>
+    <div className="h-screen w-screen bg-orange-500">
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#1a0000']} />
+        <color attach="background" args={['#FFA500']} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-        <fog attach="fog" args={['#330000', 3, 10]} />
+        <AnimatedFog />
         <Board />
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
-        <button onClick={onRestart} className="bg-orange-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-purple-700 transition-colors">
+        <button onClick={onRestart} className="bg-black-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-black-700 transition-colors">
           Play Again
         </button>
-        <button onClick={onBackToHome} className="bg-orange-600 text-white font-bold px-6 py-3 rounded text-lg sm:text-xl hover:bg-purple-700 transition-colors">
+        <button onClick={onBackToHome} className="bg-black-600 text-white font-bold px-6 py-3 rounded text-lg sm:text-xl hover:bg-black-700 transition-colors">
           Home
         </button>
       </div>
-    </>
+    </div>
   )
 }
