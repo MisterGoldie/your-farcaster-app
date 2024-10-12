@@ -3,7 +3,6 @@
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import TicTacToe3D from '../components/TicTacToe3D'
-import { UserProvider } from '@/app/context/UserContext'
 
 export default function Game() {
   const router = useRouter()
@@ -18,12 +17,10 @@ export default function Game() {
   }
 
   return (
-    <UserProvider>
-      <TicTacToe3D 
-        onRestart={handleRestart} 
-        onBackToHome={handleBackToHome}
-      />
-    </UserProvider>
+    <TicTacToe3D 
+      onRestart={handleRestart} 
+      onBackToHome={handleBackToHome}
+    />
   )
 }
 
