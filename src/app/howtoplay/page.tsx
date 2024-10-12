@@ -5,12 +5,12 @@ export default function HowToPlay() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
       <div className="max-w-4xl w-full bg-black bg-opacity-50 rounded-lg shadow-lg p-6 sm:p-10">
-        <div className="relative w-full max-w-md mx-auto mb-8 aspect-w-16 aspect-h-9">
+        <div className="w-full max-w-md aspect-square relative mb-8">
           <Image 
             src="https://bafybeicodlej4oiq6fq5lfztym5tvgndslczfqyvquvpamdloqvjrf7lly.ipfs.w3s.link/image%2019.png"
             alt="How to Play"
-            layout="fill"
-            objectFit="contain"
+            fill
+            style={{ objectFit: 'contain' }}
             priority
           />
         </div>
