@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text } from '@react-three/drei'
+import { Line, Text, Sphere } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -15,13 +15,13 @@ function Cell({ position, onClick, value }: CellProps) {
     <group position={position}>
       <mesh onClick={onClick}>
         <boxGeometry args={[0.9, 0.9, 0.1]} />
-        <meshStandardMaterial color="black" opacity={0.1} transparent />
+        <meshStandardMaterial color="#ff6600" opacity={0.3} transparent />
       </mesh>
       {value && (
         <Text
           position={[0, 0, 0.06]}
-          fontSize={0.6} //PIECES SIZE
-          color="white"
+          fontSize={0.6}
+          color={value === 'X' ? '#00ff00' : '#ff00ff'}
           anchorX="center"
           anchorY="middle"
         >
@@ -171,10 +171,18 @@ function Board() {
   return (
     <group ref={boardRef} scale={[1.2, 1.2, 1.2]}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="orange" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="orange" lineWidth={5} />
+      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#8b00ff" lineWidth={5} />
+      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#8b00ff" lineWidth={5} />
+      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
+      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
+
+      {/* Floating pumpkins */}
+      <Sphere position={[-2, 2, -1]} args={[0.2, 16, 16]}>
+        <meshStandardMaterial color="#ff6600" />
+      </Sphere>
+      <Sphere position={[2, -2, -1]} args={[0.2, 16, 16]}>
+        <meshStandardMaterial color="#ff6600" />
+      </Sphere>
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -194,7 +202,7 @@ function Board() {
       <Text
         position={[0, 2, 0]}
         fontSize={0.3}
-        color="white"
+        color="#00ff00"
         anchorX="center"
         anchorY="middle"
       >
@@ -206,7 +214,7 @@ function Board() {
         <Text
           position={[0, 0, 1]}
           fontSize={0.4}
-          color="white"
+          color="#ff0000"
           anchorX="center"
           anchorY="middle"
         >
@@ -221,9 +229,10 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
   return (
     <>
       <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#000000']} />
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
+        <color attach="background" args={['#1a0000']} />
+        <ambientLight intensity={0.3} />
+        <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
+        <fog attach="fog" args={['#330000', 3, 10]} />
         <Board />
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
