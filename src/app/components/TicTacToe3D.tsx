@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { Canvas, useFrame, extend, useThree } from '@react-three/fiber'
-import { Line, Text } from '@react-three/drei'
+import { Line, Text, Sphere } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -28,32 +28,6 @@ function Cell({ position, onClick, value }: CellProps) {
           {value}
         </Text>
       )}
-    </group>
-  )
-}
-
-function Skull({ position }: { position: [number, number, number] }) {
-  return (
-    <group position={position}>
-      {/* Skull */}
-      <mesh>
-        <sphereGeometry args={[0.2, 32, 32]} />
-        <meshStandardMaterial color="#ffffff" />
-      </mesh>
-      {/* Eyes */}
-      <mesh position={[-0.07, 0.05, 0.15]}>
-        <sphereGeometry args={[0.05, 16, 16]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      <mesh position={[0.07, 0.05, 0.15]}>
-        <sphereGeometry args={[0.05, 16, 16]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
-      {/* Nose */}
-      <mesh position={[0, -0.02, 0.2]}>
-        <coneGeometry args={[0.03, 0.06, 16]} />
-        <meshStandardMaterial color="#000000" />
-      </mesh>
     </group>
   )
 }
@@ -202,9 +176,13 @@ function Board() {
       <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
       <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#8b00ff" lineWidth={5} />
 
-      {/* Floating skulls */}
-      <Skull position={[-2, 2, -1]} />
-      <Skull position={[2, -2, -1]} />
+      {/* Floating pumpkins */}
+      <Sphere position={[-2, 2, -1]} args={[0.2, 16, 16]}>
+        <meshStandardMaterial color="#ff6600" />
+      </Sphere>
+      <Sphere position={[2, -2, -1]} args={[0.2, 16, 16]}>
+        <meshStandardMaterial color="#ff6600" />
+      </Sphere>
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -305,7 +283,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <color attach="background" args={['#1a0000']} />
         <ambientLight intensity={0.3} />
         <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-        <AnimatedFog />
+        <fog attach="fog" args={['#330000', 3, 10]} />
         <Board />
       </Canvas>
       <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-4">
