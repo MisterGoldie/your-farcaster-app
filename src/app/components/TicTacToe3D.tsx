@@ -127,8 +127,8 @@ function Board() {
 
     if (emptySpots.length === 0) return -1 // No move available
 
-    // 30% chance to make a random move
-    if (Math.random() < 0.3) {
+    // 40% chance to make a random move
+    if (Math.random() < 0.4) {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
@@ -143,12 +143,12 @@ function Board() {
       }
     }
 
-    // Check for blocking Move (50% chance to block)
+    // Check for blocking Move (70% chance to block)
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
         const testBoard = [...board]
         testBoard[i] = 'O'
-        if (checkWinner(testBoard) === 'O' && Math.random() < 0.5) {
+        if (checkWinner(testBoard) === 'O' && Math.random() < 0.7) {
           return i
         }
       }
