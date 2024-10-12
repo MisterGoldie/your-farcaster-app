@@ -132,12 +132,12 @@ function Board() {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
-    // Check for winning move (70% chance to take it)
+    // Check for winning move (80% chance to take it)
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
         const testBoard = [...board]
         testBoard[i] = 'X'
-        if (checkWinner(testBoard) === 'X' && Math.random() < 0.7) {
+        if (checkWinner(testBoard) === 'X' && Math.random() < 0.8) {
           return i
         }
       }
