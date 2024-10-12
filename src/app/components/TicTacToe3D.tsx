@@ -267,11 +267,13 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
           <svg
             className="absolute top-2 left-2 w-6 h-6"
-            viewBox="0 0 24 24"
-            fill="white"
             xmlns="http://www.w3.org/2000/svg"
+            height="24"
+            viewBox="0 -960 960 960"
+            width="24"
+            fill="#FFFFFF"
           >
-            <path d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10C22 6.477 17.523 2 12 2zm0 2c4.418 0 8 3.582 8 8s-3.582 8-8 8-8-3.582-8-8 3.582-8 8-8zM9 7v2h2v2H9v2h2v2H9v2h6v-2h-2v-2h2v-2h-2V9h2V7H9z"/>
+            <path d="M480-80q-84 0-157-31.5T196-197q-54-54-85-127.5T80-482q0-84 31-156.5T196-765q54-54 127-84.5T480-880q83 0 156 30.5T763-765q54 54 85.5 127T880-482q0 84-31.5 157T763-197q-54 54-127 85.5T480-80Zm0-82q54 0 104-17.5t92-50.5q-42-24-90.5-37T480-280q-57 0-105.5 13T284-230q42 33 92 50.5T480-162Zm0-118q34 0 55.5-14.5T557-331q0-22-21.5-36.5T480-382q-34 0-55.5 14.5T403-331q0 22 21.5 36.5T480-280Zm0-170q66 0 121.5 29T702-332q26-32 41-71t15-79q0-132-92.5-225T480-800q-132 0-226 93t-94 225q0 40 15 79t41 71q44-52 99.5-81T480-450Zm-120-90q-25 0-42.5-17.5T300-600q0-25 17.5-42.5T360-660q25 0 42.5 17.5T420-600q0 25-17.5 42.5T360-540Zm240 0q-25 0-42.5-17.5T540-600q0-25 17.5-42.5T600-660q25 0 42.5 17.5T660-600q0 25-17.5 42.5T600-540Zm-120 378Z"/>
           </svg>
           <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
