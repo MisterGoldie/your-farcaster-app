@@ -42,13 +42,13 @@ export default function Share() {
         <p>/thepod Fan Tokens owned: {playerData.thepodTokens.toFixed(2)}</p>
       </div>
       <div className="flex flex-wrap gap-4 mt-4">
-        <Link href="/game" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors">
+        <Link href="/game" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom">
           Play Again
         </Link>
-        <a href="https://moxie-frames.airstack.xyz/stim?t=cid_thepod" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors">
+        <a href="https://moxie-frames.airstack.xyz/stim?t=cid_thepod" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom">
           /thepod FT
         </a>
-        <button onClick={shareGame} className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors">
+        <button onClick={shareGame} className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom">
           Share Game
         </button>
       </div>

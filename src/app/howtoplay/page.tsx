@@ -15,7 +15,7 @@ export default function HowToPlay() {
           />
         </div>
         <div className="flex justify-center">
-          <Link href="/game" className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-3 px-6 rounded-full text-lg sm:text-xl transition-colors duration-200 transform hover:scale-105">
+          <Link href="/game" className="bg-orange-600 hover:bg-purple-700 text-white font-bold py-3 px-6 rounded-full text-lg sm:text-xl transition-colors duration-200 transform hover:scale-105 text-shadow-custom">
             Start Game
           </Link>
         </div>
