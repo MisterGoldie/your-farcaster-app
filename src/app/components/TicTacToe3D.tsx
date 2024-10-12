@@ -127,8 +127,8 @@ function Board() {
 
     if (emptySpots.length === 0) return -1 // No move available
 
-    // 40% chance to make a random move
-    if (Math.random() < 0.4) {
+    // 30% chance to make a random move
+    if (Math.random() < 0.3) {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
@@ -198,7 +198,7 @@ function Board() {
         anchorX="center"
         anchorY="middle"
       >
-        {timerStarted ? `Time: ${timeLeft}s` : 'Make a move to start'}
+        {timerStarted ? `Time: ${timeLeft}s` : 'X goes first'}
       </Text>
 
       {/* Game over text */}
@@ -210,7 +210,7 @@ function Board() {
           anchorX="center"
           anchorY="middle"
         >
-          {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! You lose!'}
+          {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! Sorry!'}
         </Text>
       )}
     </group>
