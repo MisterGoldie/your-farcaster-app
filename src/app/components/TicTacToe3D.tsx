@@ -262,23 +262,25 @@ function Board() {
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
   return (
-    <div className="h-screen w-full bg-orange-600 flex flex-col justify-between py-4"> {/* Added flex and padding */}
-      <h1 className="text-white text-3xl font-bold text-center mb-2">TIC-TAC-TOE</h1> {/* Added title */}
-      <div className="flex-grow relative"> {/* Wrapper for Canvas */}
-        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-          <color attach="background" args={['#CC5500']} />
-          <ambientLight intensity={0.3} />
-          <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-          <Board />
-        </Canvas>
-      </div>
-      <div className="flex justify-center gap-4 mt-4"> {/* Adjusted margin */}
-        <button onClick={onRestart} className="bg-orange-700 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-800 transition-colors">
-          Play Again
-        </button>
-        <button onClick={onBackToHome} className="bg-orange-700 text-white font-bold px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-800 transition-colors">
-          Home
-        </button>
+    <div className="h-screen w-full bg-black flex flex-col justify-center items-center p-4">
+      <div className="w-full max-w-md aspect-square bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
+        <h1 className="text-white text-3xl font-bold text-center py-2 bg-orange-700">TIC-TAC-TOE</h1>
+        <div className="flex-grow relative">
+          <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+            <color attach="background" args={['#CC5500']} />
+            <ambientLight intensity={0.3} />
+            <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
+            <Board />
+          </Canvas>
+        </div>
+        <div className="flex justify-center gap-4 py-4 bg-orange-700">
+          <button onClick={onRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
+            Play Again
+          </button>
+          <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors">
+            Home
+          </button>
+        </div>
       </div>
     </div>
   )
