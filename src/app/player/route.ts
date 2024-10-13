@@ -6,7 +6,7 @@ function calculatePODScore(wins: number, ties: number, losses: number, totalGame
   const gamesBonusScore = totalGames >= 25 ? 10 : 0;
   const tokenBonusScore = Math.floor(tokenBalance) * 25; // 25 points for each whole token
   const totalScore = baseScore + gamesBonusScore + tokenBonusScore;
-  return Math.round(totalScore * 10) / 10; // Round to one decimal place
+  return Math.round(totalScore * 10) / 10; // Round to one decimal place.
 }
 
 export async function GET(req: NextRequest) {
