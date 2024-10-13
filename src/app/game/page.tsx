@@ -1,44 +1,28 @@
-import { NextRequest, NextResponse } from 'next/server';
+'use client'
 
-type ComposerActionFormResponse = {
-  type: 'form';
-  title: string;
-  url: string;
-};
+import { useState } from 'react'
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 
-type ComposerActionMetadata = {
-  type: 'composer';
-  name: string;
-  icon: string;
-  description: string;
-  aboutUrl: string;
-  imageUrl: string;
-  action: {
-    type: string;
-  };
-};
+const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: false })
 
-export async function POST(req: NextRequest) {
-  const data = await req.json();
-  console.log(data);
+export default function Game() {
+  const [key, setKey] = useState(0)
+  const router = useRouter()
 
-  return NextResponse.json({ 
-    type: 'form',
-    title: 'POD Play Tic-Tac-Toe',
-    url: 'https://your-farcaster-app.vercel.app', // Replace with yo actual deployed URL
-  } as ComposerActionFormResponse);
+  const handleRestart = () => {
+    setKey(prevKey => prevKey + 1)
+  }
+
+  const handleBackToHome = () => {
+    router.push('/')
+  }
+
+  return (
+    <main className="h-[100svh] bg-black text-white overflow-hidden">
+      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+    </main>
+  )
 }
 
-export async function GET(req: NextRequest) {
-  return NextResponse.json({
-    "type": "composer",
-    "name": "POD Play Tic-Tac-Toe",
-    "icon": "joystick",
-    "description": "View POD Play Tic-Tac-Toe within Farcaster",
-    "aboutUrl": "https://your-farcaster-app.vercel.app/",
-    "imageUrl": "https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif",
-    "action": {
-      "type": "post"
-    }
-  } as ComposerActionMetadata);
-}
+///////
