@@ -297,7 +297,7 @@ function Background() {
 
   return (
     <mesh position={[0, 0, -1]}>
-      <planeGeometry args={[9, 9]} />
+      <planeGeometry args={[9.5, 9.5]} />
       <meshBasicMaterial map={texture} />
     </mesh>
   )
