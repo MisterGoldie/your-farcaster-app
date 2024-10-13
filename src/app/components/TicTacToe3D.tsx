@@ -312,7 +312,20 @@ const backgroundColors = [
   '#FF4500', // OrangeRed
 ]
 
+import ErrorBoundary from './ErrorBoundary';
+
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -325,12 +338,14 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
           </div>
           {/* Game area */}
           <div className="flex-grow relative">
-            <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-              <Background />
-              <ambientLight intensity={0.3} />
-              <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board />
-            </Canvas>
+            <ErrorBoundary>
+              <Canvas camera={{ position: isMobile ? [0, 0, 6] : [0, 0, 5], fov: isMobile ? 90 : 75 }}>
+                <Background />
+                <ambientLight intensity={0.3} />
+                <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
+                <Board />
+              </Canvas>
+            </ErrorBoundary>
           </div>
           {/* Footer */}
           <div className="flex justify-center gap-4 py-3 bg-orange-700 relative z-10">
