@@ -1,51 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
-import { Text, Html } from '@react-three/drei'
-import * as THREE from 'three'
+import { Text } from '@react-three/drei'
 
 const backgroundColors = [
   '#CC5500', '#FF0000', '#8B0000', '#B22222', '#C5C840', '#46A136', '#DC143C', '#C840B1',
 ]
 
-function TicTacToeImage({ onStartGame }: { onStartGame: () => void }) {
+function TicTacToeText({ onStartGame }: { onStartGame: () => void }) {
   const { viewport } = useThree()
 
   return (
-    <group position={[0, 0, 0]}>
-      {/* Tic-Tac-Toe grid */}
-      <mesh position={[0, -0.33, 0]} scale={[1, 1, 1]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-      <mesh position={[0, 0.33, 0]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-      <mesh position={[-0.33, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-      <mesh position={[0.33, 0, 0]} scale={[1, 1, 1]} rotation={[0, 0, Math.PI / 2]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-
-      {/* X and O */}
-      <Text position={[-0.33, 0.33, 0]} fontSize={0.3} color="black">X</Text>
-      <Text position={[0.33, -0.33, 0]} fontSize={0.3} color="black">O</Text>
-
-      {/* Clickable area */}
-      <Html>
-        <div 
-          style={{
-            width: `${viewport.width * 100}px`,
-            height: `${viewport.height * 100}px`,
-            cursor: 'pointer'
-          }}
-          onClick={onStartGame}
-        />
-      </Html>
-    </group>
+    <Text
+      position={[-viewport.width / 2 + 0.5, viewport.height / 2 - 0.5, 0]}
+      fontSize={viewport.width * 0.06}
+      color="black"
+      anchorX="left"
+      anchorY="top"
+      onClick={onStartGame}
+      onPointerOver={(e) => {
+        document.body.style.cursor = 'pointer'
+        e.object.scale.set(1.1, 1.1, 1.1)
+      }}
+      onPointerOut={(e) => {
+        document.body.style.cursor = 'default'
+        e.object.scale.set(1, 1, 1)
+      }}
+    >
+      Tic-Tac-Toe
+    </Text>
   )
 }
 
@@ -88,7 +70,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <TicTacToeImage onStartGame={onStartGame} />
+              <TicTacToeText onStartGame={onStartGame} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
