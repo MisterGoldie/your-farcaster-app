@@ -3,60 +3,6 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 
-function Bat({ position }: { position: [number, number, number] }) {
-  const batRef = useRef<THREE.Group>(null)
-  const speed = useRef({
-    x: Math.random() * 0.02 - 0.01,
-    y: Math.random() * 0.02 - 0.01,
-    z: Math.random() * 0.02 - 0.01
-  })
-
-  useFrame((state) => {
-    if (batRef.current) {
-      batRef.current.rotation.x += speed.current.x
-      batRef.current.rotation.y += speed.current.y
-      batRef.current.rotation.z += speed.current.z
-
-      batRef.current.position.x = position[0] + Math.sin(state.clock.elapsedTime * 0.5) * 0.2
-      batRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.7) * 0.2
-      batRef.current.position.z = position[2] + Math.sin(state.clock.elapsedTime * 0.3) * 0.2
-
-      if (Math.random() < 0.01) {
-        speed.current = {
-          x: Math.random() * 0.02 - 0.01,
-          y: Math.random() * 0.02 - 0.01,
-          z: Math.random() * 0.02 - 0.01
-        }
-      }
-    }
-  })
-
-  return (
-    <group ref={batRef} position={position}>
-      <mesh>
-        <sphereGeometry args={[0.15, 32, 32]} />
-        <meshStandardMaterial color="#222222" />
-      </mesh>
-      <mesh rotation={[0, 0, Math.PI / 4]}>
-        <boxGeometry args={[0.5, 0.01, 0.2]} />
-        <meshStandardMaterial color="#222222" />
-      </mesh>
-      <mesh rotation={[0, 0, -Math.PI / 4]}>
-        <boxGeometry args={[0.5, 0.01, 0.2]} />
-        <meshStandardMaterial color="#222222" />
-      </mesh>
-      <mesh position={[0.05, 0.05, 0.12]}>
-        <sphereGeometry args={[0.02, 16, 16]} />
-        <meshStandardMaterial color="#ff0000" />
-      </mesh>
-      <mesh position={[-0.05, 0.05, 0.12]}>
-        <sphereGeometry args={[0.02, 16, 16]} />
-        <meshStandardMaterial color="#ff0000" />
-      </mesh>
-    </group>
-  )
-}
-
 function Board() {
   const boardRef = useRef<THREE.Group>(null)
 
@@ -68,10 +14,6 @@ function Board() {
 
   return (
     <group ref={boardRef} scale={[1, 1, 1]}>
-      <Bat position={[-1.8, 1.8, -1]} />
-      <Bat position={[1.8, -1.8, -1]} />
-      <Bat position={[0, 2, -1.5]} />
-
       <Text
         position={[0, 0, 0]}
         fontSize={0.5}
@@ -128,7 +70,6 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
