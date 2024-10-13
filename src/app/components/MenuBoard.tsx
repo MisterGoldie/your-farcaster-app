@@ -8,12 +8,12 @@ const backgroundColors = [
 ]
 
 function TicTacToeImage({ onStartGame }: { onStartGame: () => void }) {
-  const { viewport } = useThree()
+  const scale = 0.3 // Adjust this value to change the size of the game image
 
   return (
-    <group position={[0, 0, 0]}>
+    <group position={[-1.5, 1.5, 0]} scale={[scale, scale, scale]}>
       {/* Tic-Tac-Toe grid */}
-      <mesh position={[0, -0.33, 0]} scale={[1, 1, 1]}>
+      <mesh position={[0, -0.33, 0]}>
         <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
         <lineBasicMaterial attach="material" color="black" linewidth={2} />
       </mesh>
@@ -25,7 +25,7 @@ function TicTacToeImage({ onStartGame }: { onStartGame: () => void }) {
         <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
         <lineBasicMaterial attach="material" color="black" linewidth={2} />
       </mesh>
-      <mesh position={[0.33, 0, 0]} scale={[1, 1, 1]} rotation={[0, 0, Math.PI / 2]}>
+      <mesh position={[0.33, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
         <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
         <lineBasicMaterial attach="material" color="black" linewidth={2} />
       </mesh>
@@ -34,17 +34,16 @@ function TicTacToeImage({ onStartGame }: { onStartGame: () => void }) {
       <Text position={[-0.33, 0.33, 0]} fontSize={0.3} color="black">X</Text>
       <Text position={[0.33, -0.33, 0]} fontSize={0.3} color="black">O</Text>
 
+      {/* Game label */}
+      <Text position={[0, -0.8, 0]} fontSize={0.2} color="black" anchorX="center" anchorY="top">
+        Tic-Tac-Toe
+      </Text>
+
       {/* Clickable area */}
-      <Html>
-        <div 
-          style={{
-            width: `${viewport.width * 100}px`,
-            height: `${viewport.height * 100}px`,
-            cursor: 'pointer'
-          }}
-          onClick={onStartGame}
-        />
-      </Html>
+      <mesh onClick={onStartGame} position={[0, 0, -0.1]}>
+        <planeGeometry args={[1.5, 1.5]} />
+        <meshBasicMaterial transparent opacity={0} />
+      </mesh>
     </group>
   )
 }
