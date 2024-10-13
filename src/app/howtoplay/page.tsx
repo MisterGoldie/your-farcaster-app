@@ -1,26 +1,34 @@
-import Link from 'next/link'
-import Image from 'next/image'
+'use client'
+
+import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
+
+const MenuBoard = dynamic(() => import('../components/MenuBoard'), { ssr: false })
 
 export default function HowToPlay() {
+  const router = useRouter()
+
+  const handleBackToHome = () => {
+    router.push('/')
+  }
+
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
-      <div className="max-w-4xl w-full bg-black bg-opacity-50 rounded-lg shadow-lg p-6 sm:p-10">
-        <div className="w-full max-w-md aspect-square relative mb-8">
-          <Image 
-            src="https://bafybeicodlej4oiq6fq5lfztym5tvgndslczfqyvquvpamdloqvjrf7lly.ipfs.w3s.link/image%2019.png"
-            alt=""
-            fill
-            style={{ objectFit: 'contain' }}
-            priority
-          />
-        </div>
-        <div className="flex justify-center">
-          <Link href="/game" className="bg-orange-600 hover:bg-orange-800 text-white font-bold py-3 px-6 rounded-full text-lg sm:text-xl transition-colors duration-200 transform hover:scale-105 text-shadow-custom">
-            Start Game
-          </Link>
-        </div>
+    <main className="h-[100svh] bg-black text-white overflow-hidden">
+      <MenuBoard />
+      <div className="absolute top-3 left-2 z-10"> 
+        <button onClick={handleBackToHome}>
+          <svg
+            className="w-6 h-6"
+            xmlns="http://www.w3.org/2000/svg"
+            height="26"
+            viewBox="0 -960 960 960"
+            width="26"
+            fill="#FFFFFF"
+          >
+            <path d="M480-160 160-480l320-320 42 42-248 248h526v60H274l248 248-42 42Z"/>
+          </svg>
+        </button>
       </div>
     </main>
   )
 }
-/////
