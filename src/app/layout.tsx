@@ -1,6 +1,5 @@
 import './globals.css'
 import { Metadata } from 'next'
-import { UserProvider } from './context/UserContext'
 
 export const metadata: Metadata = {
   title: 'POD Play Tic-Tac-Toe',
@@ -22,11 +21,9 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
       </head>
       <body className="bg-black flex items-center justify-center min-h-screen">
-        <UserProvider>
-          <div className="w-full max-w-md px-4">
-            {children}
-          </div>
-        </UserProvider>
+        <div className="w-full max-w-md px-4">
+          {children}
+        </div>
       </body>
     </html>
   )

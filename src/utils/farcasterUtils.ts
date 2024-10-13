@@ -55,4 +55,3 @@ export async function getUsername(fid: string): Promise<string> {
   // Implementation here
   return 'Player';
 }
-
