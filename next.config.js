@@ -20,48 +20,18 @@ const nextConfig = {
       },
     ]
   },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.output.globalObject = 'self';
-    }
-    config.module.rules.push(
-      {
-        test: /\.(glb|gltf)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            publicPath: '/_next/static/images',
-            outputPath: 'static/images/',
-          },
-        },
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif)$/i,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              publicPath: '/_next/static/images',
-              outputPath: 'static/images/',
-              name: '[name].[hash:8].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.worker\.js$/,
-        loader: 'worker-loader',
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(png|jpg|gif|svg|glb|gltf)$/i,
+      use: {
+        loader: 'file-loader',
         options: {
-          name: 'static/[hash].worker.js',
-          publicPath: '/_next/',
+          publicPath: '/_next/static/images',
+          outputPath: 'static/images/',
         },
-      }
-    );
-    config.externals.push({
-      'react-native-config': 'react-native-config',
+      },
     })
-    return config;
+    return config
   },
 }
 

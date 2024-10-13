@@ -20,28 +20,24 @@ type CellProps = {
 
 function ScaryGary({ position }: { position: [number, number, number] }) {
   const { scene } = useGLTF('/models/ScaryGary_Body.glb')
-  const textures = useTexture({
-    map: '/models/ScaryGary_Body_baseColor.png',
-    // Add other textures as needed
-  })
+  const texture = useTexture('/models/ScaryGary_Body_baseColor.png')
 
   useEffect(() => {
     scene.traverse((child) => {
       if (child instanceof THREE.Mesh) {
         if (child.material instanceof THREE.MeshStandardMaterial) {
-          child.material.map = textures.map;
-          // Assign other textures as needed
+          child.material.map = texture;
         }
       }
     });
-  }, [scene, textures])
+  }, [scene, texture]);
 
   return <primitive object={scene} position={position} scale={[0.2, 0.2, 0.2]} />
 }
 
-// ... rest of your component code
-
+// Preload assets
 useGLTF.preload('/models/ScaryGary_Body.glb')
+useTexture.preload('/models/ScaryGary_Body_baseColor.png')
 
 function Cell({ position, onClick, value }: CellProps) {
   return (
