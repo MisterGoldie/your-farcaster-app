@@ -14,6 +14,10 @@ function ScaryGary({ position }: { position: [number, number, number] }) {
   return <primitive object={scene} position={position} scale={[0.2, 0.2, 0.2]} />
 }
 
+// ... rest of your component code
+
+useGLTF.preload('/models/ScaryGary_Body.glb')
+
 function Cell({ position, onClick, value }: CellProps) {
   return (
     <group position={position}>
