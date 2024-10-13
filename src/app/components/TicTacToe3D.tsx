@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text } from '@react-three/drei'
+import { Line, Text, useGLTF } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -9,6 +9,10 @@ type CellProps = {
   value: string | null
 }
 
+function ScaryGary({ position }: { position: [number, number, number] }) {
+  const { scene } = useGLTF('/models/ScaryGary_Body.glb')
+  return <primitive object={scene} position={position} scale={[0.2, 0.2, 0.2]} />
+}
 
 function Cell({ position, onClick, value }: CellProps) {
   return (
@@ -18,15 +22,19 @@ function Cell({ position, onClick, value }: CellProps) {
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
       {value && (
-        <Text
-          position={[0, 0, 0.06]}
-          fontSize={0.6}
-          color="#000000"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {value}
-        </Text>
+        value === 'X' ? (
+          <ScaryGary position={[0, 0, 0.05]} />
+        ) : (
+          <Text
+            position={[0, 0, 0.06]}
+            fontSize={0.6}
+            color="#000000"
+            anchorX="center"
+            anchorY="middle"
+          >
+            {value}
+          </Text>
+        )
       )}
     </group>
   )
@@ -307,6 +315,8 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
     changeBackgroundColor()
     onRestart()
   }
+
+  useGLTF.preload('/models/ScaryGary_Body.glb')
 
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
