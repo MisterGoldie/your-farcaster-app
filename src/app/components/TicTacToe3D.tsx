@@ -3,6 +3,15 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { Line, Text, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 
+THREE.Cache.enabled = true;
+THREE.DefaultLoadingManager.setURLModifier((url) => {
+  // Force data URIs to be used for worker scripts
+  if (url.endsWith('.js')) {
+    return 'data:text/javascript;base64,' + btoa('importScripts("' + url + '");');
+  }
+  return url;
+});
+
 type CellProps = {
   position: [number, number, number]
   onClick: () => void
