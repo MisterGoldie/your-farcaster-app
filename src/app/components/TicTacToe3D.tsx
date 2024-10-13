@@ -1,16 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text, useGLTF, useTexture } from '@react-three/drei'
+import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
-
-THREE.Cache.enabled = true;
-THREE.DefaultLoadingManager.setURLModifier((url) => {
-  // Force data URIs to be used for worker scripts
-  if (url.endsWith('.js')) {
-    return 'data:text/javascript;base64,' + btoa('importScripts("' + url + '");');
-  }
-  return url;
-});
 
 type CellProps = {
   position: [number, number, number]
@@ -18,26 +9,6 @@ type CellProps = {
   value: string | null
 }
 
-function ScaryGary({ position }: { position: [number, number, number] }) {
-  const { scene } = useGLTF('/models/ScaryGary_Body.glb')
-  const texture = useTexture('/models/ScaryGary_Body_baseColor.png')
-
-  useEffect(() => {
-    scene.traverse((child) => {
-      if (child instanceof THREE.Mesh) {
-        if (child.material instanceof THREE.MeshStandardMaterial) {
-          child.material.map = texture;
-        }
-      }
-    });
-  }, [scene, texture]);
-
-  return <primitive object={scene} position={position} scale={[0.2, 0.2, 0.2]} />
-}
-
-// Preload assets
-useGLTF.preload('/models/ScaryGary_Body.glb')
-useTexture.preload('/models/ScaryGary_Body_baseColor.png')
 
 function Cell({ position, onClick, value }: CellProps) {
   return (
@@ -47,19 +18,15 @@ function Cell({ position, onClick, value }: CellProps) {
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
       {value && (
-        value === 'X' ? (
-          <ScaryGary position={[0, 0, 0.05]} />
-        ) : (
-          <Text
-            position={[0, 0, 0.06]}
-            fontSize={0.6}
-            color="#000000"
-            anchorX="center"
-            anchorY="middle"
-          >
-            {value}
-          </Text>
-        )
+        <Text
+          position={[0, 0, 0.06]}
+          fontSize={0.6}
+          color="#000000"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {value}
+        </Text>
       )}
     </group>
   )
@@ -316,11 +283,11 @@ function Board() {
 const backgroundColors = [
   '#CC5500', // Original orange
   '#FF0000', // Red
-  '#ECE400', // Dirty yellow
+  '#8B0000', // Dark Red
   '#B22222', // Firebrick
-  '#BA3234', // FireRed
-  '#3A8830', // LimeGreen
-  '#0000FF', // Blue
+  '#C5C840', // Dirty yellow
+  '#46A136',// Green
+  '#DC143C', // Crimson
   '#C840B1', // Purple
 ]
 
@@ -340,8 +307,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
     changeBackgroundColor()
     onRestart()
   }
-
-  useGLTF.preload('/models/ScaryGary_Body.glb')
 
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
