@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text, Instances, Instance } from '@react-three/drei'
+import { Line, Text } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -87,42 +87,6 @@ function Bat({ position }: { position: [number, number, number] }) {
         <meshStandardMaterial color="#ff0000" />
       </mesh>
     </group>
-  )
-}
-
-function Smoke() {
-  const particles = useRef<THREE.InstancedMesh>(null)
-  const [positions] = useState(() => 
-    new Array(200).fill(null).map(() => ({
-      position: [
-        Math.random() * 3 - 1.5,
-        Math.random() * 3 - 1.5,
-        Math.random() * 2 - 2
-      ],
-      scale: Math.random() * 0.2 + 0.1,
-      speed: Math.random() * 0.2 + 0.1
-    }))
-  )
-
-  useFrame((state) => {
-    positions.forEach((particle, i) => {
-      particle.position[1] += particle.speed * state.clock.elapsedTime * 0.1
-      if (particle.position[1] > 1.5) particle.position[1] = -1.5
-      particles.current?.setMatrixAt(i, new THREE.Matrix4().setPosition(particle.position[0], particle.position[1], particle.position[2]))
-    })
-    if (particles.current) {
-      particles.current.instanceMatrix.needsUpdate = true
-    }
-  })
-
-  return (
-    <Instances limit={200} ref={particles}>
-      <sphereGeometry args={[0.1, 8, 8]} />
-      <meshBasicMaterial color="#ffffff" transparent opacity={0.2} />
-      {positions.map((props, i) => (
-        <Instance key={i} position={new THREE.Vector3(...props.position)} scale={props.scale} />
-      ))}
-    </Instances>
   )
 }
 
@@ -312,8 +276,6 @@ function Board() {
           {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! Sorry!'}
         </Text>
       )}
-
-      <Smoke />
     </group>
   )
 }
