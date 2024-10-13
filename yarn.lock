@@ -440,7 +440,7 @@
 
 "@react-three/fiber@^8.17.10":
   version "8.17.10"
-  resolved "https://registry.npmjs.org/@react-three/fiber/-/fiber-8.17.10.tgz"
+  resolved "https://registry.yarnpkg.com/@react-three/fiber/-/fiber-8.17.10.tgz#e007efaf27303592b082022d865c29ee77425629"
   integrity sha512-S6bqa4DqUooEkInYv/W+Jklv2zjSYCXAhm6qKpAQyOXhTEt5gBXnA7W6aoJ0bjmp9pAeaSj/AZUoz1HCSof/uA==
   dependencies:
     "@babel/runtime" "^7.17.8"

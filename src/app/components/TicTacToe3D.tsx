@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Line, Text } from '@react-three/drei'
+import { TextureLoader } from 'three'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -280,6 +281,28 @@ function Board() {
   )
 }
 
+const backgroundImages = [
+  'https://bafybeif6r7nj3qvhwc7ivbep7b7loihjpwswnz22qamdte26pcbsxdqgke.ipfs.w3s.link/Frame%2040%20(2).png',
+  // Add more IPFS image URLs here
+]
+
+function Background() {
+  const [imageUrl, setImageUrl] = useState(backgroundImages[0])
+  const texture = useLoader(TextureLoader, imageUrl)
+  
+  useEffect(() => {
+    const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)]
+    setImageUrl(randomImage)
+  }, [])
+
+  return (
+    <mesh position={[0, 0, -1]}>
+      <planeGeometry args={[6, 5.4]} />
+      <meshBasicMaterial map={texture} />
+    </mesh>
+  )
+}
+
 const backgroundColors = [
   '#CC5500', // Original orange
   '#FF0000', // Red
@@ -330,7 +353,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
           </div>
           <div className="flex-grow relative">
             <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-              <color attach="background" args={[backgroundColor]} />
+              <Background />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               <Board />
