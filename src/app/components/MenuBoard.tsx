@@ -1,35 +1,9 @@
 import React, { useRef } from 'react'
-import { Canvas, useFrame, ThreeEvent } from '@react-three/fiber'
+import { Canvas, useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import * as THREE from 'three'
 
-type MenuOptionProps = {
-  position: [number, number, number]
-  text: string
-  onClick: () => void
-}
-
-function MenuOption({ position, text, onClick }: MenuOptionProps) {
-  return (
-    <group position={position}>
-      <mesh onClick={onClick}>
-        <planeGeometry args={[2, 0.5]} />
-        <meshStandardMaterial color="#ff6600" />
-      </mesh>
-      <Text
-        position={[0, 0, 0.01]}
-        fontSize={0.2}
-        color="#000000"
-        anchorX="center"
-        anchorY="middle"
-      >
-        {text}
-      </Text>
-    </group>
-  )
-}
-
-function Board({ onStartGame, onGoBack }: { onStartGame: () => void, onGoBack: () => void }) {
+function Board() {
   const boardRef = useRef<THREE.Group>(null)
 
   useFrame(() => {
@@ -40,34 +14,47 @@ function Board({ onStartGame, onGoBack }: { onStartGame: () => void, onGoBack: (
 
   return (
     <group ref={boardRef} scale={[1, 1, 1]}>
-      <MenuOption
+      <Text
         position={[0, 0, 0]}
-        text="Menu"
-        onClick={() => console.log('Menu clicked')}
-      />
-      <MenuOption
-        position={[0, 0, -1]}
-        text="Start Game"
-        onClick={onStartGame}
-      />
-      <MenuOption
-        position={[0, 0, -2]}
-        text="Go Back"
-        onClick={onGoBack}
-      />
+        fontSize={0.5}
+        color="#000000"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Menu
+      </Text>
     </group>
   )
 }
 
-export default function MenuBoard() {
+type MenuBoardProps = {
+  onStartGame: () => void
+  onGoBack: () => void
+}
+
+export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
   return (
-    <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
-      <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
+    <div className="h-[100svh] w-full bg-black flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1 mb-4">
         <Canvas>
           <ambientLight intensity={0.5} />
           <pointLight position={[10, 10, 10]} />
-          <Board onStartGame={() => console.log('Start game')} onGoBack={() => console.log('Go back')} />
+          <Board />
         </Canvas>
+      </div>
+      <div className="w-full max-w-md flex justify-between">
+        <button
+          onClick={onGoBack}
+          className="bg-orange-600 text-white px-6 py-3 rounded text-lg hover:bg-orange-800 transition-colors"
+        >
+          Go Back
+        </button>
+        <button
+          onClick={onStartGame}
+          className="bg-orange-600 text-white px-6 py-3 rounded text-lg hover:bg-orange-800 transition-colors"
+        >
+          Start Game
+        </button>
       </div>
     </div>
   )
