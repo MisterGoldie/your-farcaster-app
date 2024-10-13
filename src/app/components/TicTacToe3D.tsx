@@ -90,7 +90,7 @@ function Bat({ position }: { position: [number, number, number] }) {
   )
 }
 
-function Board({ onRestart }: { onRestart: () => void }) {
+function Board() {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -100,7 +100,7 @@ function Board({ onRestart }: { onRestart: () => void }) {
 
   useFrame(() => {
     if (boardRef.current) {
-      boardRef.current.rotation.y += 0.007 //ROTATION SPEED
+      boardRef.current.rotation.y += 0.007 //ROTATION SPEEDS
     }
   })
 
@@ -221,7 +221,6 @@ function Board({ onRestart }: { onRestart: () => void }) {
     setIsONext(false)
     setGameOver(false)
     setTimeLeft(15)
-    onRestart()
   }
 
   const winner = checkWinner(board)
@@ -314,7 +313,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
           <color attach="background" args={[backgroundColor]} />
           <ambientLight intensity={0.3} />
           <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-          <Board onRestart={handleRestart} />
+          <Board />
         </Canvas>
       </div>
       <div className="flex justify-center gap-4 py-3 bg-orange-700">
