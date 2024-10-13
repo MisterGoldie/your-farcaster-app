@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text, useGLTF } from '@react-three/drei'
+import { Line, Text, useGLTF, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -11,6 +11,22 @@ type CellProps = {
 
 function ScaryGary({ position }: { position: [number, number, number] }) {
   const { scene } = useGLTF('/models/ScaryGary_Body.glb')
+  const textures = useTexture({
+    map: '/models/ScaryGary_Body_baseColor.png',
+    // Add other textures as needed
+  })
+
+  useEffect(() => {
+    scene.traverse((child) => {
+      if (child instanceof THREE.Mesh) {
+        if (child.material instanceof THREE.MeshStandardMaterial) {
+          child.material.map = textures.map;
+          // Assign other textures as needed
+        }
+      }
+    });
+  }, [scene, textures])
+
   return <primitive object={scene} position={position} scale={[0.2, 0.2, 0.2]} />
 }
 

@@ -14,27 +14,43 @@ const nextConfig = {
         headers: [
           {
             key: 'Content-Security-Policy',
-            value: "default-src 'self'; connect-src 'self' https://* wss://ws-us3.pusher.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.ipfs.w3s.link; frame-src 'self' https://vercel.live; worker-src blob:;"
+            value: "default-src 'self'; connect-src 'self' https://* wss://ws-us3.pusher.com blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://vercel.live; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://vercel.live; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: https://*.ipfs.w3s.link blob:; frame-src 'self' https://vercel.live; worker-src blob:; child-src blob:;"
           },
         ],
       },
     ]
   },
   webpack: (config) => {
-    config.module.rules.push({
-      test: /\.(glb|gltf)$/,
-      use: {
-        loader: 'file-loader',
-        options: {
-          publicPath: '/_next/static/images',
-          outputPath: 'static/images/',
+    config.module.rules.push(
+      {
+        test: /\.(glb|gltf)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            publicPath: '/_next/static/images',
+            outputPath: 'static/images/',
+          },
         },
       },
-    });
+      {
+        test: /\.(png|jpg|jpeg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              publicPath: '/_next/static/images',
+              outputPath: 'static/images/',
+              name: '[name].[hash:8].[ext]',
+            },
+          },
+        ],
+      }
+    );
     config.externals.push({
       'react-native-config': 'react-native-config',
     })
-    return config
+    return config;
   },
 }
 
