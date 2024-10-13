@@ -283,10 +283,12 @@ function Board() {
 const backgroundColors = [
   '#CC5500', // Original orange
   '#FF0000', // Red
-  '#8B0000', // Dark Red
+  '#ECE400', // Dirty yellow
   '#B22222', // Firebrick
-  '#DC143C', // Crimson
-  '#FF4500', // OrangeRed
+  '#BA3234', // FireRed
+  '#3A8830', // LimeGreen
+  '#0000FF', // Blue
+  '#C840B1', // Purple
 ]
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
