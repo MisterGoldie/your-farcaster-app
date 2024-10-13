@@ -1,49 +1,25 @@
 import React, { useState, useEffect } from 'react'
-import { Canvas, useThree } from '@react-three/fiber'
-import { Text, Html } from '@react-three/drei'
-import * as THREE from 'three'
+import { Canvas } from '@react-three/fiber'
+import { Text } from '@react-three/drei'
 
 const backgroundColors = [
   '#CC5500', '#FF0000', '#8B0000', '#B22222', '#C5C840', '#46A136', '#DC143C', '#C840B1',
 ]
 
-function TicTacToeImage({ onStartGame }: { onStartGame: () => void }) {
-  const scale = 0.3 // Adjust this value to change the size of the game image
-
+function TicTacToeText({ onStartGame }: { onStartGame: () => void }) {
   return (
-    <group position={[-1.5, 1.5, 0]} scale={[scale, scale, scale]}>
-      {/* Tic-Tac-Toe grid */}
-      <mesh position={[0, -0.33, 0]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-      <mesh position={[0, 0.33, 0]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-      <mesh position={[-0.33, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-      <mesh position={[0.33, 0, 0]} rotation={[0, 0, Math.PI / 2]}>
-        <bufferGeometry attach="geometry" {...new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(-0.5, 0, 0), new THREE.Vector3(0.5, 0, 0)])} />
-        <lineBasicMaterial attach="material" color="black" linewidth={2} />
-      </mesh>
-
-      {/* X and O */}
-      <Text position={[-0.33, 0.33, 0]} fontSize={0.3} color="black">X</Text>
-      <Text position={[0.33, -0.33, 0]} fontSize={0.3} color="black">O</Text>
-
-      {/* Game label */}
-      <Text position={[0, -0.8, 0]} fontSize={0.2} color="black" anchorX="center" anchorY="top">
+    <group position={[-1.5, 1.5, 0]}>
+      <Text
+        color="black"
+        anchorX="left"
+        anchorY="top"
+        fontSize={0.3}
+        onClick={onStartGame}
+        onPointerOver={(e) => (e.object.scale.set(1.1, 1.1, 1.1))}
+        onPointerOut={(e) => (e.object.scale.set(1, 1, 1))}
+      >
         Tic-Tac-Toe
       </Text>
-
-      {/* Clickable area */}
-      <mesh onClick={onStartGame} position={[0, 0, -0.1]}>
-        <planeGeometry args={[1.5, 1.5]} />
-        <meshBasicMaterial transparent opacity={0} />
-      </mesh>
     </group>
   )
 }
@@ -54,7 +30,7 @@ type MenuBoardProps = {
 }
 
 export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
-  const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
+  const [backgroundColor, setBackgroundColor] = useState('#CC5500')
 
   useEffect(() => {
     const newColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
@@ -87,7 +63,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <TicTacToeImage onStartGame={onStartGame} />
+              <TicTacToeText onStartGame={onStartGame} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
@@ -100,4 +76,3 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
     </div>
   )
 }
-/////
