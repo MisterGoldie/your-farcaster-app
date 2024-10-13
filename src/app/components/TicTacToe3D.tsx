@@ -296,8 +296,8 @@ function Background() {
   }, [])
 
   return (
-    <mesh position={[0, 0, -1]}>
-      <planeGeometry args={[6, 5.4]} />
+    <mesh position={[0, 0, -0.5]}>
+      <planeGeometry args={[3, 3]} />
       <meshBasicMaterial map={texture} />
     </mesh>
   )
@@ -313,22 +313,6 @@ const backgroundColors = [
 ]
 
 export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
-  const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
-
-  const changeBackgroundColor = () => {
-    const newColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
-    setBackgroundColor(newColor)
-  }
-
-  useEffect(() => {
-    changeBackgroundColor()
-  }, [])
-
-  const handleRestart = () => {
-    changeBackgroundColor()
-    onRestart()
-  }
-
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -360,7 +344,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
-            <button onClick={handleRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button onClick={onRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Play Again
             </button>
             <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
