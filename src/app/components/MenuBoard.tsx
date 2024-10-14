@@ -1,7 +1,34 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
+
+function RoundedRectangle({ width, height, radius, color }: { width: number; height: number; radius: number; color: string }) {
+  const shape = useMemo(() => {
+    const shape = new THREE.Shape()
+    const x = -width / 2
+    const y = -height / 2
+    
+    shape.moveTo(x, y + radius)
+    shape.lineTo(x, y + height - radius)
+    shape.quadraticCurveTo(x, y + height, x + radius, y + height)
+    shape.lineTo(x + width - radius, y + height)
+    shape.quadraticCurveTo(x + width, y + height, x + width, y + height - radius)
+    shape.lineTo(x + width, y + radius)
+    shape.quadraticCurveTo(x + width, y, x + width - radius, y)
+    shape.lineTo(x + radius, y)
+    shape.quadraticCurveTo(x, y, x, y + radius)
+
+    return shape
+  }, [width, height, radius])
+
+  return (
+    <mesh>
+      <shapeGeometry args={[shape]} />
+      <meshBasicMaterial color={color} transparent opacity={0.8} />
+    </mesh>
+  )
+}
 
 type MenuBoardProps = {
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void
@@ -12,9 +39,12 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
   const [hovered, setHovered] = useState(false)
-  const buttonRef = useRef<THREE.Mesh>(null)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
+
+  const buttonWidth = viewport.width * 0.4
+  const buttonHeight = viewport.height * 0.15
+  const cornerRadius = Math.min(buttonWidth, buttonHeight) * 0.2
 
   return (
     <group>
@@ -40,15 +70,14 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
             }}
             onClick={() => setShowDifficulty(true)}
           >
-            <Plane
-              ref={buttonRef}
-              args={[viewport.width * 0.4, viewport.height * 0.15]}
-              position={[0, -viewport.height * 0.05, -0.01]}
-            >
-              <meshBasicMaterial color={hovered ? "#ff8c00" : "#ff6600"} />
-            </Plane>
+            <RoundedRectangle
+              width={buttonWidth}
+              height={buttonHeight}
+              radius={cornerRadius}
+              color={hovered ? "#ff8c00" : "#ff6600"}
+            />
             <Text
-              position={[0, -viewport.height * 0.05, 0]}
+              position={[0, -viewport.height * 0.05, 0.01]}
               fontSize={viewport.width * 0.08}
               color="white"
               anchorX="center"
