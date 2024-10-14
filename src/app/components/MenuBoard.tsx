@@ -75,7 +75,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               width={buttonWidth}
               height={buttonHeight}
               radius={cornerRadius}
-              color={hoveredButton === 'tic-tac-toe' ? "#B33C0B" : "#C2410B"}
+              color={hoveredButton === 'tic-tac-toe' ? "#33333" : "#000000"}
             />
             <Text
               position={[0, 0, 0.01]}

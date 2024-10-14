@@ -206,11 +206,11 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
     if (emptySpots.length === 0) return -1 // No move available
 
     // Adjust probabilities based on difficulty
-    const randomMoveChance = difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 0.3 : 0.1
-    const winningMoveChance = difficulty === 'easy' ? 0.6 : difficulty === 'medium' ? 0.8 : 0.95
-    const blockingMoveChance = difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 0.7 : 0.9
+    const randomMoveChance = difficulty === 'easy' ? 0.7 : difficulty === 'medium' ? 0.3 : 0.1
+    const winningMoveChance = difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 0.8 : 0.95
+    const blockingMoveChance = difficulty === 'easy' ? 0.4 : difficulty === 'medium' ? 0.7 : 0.9
 
-    // Random move
+    // Random move (more likely in easy mode)
     if (Math.random() < randomMoveChance) {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
@@ -226,7 +226,7 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
       }
     }
 
-    // Check for blocking Move
+    // Check for blocking move
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
         const testBoard = [...board]
@@ -237,13 +237,16 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
       }
     }
 
-    // Take center if available
-    if (!board[4]) return 4
+    // Strategic moves (more likely in harder modes)
+    if (difficulty !== 'easy' || Math.random() < 0.3) {
+      // Take center if available
+      if (!board[4]) return 4
 
-    // Take any available corner
-    const corners = [0, 2, 6, 8].filter(i => !board[i])
-    if (corners.length > 0) {
-      return corners[Math.floor(Math.random() * corners.length)]
+      // Take any available corner
+      const corners = [0, 2, 6, 8].filter(i => !board[i])
+      if (corners.length > 0) {
+        return corners[Math.floor(Math.random() * corners.length)]
+      }
     }
 
     // Take any available side
