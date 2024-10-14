@@ -119,7 +119,7 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   useFrame((state) => {
     if (boardRef.current) {
-      const speed = 0.00 * getSpeedMultiplier();
+      const speed = 0.01 * getSpeedMultiplier();
       boardRef.current.rotation.y += speed;
     }
   })
