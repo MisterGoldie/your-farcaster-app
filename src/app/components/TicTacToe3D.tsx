@@ -32,7 +32,7 @@ function Cell({ position, onClick, value }: CellProps) {
   )
 }
 
-function Bat({ position }: { position: [number, number, number] }) {
+function Bat({ position, difficulty }: { position: [number, number, number], difficulty: 'easy' | 'medium' | 'hard' }) {
   const batRef = useRef<THREE.Group>(null)
   const speed = useRef({
     x: Math.random() * 0.02 - 0.01,
@@ -40,22 +40,32 @@ function Bat({ position }: { position: [number, number, number] }) {
     z: Math.random() * 0.02 - 0.01
   })
 
+  const getSpeedMultiplier = () => {
+    switch (difficulty) {
+      case 'easy': return 1;
+      case 'medium': return 1.5;
+      case 'hard': return 2;
+      default: return 1;
+    }
+  }
+
   useFrame((state) => {
     if (batRef.current) {
-      batRef.current.rotation.x += speed.current.x
-      batRef.current.rotation.y += speed.current.y
-      batRef.current.rotation.z += speed.current.z
+      const speedMultiplier = getSpeedMultiplier();
+      batRef.current.rotation.x += speed.current.x * speedMultiplier
+      batRef.current.rotation.y += speed.current.y * speedMultiplier
+      batRef.current.rotation.z += speed.current.z * speedMultiplier
 
-      batRef.current.position.x = position[0] + Math.sin(state.clock.elapsedTime * 0.5) * 0.2
-      batRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.7) * 0.2
-      batRef.current.position.z = position[2] + Math.sin(state.clock.elapsedTime * 0.3) * 0.2
+      batRef.current.position.x = position[0] + Math.sin(state.clock.elapsedTime * 0.5 * speedMultiplier) * 0.2
+      batRef.current.position.y = position[1] + Math.cos(state.clock.elapsedTime * 0.7 * speedMultiplier) * 0.2
+      batRef.current.position.z = position[2] + Math.sin(state.clock.elapsedTime * 0.3 * speedMultiplier) * 0.2
 
       // Randomly change direction occasionally
-      if (Math.random() < 0.01) {
+      if (Math.random() < 0.01 * speedMultiplier) {
         speed.current = {
-          x: Math.random() * 0.02 - 0.01,
-          y: Math.random() * 0.02 - 0.01,
-          z: Math.random() * 0.02 - 0.01
+          x: (Math.random() * 0.02 - 0.01) * speedMultiplier,
+          y: (Math.random() * 0.02 - 0.01) * speedMultiplier,
+          z: (Math.random() * 0.02 - 0.01) * speedMultiplier
         }
       }
     }
@@ -90,7 +100,7 @@ function Bat({ position }: { position: [number, number, number] }) {
   )
 }
 
-function Board({ difficulty }: { difficulty: Difficulty }) {
+function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -98,17 +108,18 @@ function Board({ difficulty }: { difficulty: Difficulty }) {
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
 
-  useFrame((state) => {
-    if (boardRef.current && difficulty !== 'easy') {
-      let speedMultiplier = 1;
-      if (difficulty === 'medium') {
-        speedMultiplier = 2;
-      } else if (difficulty === 'hard') {
-        speedMultiplier = 3;
-      }
+  const getSpeedMultiplier = () => {
+    switch (difficulty) {
+      case 'easy': return 1;
+      case 'medium': return 1.5;
+      case 'hard': return 2;
+      default: return 1;
+    }
+  }
 
-      boardRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3 * speedMultiplier) * 0.2 * speedMultiplier
-      boardRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2 * speedMultiplier) * 0.2 * speedMultiplier
+  useFrame(() => {
+    if (boardRef.current) {
+      boardRef.current.rotation.y += 0.007 * getSpeedMultiplier() // Adjusted rotation speed
     }
   })
 
@@ -243,9 +254,9 @@ function Board({ difficulty }: { difficulty: Difficulty }) {
       <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#000000" lineWidth={5} />
 
       {/* Floating bats */}
-      <Bat position={[-1.8, 1.8, -1]} />
-      <Bat position={[1.8, -1.8, -1]} />
-      <Bat position={[0, 2, -1.5]} /> {/* New bat */}
+      <Bat position={[-1.8, 1.8, -1]} difficulty={difficulty} />
+      <Bat position={[1.8, -1.8, -1]} difficulty={difficulty} />
+      <Bat position={[0, 2, -1.5]} difficulty={difficulty} />
 
       {/* Cells */}
       {board.map((value, index) => (
@@ -301,7 +312,7 @@ const backgroundColors = [
 
 type Difficulty = 'easy' | 'medium' | 'hard'
 
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: Difficulty }) {
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard' }) {
   console.log("Difficulty in TicTacToe3D:", difficulty);
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
@@ -346,7 +357,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board difficulty={difficulty} /> {/* Pass difficulty here */}
+              <Board difficulty={difficulty} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
