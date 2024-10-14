@@ -205,34 +205,54 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
     if (emptySpots.length === 0) return -1 // No move available
 
-    // 30% chance to make a random move
-    if (Math.random() < 0.3) {
+    // Adjust probabilities based on difficulty
+    const randomMoveChance = difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 0.3 : 0.1
+    const winningMoveChance = difficulty === 'easy' ? 0.6 : difficulty === 'medium' ? 0.8 : 0.95
+    const blockingMoveChance = difficulty === 'easy' ? 0.5 : difficulty === 'medium' ? 0.7 : 0.9
+
+    // Random move
+    if (Math.random() < randomMoveChance) {
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
-    // Check for winning move (80% chance to take it)
+    // Check for winning move
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
         const testBoard = [...board]
         testBoard[i] = 'X'
-        if (checkWinner(testBoard) === 'X' && Math.random() < 0.8) {
+        if (checkWinner(testBoard) === 'X' && Math.random() < winningMoveChance) {
           return i
         }
       }
     }
 
-    // Check for blocking Move (70% chance to block)
+    // Check for blocking Move
     for (let i = 0; i < 9; i++) {
       if (!board[i]) {
         const testBoard = [...board]
         testBoard[i] = 'O'
-        if (checkWinner(testBoard) === 'O' && Math.random() < 0.7) {
+        if (checkWinner(testBoard) === 'O' && Math.random() < blockingMoveChance) {
           return i
         }
       }
     }
 
-    // Take any available spot
+    // Take center if available
+    if (!board[4]) return 4
+
+    // Take any available corner
+    const corners = [0, 2, 6, 8].filter(i => !board[i])
+    if (corners.length > 0) {
+      return corners[Math.floor(Math.random() * corners.length)]
+    }
+
+    // Take any available side
+    const sides = [1, 3, 5, 7].filter(i => !board[i])
+    if (sides.length > 0) {
+      return sides[Math.floor(Math.random() * sides.length)]
+    }
+
+    // This should never happen, but just in case
     return emptySpots[Math.floor(Math.random() * emptySpots.length)]
   }
 
@@ -311,9 +331,7 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-type Difficulty = 'easy' | 'medium' | 'hard'
-
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, onChangeDifficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard', onChangeDifficulty: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard' }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
   const changeBackgroundColor = () => {
@@ -354,11 +372,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, onCha
             <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Home
             </button>
-          </div>
-          <div className="flex justify-center gap-2 py-2 bg-orange-700">
-            <button onClick={() => onChangeDifficulty('easy')} className={`px-2 py-1 rounded text-xs ${difficulty === 'easy' ? 'bg-orange-900' : 'bg-orange-800'}`}>Easy</button>
-            <button onClick={() => onChangeDifficulty('medium')} className={`px-2 py-1 rounded text-xs ${difficulty === 'medium' ? 'bg-orange-900' : 'bg-orange-800'}`}>Medium</button>
-            <button onClick={() => onChangeDifficulty('hard')} className={`px-2 py-1 rounded text-xs ${difficulty === 'hard' ? 'bg-orange-900' : 'bg-orange-800'}`}>Hard</button>
           </div>
         </div>
       </div>

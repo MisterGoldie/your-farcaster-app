@@ -8,8 +8,8 @@ const MenuBoard = dynamic(() => import('../components/MenuBoard'), { ssr: false 
 export default function HowToPlay() {
   const router = useRouter()
 
-  const handleStartGame = () => {
-    router.push('/game')
+  const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard') => {
+    router.push(`/game?difficulty=${difficulty}`)
   }
 
   const handleGoBack = () => {

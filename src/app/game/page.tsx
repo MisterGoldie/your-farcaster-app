@@ -30,7 +30,6 @@ export default function Game() {
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
         difficulty={difficulty}
-        onChangeDifficulty={handleChangeDifficulty}
       />
     </main>
   )
