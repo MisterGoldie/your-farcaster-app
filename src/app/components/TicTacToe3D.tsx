@@ -31,13 +31,19 @@ function Cell({ position, onClick, value }: CellProps) {
   )
 }
 
-function Board() {
+function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
+
+  useFrame((state) => {
+    if (boardRef.current && difficulty === 'hard') {
+      boardRef.current.rotation.y += 0.01
+    }
+  })
 
   useEffect(() => {
     if (timerStarted && !gameOver) {
@@ -202,7 +208,11 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { 
+  onRestart: () => void, 
+  onBackToHome: () => void,
+  difficulty: 'easy' | 'medium' | 'hard'
+}) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
   const changeBackgroundColor = () => {
@@ -233,7 +243,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board />
+              <Board difficulty={difficulty} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
@@ -249,4 +259,3 @@ export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: ()
     </div>
   )
 }
-
