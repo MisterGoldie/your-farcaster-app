@@ -20,7 +20,7 @@ export default function Game() {
 
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
-      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} />
+      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} difficulty={'easy'} />
     </main>
   )
 }

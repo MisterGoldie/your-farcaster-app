@@ -291,7 +291,9 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-export default function TicTacToe3D({ onRestart, onBackToHome }: { onRestart: () => void, onBackToHome: () => void }) {
+type Difficulty = 'easy' | 'medium' | 'hard'
+
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: Difficulty }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
   const changeBackgroundColor = () => {
