@@ -9,57 +9,20 @@ type MenuBoardProps = {
 
 function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
   const { viewport } = useThree()
-  const [selectedDifficulty, setSelectedDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy')
+  const [showDifficulty, setShowDifficulty] = useState(false)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
 
   return (
     <group>
-      <Text
-        position={[0, viewport.height * 0.2, 0]}
-        fontSize={viewport.width * 0.06}
-        color="black"
-        anchorX="center"
-        anchorY="middle"
-      >
-        Select Game:
-      </Text>
-      <Text
-        position={[0, viewport.height * 0.05, 0]}
-        fontSize={viewport.width * 0.08}
-        color="black"
-        anchorX="center"
-        anchorY="middle"
-        onClick={() => onStartGame(selectedDifficulty)}
-        onPointerOver={(e) => {
-          document.body.style.cursor = 'pointer'
-          e.object.scale.set(1.1, 1.1, 1.1)
-        }}
-        onPointerOut={(e) => {
-          document.body.style.cursor = 'default'
-          e.object.scale.set(1, 1, 1)
-        }}
-      >
-        Tic-Tac-Toe
-      </Text>
-      <Text
-        position={[0, -viewport.height * 0.1, 0]}
-        fontSize={viewport.width * 0.04}
-        color="black"
-        anchorX="center"
-        anchorY="middle"
-      >
-        Difficulty:
-      </Text>
-      {difficultyOptions.map((difficulty, index) => (
+      {!showDifficulty ? (
         <Text
-          key={difficulty}
-          position={[((index - 1) * viewport.width * 0.15), -viewport.height * 0.2, 0]}
-          fontSize={viewport.width * 0.03}
-          color={selectedDifficulty === difficulty ? "red" : "black"}
+          position={[0, 0, 0]}
+          fontSize={viewport.width * 0.08}
+          color="black"
           anchorX="center"
           anchorY="middle"
-          onClick={() => setSelectedDifficulty(difficulty)}
+          onClick={() => setShowDifficulty(true)}
           onPointerOver={(e) => {
             document.body.style.cursor = 'pointer'
             e.object.scale.set(1.1, 1.1, 1.1)
@@ -69,9 +32,33 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
             e.object.scale.set(1, 1, 1)
           }}
         >
-          {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+          Tic-Tac-Toe
         </Text>
-      ))}
+      ) : (
+        <>
+          {difficultyOptions.map((difficulty, index) => (
+            <Text
+              key={difficulty}
+              position={[0, viewport.height * 0.2 - index * viewport.height * 0.2, 0]}
+              fontSize={viewport.width * 0.06}
+              color="black"
+              anchorX="center"
+              anchorY="middle"
+              onClick={() => onStartGame(difficulty)}
+              onPointerOver={(e) => {
+                document.body.style.cursor = 'pointer'
+                e.object.scale.set(1.1, 1.1, 1.1)
+              }}
+              onPointerOut={(e) => {
+                document.body.style.cursor = 'default'
+                e.object.scale.set(1, 1, 1)
+              }}
+            >
+              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+            </Text>
+          ))}
+        </>
+      )}
     </group>
   )
 }
