@@ -41,7 +41,8 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
-      boardRef.current.rotation.y += 0.01
+      const rotationSpeed = 0.01 + (board.filter(Boolean).length * 0.002)
+      boardRef.current.rotation.y += rotationSpeed
     }
   })
 
