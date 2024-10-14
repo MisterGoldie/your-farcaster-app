@@ -189,6 +189,8 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
           color="#000000"
           anchorX="center"
           anchorY="middle"
+          outlineWidth={0.02}
+          outlineColor="#ffffff"
         >
           {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! Sorry!'}
         </Text>
