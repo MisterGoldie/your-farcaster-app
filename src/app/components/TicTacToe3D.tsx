@@ -313,7 +313,7 @@ const backgroundColors = [
 
 type Difficulty = 'easy' | 'medium' | 'hard'
 
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard' }) {
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, onChangeDifficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard', onChangeDifficulty: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
   const changeBackgroundColor = () => {
@@ -354,6 +354,11 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
             <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Home
             </button>
+          </div>
+          <div className="flex justify-center gap-2 py-2 bg-orange-700">
+            <button onClick={() => onChangeDifficulty('easy')} className={`px-2 py-1 rounded text-xs ${difficulty === 'easy' ? 'bg-orange-900' : 'bg-orange-800'}`}>Easy</button>
+            <button onClick={() => onChangeDifficulty('medium')} className={`px-2 py-1 rounded text-xs ${difficulty === 'medium' ? 'bg-orange-900' : 'bg-orange-800'}`}>Medium</button>
+            <button onClick={() => onChangeDifficulty('hard')} className={`px-2 py-1 rounded text-xs ${difficulty === 'hard' ? 'bg-orange-900' : 'bg-orange-800'}`}>Hard</button>
           </div>
         </div>
       </div>

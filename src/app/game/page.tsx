@@ -15,6 +15,11 @@ export default function Game() {
     console.log("Current difficulty in Game component:", difficulty);
   }, [difficulty]);
 
+  const changeDifficulty = (newDifficulty: 'easy' | 'medium' | 'hard') => {
+    setDifficulty(newDifficulty);
+    console.log("Difficulty changed to:", newDifficulty);
+  }
+
   const handleRestart = () => {
     setKey(prevKey => prevKey + 1)
   }
@@ -30,6 +35,7 @@ export default function Game() {
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
         difficulty={difficulty}
+        onChangeDifficulty={changeDifficulty}
       />
     </main>
   )
