@@ -34,9 +34,9 @@ export default function Game() {
         key={key}
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
-        difficulty={difficulty} onChangeDifficulty={function (difficulty: 'easy' | 'medium' | 'hard'): void {
-          throw new Error('Function not implemented.')
-        } }      />
+        difficulty={difficulty}
+        onChangeDifficulty={changeDifficulty}
+      />
     </main>
   )
 }
