@@ -12,18 +12,18 @@ function DifficultySelector({ onSelectDifficulty }: { onSelectDifficulty: (diffi
   return (
     <group>
       <Text
-        position={[0, viewport.height / 2 - 0.5, 0]}
+        position={[0, viewport.height * 0.4, 0]}
         fontSize={viewport.width * 0.08}
         color="black"
         anchorX="center"
-        anchorY="top"
+        anchorY="middle"
       >
         Select Difficulty:
       </Text>
       {difficulties.map((difficulty, index) => (
         <Text
           key={difficulty}
-          position={[0, viewport.height / 3 - index * (viewport.height / 5), 0]}
+          position={[0, viewport.height * (0.2 - index * 0.2), 0]}
           fontSize={viewport.width * 0.06}
           color="black"
           anchorX="center"
