@@ -40,7 +40,7 @@ function DifficultySelector({ onSelectDifficulty }: { onSelectDifficulty: (diffi
 }
 
 type MenuBoardProps = {
-  onStartGame: (difficulty: Difficulty) => void
+  onStartGame: () => void
   onGoBack: () => void
 }
 
@@ -74,7 +74,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               {showDifficulty ? (
-                <DifficultySelector onSelectDifficulty={(difficulty) => onStartGame(difficulty)} />
+                <DifficultySelector onSelectDifficulty={onStartGame} />
               ) : (
                 <group>
                   <Text
@@ -118,4 +118,3 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
     </div>
   )
 }
-
