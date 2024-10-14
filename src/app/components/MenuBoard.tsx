@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
-
-const backgroundColors = [
-  '#CC5500', '#FF0000', '#8B0000', '#B22222', '#C5C840', '#46A136', '#DC143C', '#C840B1',
-]
 
 function TicTacToeText({ onStartGame }: { onStartGame: () => void }) {
   const { viewport } = useThree()
@@ -37,13 +33,6 @@ type MenuBoardProps = {
 }
 
 export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
-  const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
-
-  useEffect(() => {
-    const newColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
-    setBackgroundColor(newColor)
-  }, [])
-
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -67,7 +56,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
           </div>
           <div className="flex-grow relative">
             <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-              <color attach="background" args={[backgroundColor]} />
+              <color attach="background" args={['#f97316']} /> {/* Orange background */}
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               <TicTacToeText onStartGame={onStartGame} />
