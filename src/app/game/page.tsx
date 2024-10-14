@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
@@ -8,17 +8,8 @@ const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: fa
 
 export default function Game() {
   const [key, setKey] = useState(0)
-  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium')
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy')
   const router = useRouter()
-
-  useEffect(() => {
-    console.log("Current difficulty in Game component:", difficulty);
-  }, [difficulty]);
-
-  const changeDifficulty = (newDifficulty: 'easy' | 'medium' | 'hard') => {
-    setDifficulty(newDifficulty);
-    console.log("Difficulty changed to:", newDifficulty);
-  }
 
   const handleRestart = () => {
     setKey(prevKey => prevKey + 1)
@@ -28,6 +19,10 @@ export default function Game() {
     router.push('/')
   }
 
+  const handleChangeDifficulty = (newDifficulty: 'easy' | 'medium' | 'hard') => {
+    setDifficulty(newDifficulty)
+  }
+
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
       <TicTacToe3D 
@@ -35,7 +30,7 @@ export default function Game() {
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
         difficulty={difficulty}
-        onChangeDifficulty={changeDifficulty}
+        onChangeDifficulty={handleChangeDifficulty}
       />
     </main>
   )
