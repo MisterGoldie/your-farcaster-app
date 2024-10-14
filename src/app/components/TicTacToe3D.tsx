@@ -334,6 +334,8 @@ const backgroundColors = [
 export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard' }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
+  console.log("TicTacToe3D received difficulty:", difficulty) // Add this line
+
   const changeBackgroundColor = () => {
     const newColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
     setBackgroundColor(newColor)

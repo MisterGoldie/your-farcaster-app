@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
@@ -10,6 +10,13 @@ export default function Game() {
   const [key, setKey] = useState(0)
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy')
   const router = useRouter()
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const difficultyFromURL = searchParams.get('difficulty') as 'easy' | 'medium' | 'hard';
+    if (difficultyFromURL) {
+      setDifficulty(difficultyFromURL);
+    }
+  }, []);
 
   const handleRestart = () => {
     setKey(prevKey => prevKey + 1)
