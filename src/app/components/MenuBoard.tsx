@@ -42,7 +42,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
 
-  const buttonWidth = viewport.width * 0.4
+  const buttonWidth = viewport.width * 0.6  // Increased width
   const buttonHeight = viewport.height * 0.15
   const cornerRadius = Math.min(buttonWidth, buttonHeight) * 0.2
 
@@ -75,11 +75,11 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               width={buttonWidth}
               height={buttonHeight}
               radius={cornerRadius}
-              color={hoveredButton === 'tic-tac-toe' ? "#33333" : "#000000"}
+              color={hoveredButton === 'tic-tac-toe' ? "#333333" : "#000000"}
             />
             <Text
               position={[0, 0, 0.01]}
-              fontSize={viewport.width * 0.08}
+              fontSize={viewport.width * 0.06}  // Adjusted font size
               color="white"
               anchorX="center"
               anchorY="middle"
