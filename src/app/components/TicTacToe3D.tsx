@@ -110,18 +110,18 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   const getSpeedMultiplier = () => {
     switch (difficulty) {
-      case 'easy': return 0.5;
+      case 'easy': return 0.5;  // Half speed
       case 'medium': return 2;
       case 'hard': return 4;
       default: return 1;
     }
   }
 
-  useFrame(() => {
+  useFrame((state) => {
     if (boardRef.current) {
       const speed = 0.02 * getSpeedMultiplier(); // Increased base speed from 0.007 to 0.02
-      console.log("Rotation speed:", speed, "Difficulty:", difficulty); // Added difficulty to log
-      boardRef.current.rotation.y += speed;
+      boardRef.current.rotation.y = Math.sin(state.clock.elapsedTime * speed) * 0.2;
+      console.log("Rotation speed:", speed, "Difficulty:", difficulty);
     }
   })
 
@@ -314,7 +314,7 @@ const backgroundColors = [
 
 type Difficulty = 'easy' | 'medium' | 'hard'
 
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard' }) {
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, onChangeDifficulty }: { onRestart: () => void, onBackToHome: () => void, difficulty: 'easy' | 'medium' | 'hard', onChangeDifficulty: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
   console.log("Difficulty in TicTacToe3D:", difficulty);
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
@@ -359,7 +359,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board difficulty={difficulty} /> {/* Make sure difficulty is passed here */}
+              <Board difficulty={difficulty} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
@@ -369,6 +369,11 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
             <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Home
             </button>
+          </div>
+          <div className="flex justify-center gap-2 py-2 bg-orange-700">
+            <button onClick={() => onChangeDifficulty('easy')} className={`px-2 py-1 rounded text-xs ${difficulty === 'easy' ? 'bg-orange-900' : 'bg-orange-800'}`}>Easy</button>
+            <button onClick={() => onChangeDifficulty('medium')} className={`px-2 py-1 rounded text-xs ${difficulty === 'medium' ? 'bg-orange-900' : 'bg-orange-800'}`}>Medium</button>
+            <button onClick={() => onChangeDifficulty('hard')} className={`px-2 py-1 rounded text-xs ${difficulty === 'hard' ? 'bg-orange-900' : 'bg-orange-800'}`}>Hard</button>
           </div>
         </div>
       </div>

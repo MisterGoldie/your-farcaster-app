@@ -15,6 +15,11 @@ export default function Game() {
     console.log("Current difficulty in Game component:", difficulty);
   }, [difficulty]);
 
+  const changeDifficulty = (newDifficulty: 'easy' | 'medium' | 'hard') => {
+    setDifficulty(newDifficulty);
+    console.log("Difficulty changed to:", newDifficulty);
+  }
+
   const handleRestart = () => {
     setKey(prevKey => prevKey + 1)
   }
@@ -26,11 +31,12 @@ export default function Game() {
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
       <TicTacToe3D 
-        key={key} 
-        onRestart={handleRestart} 
-        onBackToHome={handleBackToHome} 
-        difficulty={difficulty}
-      />
+        key={key}
+        onRestart={handleRestart}
+        onBackToHome={handleBackToHome}
+        difficulty={difficulty} onChangeDifficulty={function (difficulty: 'easy' | 'medium' | 'hard'): void {
+          throw new Error('Function not implemented.')
+        } }      />
     </main>
   )
 }
