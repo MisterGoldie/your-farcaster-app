@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Canvas, useThree } from '@react-three/fiber'
+import React, { useState, useEffect, useRef } from 'react'
+import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 
 type Difficulty = 'easy' | 'medium' | 'hard';
@@ -11,15 +11,6 @@ function DifficultySelector({ onSelectDifficulty }: { onSelectDifficulty: (diffi
 
   return (
     <group>
-      <Text
-        position={[0, viewport.height * 0.4, 0]}
-        fontSize={viewport.width * 0.08}
-        color="black"
-        anchorX="center"
-        anchorY="middle"
-      >
-        Select Difficulty:
-      </Text>
       {difficulties.map((difficulty, index) => (
         <Text
           key={difficulty}
@@ -28,7 +19,10 @@ function DifficultySelector({ onSelectDifficulty }: { onSelectDifficulty: (diffi
           color="black"
           anchorX="center"
           anchorY="middle"
-          onClick={() => onSelectDifficulty(difficulty)}
+          onClick={() => {
+            console.log("Difficulty selected:", difficulty);
+            onSelectDifficulty(difficulty);
+          }}
           onPointerOver={(e) => {
             document.body.style.cursor = 'pointer'
             e.object.scale.set(1.1, 1.1, 1.1)
@@ -124,3 +118,4 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
     </div>
   )
 }
+
