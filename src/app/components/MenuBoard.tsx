@@ -7,28 +7,39 @@ type MenuBoardProps = {
   onGoBack: () => void
 }
 
-function TicTacToeText({ onStartGame }: { onStartGame: () => void }) {
+function MenuText({ onStartGame }: { onStartGame: () => void }) {
   const { viewport } = useThree()
 
   return (
-    <Text
-      position={[0, 0, 0]}
-      fontSize={viewport.width * 0.08}
-      color="black"
-      anchorX="center"
-      anchorY="middle"
-      onClick={onStartGame}
-      onPointerOver={(e) => {
-        document.body.style.cursor = 'pointer'
-        e.object.scale.set(1.1, 1.1, 1.1)
-      }}
-      onPointerOut={(e) => {
-        document.body.style.cursor = 'default'
-        e.object.scale.set(1, 1, 1)
-      }}
-    >
-      Tic-Tac-Toe
-    </Text>
+    <group>
+      <Text
+        position={[0, viewport.height * 0.1, 0]}
+        fontSize={viewport.width * 0.06}
+        color="black"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Select Game:
+      </Text>
+      <Text
+        position={[0, -viewport.height * 0.05, 0]}
+        fontSize={viewport.width * 0.08}
+        color="black"
+        anchorX="center"
+        anchorY="middle"
+        onClick={onStartGame}
+        onPointerOver={(e) => {
+          document.body.style.cursor = 'pointer'
+          e.object.scale.set(1.1, 1.1, 1.1)
+        }}
+        onPointerOut={(e) => {
+          document.body.style.cursor = 'default'
+          e.object.scale.set(1, 1, 1)
+        }}
+      >
+        Tic-Tac-Toe
+      </Text>
+    </group>
   )
 }
 
@@ -47,7 +58,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <TicTacToeText onStartGame={onStartGame} />
+              <MenuText onStartGame={onStartGame} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
