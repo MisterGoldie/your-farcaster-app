@@ -13,13 +13,13 @@ function Cell({ position, onClick, value }: CellProps) {
   return (
     <group position={position}>
       <mesh onClick={onClick}>
-        <boxGeometry args={[0.9, 0.9, 0.1]} />
+        <boxGeometry args={[0.95, 0.95, 0.1]} />
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
       {value && (
         <Text
           position={[0, 0, 0.06]}
-          fontSize={0.6}
+          fontSize={0.7}
           color="#000000"
           anchorX="center"
           anchorY="middle"
@@ -167,20 +167,20 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
   const isDraw = !winner && board.every(Boolean)
 
   return (
-    <group ref={boardRef} scale={[1, 1, 1]}>
+    <group ref={boardRef} scale={[1.1, 1.1, 1]}>
       {/* Grid lines */}
-      <Line points={[-1.5, -0.5, 0, 1.5, -0.5, 0]} color="#000000" lineWidth={5} />
-      <Line points={[-1.5, 0.5, 0, 1.5, 0.5, 0]} color="#000000" lineWidth={5} />
-      <Line points={[-0.5, -1.5, 0, -0.5, 1.5, 0]} color="#000000" lineWidth={5} />
-      <Line points={[0.5, -1.5, 0, 0.5, 1.5, 0]} color="#000000" lineWidth={5} />
+      <Line points={[-1.6, -0.53, 0, 1.6, -0.53, 0]} color="#000000" lineWidth={7} />
+      <Line points={[-1.6, 0.53, 0, 1.6, 0.53, 0]} color="#000000" lineWidth={7} />
+      <Line points={[-0.53, -1.6, 0, -0.53, 1.6, 0]} color="#000000" lineWidth={7} />
+      <Line points={[0.53, -1.6, 0, 0.53, 1.6, 0]} color="#000000" lineWidth={7} />
 
       {/* Cells */}
       {board.map((value, index) => (
         <Cell
           key={index}
           position={[
-            (index % 3 - 1) * 1,
-            (1 - Math.floor(index / 3)) * 1,
+            (index % 3 - 1) * 1.06,
+            (1 - Math.floor(index / 3)) * 1.06,
             0
           ]}
           onClick={() => handleCellClick(index)}
@@ -190,8 +190,8 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
       {/* Timer */}
       <Text
-        position={[0, 1.8, 0]}
-        fontSize={0.25}
+        position={[0, 1.9, 0]}
+        fontSize={0.28}
         color="#000000"
         anchorX="center"
         anchorY="middle"
@@ -203,11 +203,11 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
       {(winner || isDraw || timeLeft === 0) && (
         <Text
           position={[0, 0, 1]}
-          fontSize={0.4}
+          fontSize={0.5}
           color="#000000"
           anchorX="center"
           anchorY="middle"
-          outlineWidth={0.02}
+          outlineWidth={0.03}
           outlineColor="#ffffff"
         >
           {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! Sorry!'}
