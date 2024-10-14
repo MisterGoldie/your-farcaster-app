@@ -87,11 +87,11 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
                 <DifficultySelector onSelectDifficulty={handleDifficultySelect} />
               ) : (
                 <Text
-                  position={[-1.5, 1.5, 0]}
-                  fontSize={0.3}
+                  position={[0, 0, 0]}  // This centers the text in the canvas
+                  fontSize={0.9}
                   color="black"
-                  anchorX="left"
-                  anchorY="top"
+                  anchorX="center"
+                  anchorY="middle"
                   onClick={() => setShowDifficulty(true)}
                   onPointerOver={(e) => {
                     document.body.style.cursor = 'pointer'
