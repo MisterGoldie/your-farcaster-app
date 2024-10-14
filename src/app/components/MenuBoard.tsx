@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
-import { Text } from '@react-three/drei'
+import { Text, Plane } from '@react-three/drei'
+import * as THREE from 'three'
 
 type MenuBoardProps = {
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void
@@ -10,6 +11,8 @@ type MenuBoardProps = {
 function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const buttonRef = useRef<THREE.Mesh>(null)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
 
@@ -26,24 +29,34 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
           >
             Select Game:
           </Text>
-          <Text
-            position={[0, -viewport.height * 0.05, 0]}
-            fontSize={viewport.width * 0.08}
-            color="black"
-            anchorX="center"
-            anchorY="middle"
-            onClick={() => setShowDifficulty(true)}
-            onPointerOver={(e) => {
+          <group
+            onPointerOver={() => {
               document.body.style.cursor = 'pointer'
-              e.object.scale.set(1.1, 1.1, 1.1)
+              setHovered(true)
             }}
-            onPointerOut={(e) => {
+            onPointerOut={() => {
               document.body.style.cursor = 'default'
-              e.object.scale.set(1, 1, 1)
+              setHovered(false)
             }}
+            onClick={() => setShowDifficulty(true)}
           >
-            Tic-Tac-Toe
-          </Text>
+            <Plane
+              ref={buttonRef}
+              args={[viewport.width * 0.4, viewport.height * 0.15]}
+              position={[0, -viewport.height * 0.05, -0.01]}
+            >
+              <meshBasicMaterial color={hovered ? "#ff8c00" : "#ff6600"} />
+            </Plane>
+            <Text
+              position={[0, -viewport.height * 0.05, 0]}
+              fontSize={viewport.width * 0.08}
+              color="white"
+              anchorX="center"
+              anchorY="middle"
+            >
+              Tic-Tac-Toe
+            </Text>
+          </group>
         </>
       ) : (
         <>
