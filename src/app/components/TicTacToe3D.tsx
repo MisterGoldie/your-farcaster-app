@@ -148,8 +148,8 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
     // For hard difficulty
     if (!board[4]) {
-      // If center is available, 50% chance to take it
-      if (Math.random() < 0.5) return 4
+      // If center is available, 70% chance to take it
+      if (Math.random() < 0.7) return 4
     }
 
     // Prefer corners, then sides, then center
