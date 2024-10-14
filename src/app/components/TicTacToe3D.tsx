@@ -100,8 +100,15 @@ function Board({ difficulty }: { difficulty: Difficulty }) {
 
   useFrame((state) => {
     if (boardRef.current && difficulty !== 'easy') {
-      boardRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.2
-      boardRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.2
+      let speedMultiplier = 1;
+      if (difficulty === 'medium') {
+        speedMultiplier = 2;
+      } else if (difficulty === 'hard') {
+        speedMultiplier = 3;
+      }
+
+      boardRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3 * speedMultiplier) * 0.2 * speedMultiplier
+      boardRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2 * speedMultiplier) * 0.2 * speedMultiplier
     }
   })
 
