@@ -112,14 +112,14 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
     switch (difficulty) {
       case 'easy': return 0.0;
       case 'medium': return 0.0;
-      case 'hard': return 2.0;
+      case 'hard': return 0.05;
       default: return 0.0;
     }
   }
 
   useFrame((state) => {
     if (boardRef.current) {
-      const speed = 0.01 * getSpeedMultiplier();
+      const speed = getSpeedMultiplier();
       boardRef.current.rotation.y += speed;
     }
   })
