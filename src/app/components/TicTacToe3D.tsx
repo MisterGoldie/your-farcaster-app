@@ -148,19 +148,38 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
     }
 
     // For hard difficulty
-    if (!board[4]) {
+    if (difficulty === 'hard') {
+      // Check for winning move
+      for (let i = 0; i < emptySpots.length; i++) {
+        const testBoard = [...board]
+        testBoard[emptySpots[i]] = 'X'
+        if (checkWinner(testBoard) === 'X') {
+          return emptySpots[i]
+        }
+      }
+
+      // Check for blocking player's winning move
+      for (let i = 0; i < emptySpots.length; i++) {
+        const testBoard = [...board]
+        testBoard[emptySpots[i]] = 'O'
+        if (checkWinner(testBoard) === 'O') {
+          return emptySpots[i]
+        }
+      }
+
       // If center is available, 70% chance to take it
-      if (Math.random() < 0.7) return 4
+      if (!board[4] && Math.random() < 0.7) return 4
+
+      // Prefer corners, then sides
+      if (corners.length > 0) {
+        return corners[Math.floor(Math.random() * corners.length)]
+      } else if (sides.length > 0) {
+        return sides[Math.floor(Math.random() * sides.length)]
+      }
     }
 
-    // Prefer corners, then sides, then center
-    if (corners.length > 0) {
-      return corners[Math.floor(Math.random() * corners.length)]
-    } else if (sides.length > 0) {
-      return sides[Math.floor(Math.random() * sides.length)]
-    } else {
-      return 4 // center, if somehow it's the only spot left
-    }
+    // Fallback: choose a random empty spot
+    return emptySpots[Math.floor(Math.random() * emptySpots.length)]
   }
 
   const winner = checkWinner(board)
