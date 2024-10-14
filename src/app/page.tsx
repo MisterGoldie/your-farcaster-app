@@ -7,12 +7,8 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-black text-white p-4 sm:p-8">
       <h1 className="text-2xl sm:text-4xl mb-4 sm:mb-8 font-['Frijole'] text-center">
-        POD Play Tic-Tac-Toe
+        Welcome to POD Play 🕹️
       </h1>
-      
-      <p className="text-lg sm:text-xl mb-6 text-center max-w-md">
-        Welcome to POD Play presented by /thepod 🕹️
-      </p>
       
       <div className="w-full max-w-xs sm:max-w-sm md:max-w-md aspect-square relative mb-8">
         <Image 
@@ -28,7 +24,7 @@ export default function Home() {
         href="/howtoplay" 
         className="bg-orange-600 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-orange-800 transition-colors text-shadow-custom"
       >
-        Start Game
+        Enter
       </Link>
     </main>
   )
