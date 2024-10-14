@@ -126,23 +126,40 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
     if (emptySpots.length === 0) return -1 // No move available
 
-    // Take center if available
-    if (!board[4]) return 4
+    if (difficulty === 'easy') {
+      // For easy difficulty, just choose a random empty spot
+      return emptySpots[Math.floor(Math.random() * emptySpots.length)]
+    }
 
-    // Take any available corner
+    // For medium and hard difficulties, use a more strategic approach
     const corners = [0, 2, 6, 8].filter(i => !board[i])
+    const sides = [1, 3, 5, 7].filter(i => !board[i])
+
+    if (difficulty === 'medium') {
+      // Prefer corners, then center, then sides
+      if (corners.length > 0) {
+        return corners[Math.floor(Math.random() * corners.length)]
+      } else if (!board[4]) {
+        return 4 // center
+      } else {
+        return sides[Math.floor(Math.random() * sides.length)]
+      }
+    }
+
+    // For hard difficulty
+    if (!board[4]) {
+      // If center is available, 50% chance to take it
+      if (Math.random() < 0.5) return 4
+    }
+
+    // Prefer corners, then sides, then center
     if (corners.length > 0) {
       return corners[Math.floor(Math.random() * corners.length)]
-    }
-
-    // Take any available side
-    const sides = [1, 3, 5, 7].filter(i => !board[i])
-    if (sides.length > 0) {
+    } else if (sides.length > 0) {
       return sides[Math.floor(Math.random() * sides.length)]
+    } else {
+      return 4 // center, if somehow it's the only spot left
     }
-
-    // This should never happen, but just in case
-    return emptySpots[Math.floor(Math.random() * emptySpots.length)]
   }
 
   const winner = checkWinner(board)
