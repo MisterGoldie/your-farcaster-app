@@ -25,7 +25,7 @@ function RoundedRectangle({ width, height, radius, color }: { width: number; hei
   return (
     <mesh>
       <shapeGeometry args={[shape]} />
-      <meshBasicMaterial color={color} transparent opacity={0.9} />
+      <meshBasicMaterial color={color} /> // Removed transparency
     </mesh>
   )
 }
@@ -75,7 +75,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               width={buttonWidth}
               height={buttonHeight}
               radius={cornerRadius}
-              color={hovered ? "#ff8c00" : "#ff6600"}
+              color={hovered ? "#333333" : "#000000"} // Dark gray when hovered, black otherwise
             />
             <Text
               position={[0, 0, 0.01]}
