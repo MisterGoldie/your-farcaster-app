@@ -25,7 +25,7 @@ function RoundedRectangle({ width, height, radius, color }: { width: number; hei
   return (
     <mesh>
       <shapeGeometry args={[shape]} />
-      <meshBasicMaterial color={color} transparent opacity={0.8} />
+      <meshBasicMaterial color={color} transparent opacity={0.9} />
     </mesh>
   )
 }
@@ -60,6 +60,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
             Select Game:
           </Text>
           <group
+            position={[0, -viewport.height * 0.05, 0]}
             onPointerOver={() => {
               document.body.style.cursor = 'pointer'
               setHovered(true)
@@ -77,7 +78,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               color={hovered ? "#ff8c00" : "#ff6600"}
             />
             <Text
-              position={[0, -viewport.height * 0.05, 0.01]}
+              position={[0, 0, 0.01]}
               fontSize={viewport.width * 0.08}
               color="white"
               anchorX="center"
