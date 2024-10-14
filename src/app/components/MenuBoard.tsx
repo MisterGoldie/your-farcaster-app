@@ -53,10 +53,6 @@ type MenuBoardProps = {
 export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
   const [showDifficulty, setShowDifficulty] = useState(false)
 
-  const handleDifficultySelect = (difficulty: Difficulty) => {
-    onStartGame(difficulty)
-  }
-
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -84,26 +80,37 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               {showDifficulty ? (
-                <DifficultySelector onSelectDifficulty={handleDifficultySelect} />
+                <DifficultySelector onSelectDifficulty={(difficulty) => onStartGame(difficulty)} />
               ) : (
-                <Text
-                  position={[0, 0, 0]}  // This centers the text in the canvas
-                  fontSize={0.9}
-                  color="black"
-                  anchorX="center"
-                  anchorY="middle"
-                  onClick={() => setShowDifficulty(true)}
-                  onPointerOver={(e) => {
-                    document.body.style.cursor = 'pointer'
-                    e.object.scale.set(1.1, 1.1, 1.1)
-                  }}
-                  onPointerOut={(e) => {
-                    document.body.style.cursor = 'default'
-                    e.object.scale.set(1, 1, 1)
-                  }}
-                >
-                  Tic-Tac-Toe
-                </Text>
+                <group>
+                  <Text
+                    position={[0, 1, 0]}
+                    fontSize={0.5}
+                    color="black"
+                    anchorX="center"
+                    anchorY="middle"
+                  >
+                    Select Game:
+                  </Text>
+                  <Text
+                    position={[0, 0, 0]}
+                    fontSize={0.7}
+                    color="black"
+                    anchorX="center"
+                    anchorY="middle"
+                    onClick={() => setShowDifficulty(true)}
+                    onPointerOver={(e) => {
+                      document.body.style.cursor = 'pointer'
+                      e.object.scale.set(1.1, 1.1, 1.1)
+                    }}
+                    onPointerOut={(e) => {
+                      document.body.style.cursor = 'default'
+                      e.object.scale.set(1, 1, 1)
+                    }}
+                  >
+                    Tic-Tac-Toe
+                  </Text>
+                </group>
               )}
             </Canvas>
           </div>
