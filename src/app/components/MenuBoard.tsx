@@ -16,24 +16,35 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
   return (
     <group>
       {!showDifficulty ? (
-        <Text
-          position={[0, 0, 0]}
-          fontSize={viewport.width * 0.08}
-          color="black"
-          anchorX="center"
-          anchorY="middle"
-          onClick={() => setShowDifficulty(true)}
-          onPointerOver={(e) => {
-            document.body.style.cursor = 'pointer'
-            e.object.scale.set(1.1, 1.1, 1.1)
-          }}
-          onPointerOut={(e) => {
-            document.body.style.cursor = 'default'
-            e.object.scale.set(1, 1, 1)
-          }}
-        >
-          Tic-Tac-Toe
-        </Text>
+        <>
+          <Text
+            position={[0, viewport.height * 0.1, 0]}
+            fontSize={viewport.width * 0.06}
+            color="black"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Select Game:
+          </Text>
+          <Text
+            position={[0, -viewport.height * 0.05, 0]}
+            fontSize={viewport.width * 0.08}
+            color="black"
+            anchorX="center"
+            anchorY="middle"
+            onClick={() => setShowDifficulty(true)}
+            onPointerOver={(e) => {
+              document.body.style.cursor = 'pointer'
+              e.object.scale.set(1.1, 1.1, 1.1)
+            }}
+            onPointerOut={(e) => {
+              document.body.style.cursor = 'default'
+              e.object.scale.set(1, 1, 1)
+            }}
+          >
+            Tic-Tac-Toe
+          </Text>
+        </>
       ) : (
         <>
           {difficultyOptions.map((difficulty, index) => (
