@@ -12,10 +12,10 @@ function DifficultySelector({ onSelectDifficulty }: { onSelectDifficulty: (diffi
   return (
     <group>
       <Text
-        position={[-viewport.width / 2 + 0.5, viewport.height / 2 - 0.5, 0]}
-        fontSize={viewport.width * 0.06}
+        position={[0, viewport.height / 2 - 1, 0]}
+        fontSize={viewport.width * 0.08}
         color="black"
-        anchorX="left"
+        anchorX="center"
         anchorY="top"
       >
         Select Difficulty:
@@ -23,11 +23,11 @@ function DifficultySelector({ onSelectDifficulty }: { onSelectDifficulty: (diffi
       {difficulties.map((difficulty, index) => (
         <Text
           key={difficulty}
-          position={[-viewport.width / 2 + 0.5, viewport.height / 2 - 0.8 - index * 0.4, 0]}
-          fontSize={viewport.width * 0.05}
+          position={[0, viewport.height / 4 - index * (viewport.height / 4), 0]}
+          fontSize={viewport.width * 0.06}
           color="black"
-          anchorX="left"
-          anchorY="top"
+          anchorX="center"
+          anchorY="middle"
           onClick={() => onSelectDifficulty(difficulty)}
           onPointerOver={(e) => {
             document.body.style.cursor = 'pointer'
