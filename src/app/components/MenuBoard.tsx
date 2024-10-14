@@ -112,7 +112,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               />
               <Text
                 position={[0, 0, 0.01]}
-                fontSize={viewport.width * 0.06}
+                fontSize={viewport.width * 0.05}
                 color="white"
                 anchorX="center"
                 anchorY="middle"
