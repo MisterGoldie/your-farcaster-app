@@ -90,7 +90,7 @@ function Bat({ position }: { position: [number, number, number] }) {
   )
 }
 
-function Board() {
+function Board({ difficulty }: { difficulty: Difficulty }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -98,9 +98,10 @@ function Board() {
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
 
-  useFrame(() => {
-    if (boardRef.current) {
-      boardRef.current.rotation.y += 0.007 //ROTATION SPEED
+  useFrame((state) => {
+    if (boardRef.current && difficulty !== 'easy') {
+      boardRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.2
+      boardRef.current.rotation.y = Math.sin(state.clock.elapsedTime * 0.2) * 0.2
     }
   })
 
@@ -337,7 +338,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board />
+              <Board difficulty={difficulty} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
