@@ -110,10 +110,10 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   const getSpeedMultiplier = () => {
     switch (difficulty) {
-      case 'easy': return 0.5;
-      case 'medium': return 1.0;
-      case 'hard': return 1.5;
-      default: return 1.0;
+      case 'easy': return 0.0;
+      case 'medium': return 0.0;
+      case 'hard': return 2.0;
+      default: return 0.0;
     }
   }
 
