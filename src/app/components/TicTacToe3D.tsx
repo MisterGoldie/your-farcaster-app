@@ -110,17 +110,17 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   const getSpeedMultiplier = () => {
     switch (difficulty) {
-      case 'easy': return 0.5;  // Half speed
-      case 'medium': return 1;  // Normal speed
-      case 'hard': return 2;    // Double speed
+      case 'easy': return 0.5;
+      case 'medium': return 2;
+      case 'hard': return 4;
       default: return 1;
     }
   }
 
   useFrame(() => {
     if (boardRef.current) {
-      const speed = 0.007 * getSpeedMultiplier();
-      console.log("Rotation speed:", speed); // Debug log
+      const speed = 0.02 * getSpeedMultiplier(); // Increased base speed from 0.007 to 0.02
+      console.log("Rotation speed:", speed, "Difficulty:", difficulty); // Added difficulty to log
       boardRef.current.rotation.y += speed;
     }
   })
