@@ -110,16 +110,18 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   const getSpeedMultiplier = () => {
     switch (difficulty) {
-      case 'easy': return 1;
-      case 'medium': return 1.5;
-      case 'hard': return 2;
+      case 'easy': return 0.5;  // Half speed
+      case 'medium': return 1;  // Normal speed
+      case 'hard': return 2;    // Double speed
       default: return 1;
     }
   }
 
   useFrame(() => {
     if (boardRef.current) {
-      boardRef.current.rotation.y += 0.007 * getSpeedMultiplier() // Adjusted rotation speed
+      const speed = 0.007 * getSpeedMultiplier();
+      console.log("Rotation speed:", speed); // Debug log
+      boardRef.current.rotation.y += speed;
     }
   })
 
@@ -357,7 +359,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board difficulty={difficulty} />
+              <Board difficulty={difficulty} /> {/* Make sure difficulty is passed here */}
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
