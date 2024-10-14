@@ -338,7 +338,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { o
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board difficulty={difficulty} />
+              <Board difficulty={difficulty} /> {/* Pass difficulty here */}
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">

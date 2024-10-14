@@ -8,6 +8,7 @@ const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: fa
 
 export default function Game() {
   const [key, setKey] = useState(0)
+  const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium')
   const router = useRouter()
 
   const handleRestart = () => {
@@ -20,7 +21,12 @@ export default function Game() {
 
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
-      <TicTacToe3D key={key} onRestart={handleRestart} onBackToHome={handleBackToHome} difficulty={'easy'} />
+      <TicTacToe3D 
+        key={key} 
+        onRestart={handleRestart} 
+        onBackToHome={handleBackToHome} 
+        difficulty={difficulty}
+      />
     </main>
   )
 }
