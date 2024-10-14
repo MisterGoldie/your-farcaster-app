@@ -38,7 +38,7 @@ type MenuBoardProps = {
 function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
-  const [hovered, setHovered] = useState(false)
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
 
@@ -63,11 +63,11 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
             position={[0, -viewport.height * 0.05, 0]}
             onPointerOver={() => {
               document.body.style.cursor = 'pointer'
-              setHovered(true)
+              setHoveredButton('tic-tac-toe')
             }}
             onPointerOut={() => {
               document.body.style.cursor = 'default'
-              setHovered(false)
+              setHoveredButton(null)
             }}
             onClick={() => setShowDifficulty(true)}
           >
@@ -75,7 +75,7 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               width={buttonWidth}
               height={buttonHeight}
               radius={cornerRadius}
-              color={hovered ? "#333333" : "#000000"} // Dark gray when hovered, black otherwise
+              color={hoveredButton === 'tic-tac-toe' ? "#33333" : "#000000"}
             />
             <Text
               position={[0, 0, 0.01]}
@@ -91,25 +91,35 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
       ) : (
         <>
           {difficultyOptions.map((difficulty, index) => (
-            <Text
+            <group
               key={difficulty}
               position={[0, viewport.height * 0.2 - index * viewport.height * 0.2, 0]}
-              fontSize={viewport.width * 0.06}
-              color="black"
-              anchorX="center"
-              anchorY="middle"
-              onClick={() => onStartGame(difficulty)}
-              onPointerOver={(e) => {
+              onPointerOver={() => {
                 document.body.style.cursor = 'pointer'
-                e.object.scale.set(1.1, 1.1, 1.1)
+                setHoveredButton(difficulty)
               }}
-              onPointerOut={(e) => {
+              onPointerOut={() => {
                 document.body.style.cursor = 'default'
-                e.object.scale.set(1, 1, 1)
+                setHoveredButton(null)
               }}
+              onClick={() => onStartGame(difficulty)}
             >
-              {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
-            </Text>
+              <RoundedRectangle
+                width={buttonWidth}
+                height={buttonHeight}
+                radius={cornerRadius}
+                color={hoveredButton === difficulty ? "#333333" : "#000000"}
+              />
+              <Text
+                position={[0, 0, 0.01]}
+                fontSize={viewport.width * 0.06}
+                color="white"
+                anchorX="center"
+                anchorY="middle"
+              >
+                {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)}
+              </Text>
+            </group>
           ))}
         </>
       )}
