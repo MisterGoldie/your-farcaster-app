@@ -26,6 +26,7 @@ function calculatePODScore(wins: number, ties: number, losses: number, totalGame
 export default function HowToPlay() {
   const router = useRouter()
   const { user } = useUserContext()
+  const [isLoading, setIsLoading] = useState(true)
   const [playerData, setPlayerData] = useState({
     name: 'Player',
     profileImage: 'https://example.com/default-profile.jpg',
@@ -71,6 +72,20 @@ export default function HowToPlay() {
 
     fetchPlayerData()
   }, [user])
+
+  useEffect(() => {
+    // Simulate checking for user authentication
+    const checkUser = async () => {
+      // Replace this with your actual user authentication logic
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      setIsLoading(false)
+    }
+    checkUser()
+  }, [])
+
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
 
   const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard') => {
     router.push(`/game?difficulty=${difficulty}`)
