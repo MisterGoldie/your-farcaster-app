@@ -17,6 +17,7 @@ export const metadata: Metadata = {
     'fc:frame': 'vNext',
     'fc:frame:image': frameImageUrl,
     'fc:frame:button:1': 'Enter',
+    'fc:frame:button:1:action': 'post',
     'fc:frame:post_url': 'https://your-farcaster-app.vercel.app/api/howtoplay',
     'frames.js:version': '0.19.3',
   },
