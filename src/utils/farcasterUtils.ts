@@ -55,10 +55,3 @@ export async function getUsername(fid: string): Promise<string> {
   // Implementation here
   return 'Player';
 }
-
-function calculatePODScore(wins: number, ties: number, losses: number, totalGames: number, tokenBalance: number): number {
-  // Implementation here
-  return 0;
-}
-
-// Add other utility functions as needed

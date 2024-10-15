@@ -33,17 +33,9 @@ function RoundedRectangle({ width, height, radius, color }: { width: number; hei
 type MenuBoardProps = {
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void
   onGoBack: () => void
-  playerData: {
-    name: string
-    profileImage: string
-    podScore: number
-    record: { wins: number; losses: number; ties: number }
-    totalGamesPlayed: number
-    thepodTokens: number
-  }
 }
 
-function MenuText({ onStartGame, playerData }: { onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void, playerData: MenuBoardProps['playerData'] }) {
+function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
@@ -58,24 +50,6 @@ function MenuText({ onStartGame, playerData }: { onStartGame: (difficulty: 'easy
     <group>
       {!showDifficulty ? (
         <>
-          <Text
-            position={[0, viewport.height * 0.3, 0]}
-            fontSize={viewport.width * 0.05}
-            color="black"
-            anchorX="center"
-            anchorY="middle"
-          >
-            Welcome, {playerData.name}!
-          </Text>
-          <Text
-            position={[0, viewport.height * 0.2, 0]}
-            fontSize={viewport.width * 0.04}
-            color="black"
-            anchorX="center"
-            anchorY="middle"
-          >
-            POD Score: {playerData.podScore}
-          </Text>
           <Text
             position={[0, viewport.height * 0.1, 0]}
             fontSize={viewport.width * 0.06}
@@ -153,7 +127,7 @@ function MenuText({ onStartGame, playerData }: { onStartGame: (difficulty: 'easy
   )
 }
 
-export default function MenuBoard({ onStartGame, onGoBack, playerData }: MenuBoardProps) {
+export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -168,7 +142,7 @@ export default function MenuBoard({ onStartGame, onGoBack, playerData }: MenuBoa
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} playerData={playerData} />
+              <MenuText onStartGame={onStartGame} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
