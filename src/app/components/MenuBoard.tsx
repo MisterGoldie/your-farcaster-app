@@ -17,16 +17,6 @@ function MenuText({ onStartGame, onGoBack }: {
 
   return (
     <group>
-      <Text
-        position={[0, viewport.height * 0.35, 0]}
-        fontSize={viewport.width * 0.1}
-        color="white"
-        anchorX="center"
-        anchorY="middle"
-      >
-        MAIN MENU
-      </Text>
-      
       {difficultyOptions.map((difficulty, index) => (
         <group
           key={difficulty}
@@ -56,33 +46,6 @@ function MenuText({ onStartGame, onGoBack }: {
           </Text>
         </group>
       ))}
-
-      <group
-        position={[0, -viewport.height * 0.4, 0]}
-        onPointerOver={() => {
-          document.body.style.cursor = 'pointer'
-          setHoveredButton('goback')
-        }}
-        onPointerOut={() => {
-          document.body.style.cursor = 'default'
-          setHoveredButton(null)
-        }}
-        onClick={onGoBack}
-      >
-        <mesh>
-          <planeGeometry args={[buttonWidth, buttonHeight]} />
-          <meshBasicMaterial color={hoveredButton === 'goback' ? "#8B4000" : "#A52A2A"} />
-        </mesh>
-        <Text
-          position={[0, 0, 0.01]}
-          fontSize={viewport.width * 0.05}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          Go Back
-        </Text>
-      </group>
     </group>
   )
 }
@@ -92,11 +55,27 @@ export default function MenuBoard({ onStartGame, onGoBack }: {
   onGoBack: () => void
 }) {
   return (
-    <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
-      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-        <color attach="background" args={['#f97316']} />
-        <MenuText onStartGame={onStartGame} onGoBack={onGoBack} />
-      </Canvas>
+    <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col">
+      <div className="bg-orange-700 py-2">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
+          MAIN MENU
+        </h1>
+      </div>
+      <div className="flex-grow relative">
+        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+          <color attach="background" args={['#f97316']} />
+          <MenuText onStartGame={onStartGame} onGoBack={onGoBack} />
+        </Canvas>
+      </div>
+      <div className="bg-orange-700 py-3 flex justify-center">
+        <button
+          onClick={onGoBack}
+          className="bg-red-700 text-white px-6 py-2 rounded text-lg hover:bg-red-800 transition-colors"
+          style={{ fontFamily: 'Frijole, cursive' }}
+        >
+          Go Back
+        </button>
+      </div>
     </div>
   )
 }
