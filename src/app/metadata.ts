@@ -2,16 +2,14 @@ import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'POD Play Tic-Tac-Toe',
-  description: 'Play Tic-Tac-Toe presented by /thepod',
+  description: 'Play Tic-Tac-Toe in Farcaster!',
   openGraph: {
-    title: 'POD Play Tic-Tac-Toe',
-    description: 'Play Tic-Tac-Toe presented by /thepod',
-    images: ['https://your-farcaster-app.vercel.app/your-image.png'],
+    images: ['https://your-farcaster-app.vercel.app/game-preview.png'],
   },
   other: {
     'fc:frame': 'vNext',
-    'fc:frame:image': 'https://your-farcaster-app.vercel.app/your-image.png',
-    'fc:frame:button:1': 'Start Game',
+    'fc:frame:image': 'https://your-farcaster-app.vercel.app/game-preview.png',
+    'fc:frame:button:1': 'Play Now',
     'fc:frame:post_url': 'https://your-farcaster-app.vercel.app/api/frame',
   },
 }
