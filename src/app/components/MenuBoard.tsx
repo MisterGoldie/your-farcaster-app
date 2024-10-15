@@ -36,19 +36,23 @@ type MenuBoardProps = {
   onGoBack: () => void
 }
 
-function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void }) {
+function MenuText({ onStartGame, isMuted, toggleMute }: { 
+  onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void,
+  isMuted: boolean,
+  toggleMute: () => void
+}) {
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
 
-  const buttonWidth = viewport.width * 0.6  // Increased width
+  const buttonWidth = viewport.width * 0.6
   const buttonHeight = viewport.height * 0.15
   const cornerRadius = Math.min(buttonWidth, buttonHeight) * 0.2
 
-  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5 });
-  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5 });
+  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   return (
     <group>
@@ -135,11 +139,48 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
           ))}
         </>
       )}
+      {/* Add mute button */}
+      <group
+        position={[viewport.width * 0.4, viewport.height * 0.4, 0]}
+        onPointerOver={() => {
+          document.body.style.cursor = 'pointer'
+          if (!isMuted) playHover()
+        }}
+        onPointerOut={() => {
+          document.body.style.cursor = 'default'
+        }}
+        onClick={() => {
+          toggleMute()
+          if (!isMuted) playClick()
+        }}
+      >
+        <RoundedRectangle
+          width={viewport.width * 0.1}
+          height={viewport.width * 0.1}
+          radius={cornerRadius}
+          color={isMuted ? "#ff0000" : "#00ff00"}
+        />
+        <Text
+          position={[0, 0, 0.01]}
+          fontSize={viewport.width * 0.03}
+          color="white"
+          anchorX="center"
+          anchorY="middle"
+        >
+          {isMuted ? "Unmute" : "Mute"}
+        </Text>
+      </group>
     </group>
   )
 }
 
 export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
+  const [isMuted, setIsMuted] = useState(false)
+
+  const toggleMute = () => {
+    setIsMuted(prev => !prev)
+  }
+
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -154,7 +195,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} />
+              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} />
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
