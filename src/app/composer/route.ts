@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
     "icon": "joystick",
     "description": "View POD Play Tic-Tac-Toe within Farcaster",
     "aboutUrl": "https://your-farcaster-app.vercel.app/",
-    "imageUrl": "https://bafybeidnv5uh2ne54dlzyummobyv3bmc7uzuyt5htodvy27toqqhijf4xu.ipfs.w3s.link/PodPlay.gif",
+    "imageUrl": "https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF",
     "action": {
       "type": "post"
     }
