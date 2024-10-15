@@ -35,9 +35,9 @@ export default function Share() {
   }, []);
 
   const shareGame = () => {
-    const shareText = 'Welcome to POD Play presented by /thepod 🕹️. Think you can win a game of Tic-Tac-Toe? Frame by @goldie & @themrsazon, powered by @moxie.eth'
-    const shareUrl = 'https://your-farcaster-app.vercel.app/api'
-    const farcasterShareURL = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(shareUrl)}`
+    const shareText = 'Welcome to POD Play presented by /thepod 🕹️. Think you can win a game of Tic-Tac-Toe?'
+    const shareUrl = 'https://your-farcaster-app.vercel.app'
+    const farcasterShareURL = `https://warpcast.com/~/compose?text=${encodeURIComponent(shareText)}&embeds[]=${encodeURIComponent(shareUrl)}&mini_app_id=pod-play-tic-tac-toe`
     window.open(farcasterShareURL, '_blank')
   }
 

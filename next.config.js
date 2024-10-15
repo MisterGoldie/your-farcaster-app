@@ -23,6 +23,18 @@ const nextConfig = {
           {
             key: 'X-Frame-Options',
             value: 'ALLOW-FROM https://*.farcaster.xyz https://*.warpcast.com'
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: 'https://*.farcaster.xyz, https://*.warpcast.com'
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, OPTIONS'
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-Farcaster-User'
           }
         ],
       },

@@ -11,5 +11,7 @@ export const metadata: Metadata = {
     'fc:frame:image': 'https://your-farcaster-app.vercel.app/game-preview.png',
     'fc:frame:button:1': 'Play Now',
     'fc:frame:post_url': 'https://your-farcaster-app.vercel.app/api/frame',
+    'fc:custom:mini_app_id': 'pod-play-tic-tac-toe',
+    'fc:custom:base_url': 'https://your-farcaster-app.vercel.app',
   },
 }
