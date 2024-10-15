@@ -2,6 +2,7 @@ import React, { useState, useRef, useMemo } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
+import useSound from 'use-sound';
 
 function RoundedRectangle({ width, height, radius, color }: { width: number; height: number; radius: number; color: string }) {
   const shape = useMemo(() => {
@@ -46,6 +47,9 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
   const buttonHeight = viewport.height * 0.15
   const cornerRadius = Math.min(buttonWidth, buttonHeight) * 0.2
 
+  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5 });
+  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5 });
+
   return (
     <group>
       {!showDifficulty ? (
@@ -64,12 +68,16 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
             onPointerOver={() => {
               document.body.style.cursor = 'pointer'
               setHoveredButton('tic-tac-toe')
+              playHover()
             }}
             onPointerOut={() => {
               document.body.style.cursor = 'default'
               setHoveredButton(null)
             }}
-            onClick={() => setShowDifficulty(true)}
+            onClick={() => {
+              setShowDifficulty(true)
+              playClick()
+            }}
           >
             <RoundedRectangle
               width={buttonWidth}
@@ -97,12 +105,16 @@ function MenuText({ onStartGame }: { onStartGame: (difficulty: 'easy' | 'medium'
               onPointerOver={() => {
                 document.body.style.cursor = 'pointer'
                 setHoveredButton(difficulty)
+                playHover()
               }}
               onPointerOut={() => {
                 document.body.style.cursor = 'default'
                 setHoveredButton(null)
               }}
-              onClick={() => onStartGame(difficulty)}
+              onClick={() => {
+                onStartGame(difficulty)
+                playClick()
+              }}
             >
               <RoundedRectangle
                 width={buttonWidth}
