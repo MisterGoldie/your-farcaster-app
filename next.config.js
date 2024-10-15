@@ -23,6 +23,7 @@ const nextConfig = {
   webpack: (config) => {
     config.externals.push({
       'react-native-config': 'react-native-config',
+      canvas: 'canvas',
     })
     return config
   },
