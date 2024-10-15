@@ -2,9 +2,8 @@ import React, { useState } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 
-function MenuText({ onStartGame, onGoBack }: { 
-  onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void,
-  onGoBack: () => void
+function MenuText({ onStartGame }: { 
+  onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void
 }) {
   const { viewport } = useThree()
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
@@ -13,7 +12,7 @@ function MenuText({ onStartGame, onGoBack }: {
 
   const buttonWidth = viewport.width * 0.6
   const buttonHeight = viewport.height * 0.1
-  const cornerRadius = Math.min(buttonWidth, buttonHeight) * 0.2
+  const cornerRadius = Math.min(buttonWidth, buttonHeight) * 0.25
 
   return (
     <group>
@@ -64,7 +63,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: {
       <div className="flex-grow relative">
         <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
           <color attach="background" args={['#f97316']} />
-          <MenuText onStartGame={onStartGame} onGoBack={onGoBack} />
+          <MenuText onStartGame={onStartGame} />
         </Canvas>
       </div>
       <div className="bg-orange-700 py-3 flex justify-center">
@@ -73,7 +72,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: {
           className="bg-red-700 text-white px-6 py-2 rounded text-lg hover:bg-red-800 transition-colors"
           style={{ fontFamily: 'Frijole, cursive' }}
         >
-          Go Back
+          GO BACK
         </button>
       </div>
     </div>
