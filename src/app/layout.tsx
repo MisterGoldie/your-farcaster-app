@@ -1,26 +1,9 @@
 import './globals.css'
 import { Metadata } from 'next'
-import { UserProvider } from './context/UserContext'
-
-// Use the provided IPFS image
-const frameImageUrl = 'https://bafybeicodlej4oiq6fq5lfztym5tvgndslczfqyvquvpamdloqvjrf7lly.ipfs.w3s.link/image%2019.png'
 
 export const metadata: Metadata = {
   title: 'POD Play Tic-Tac-Toe',
-  description: 'Play Tic-Tac-Toe with POD Play',
-  openGraph: {
-    title: 'POD Play Tic-Tac-Toe',
-    description: 'Play Tic-Tac-Toe with POD Play',
-    images: [frameImageUrl],
-  },
-  other: {
-    'fc:frame': 'vNext',
-    'fc:frame:image': frameImageUrl,
-    'fc:frame:button:1': 'Enter',
-    'fc:frame:button:1:action': 'post',
-    'fc:frame:post_url': 'https://your-farcaster-app.vercel.app/api/howtoplay',
-    'frames.js:version': '0.19.3',
-  },
+  description: 'A Tic-Tac-Toe game presented by /thepod',
 }
 
 export default function RootLayout({
@@ -30,10 +13,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
-        <UserProvider>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Frijole&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+      </head>
+      <body className="bg-black flex items-center justify-center min-h-screen">
+        <div className="w-full max-w-md px-4">
           {children}
-        </UserProvider>
+        </div>
       </body>
     </html>
   )
