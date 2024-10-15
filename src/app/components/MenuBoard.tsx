@@ -139,7 +139,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
           ))}
         </>
       )}
-      {/* Add mute button */}
+      {/* Modify the mute button */}
       <group
         position={[viewport.width * 0.4, viewport.height * 0.4, 0]}
         onPointerOver={() => {
@@ -166,6 +166,8 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
           color="white"
           anchorX="center"
           anchorY="middle"
+          outlineWidth={2}
+          outlineColor="black"
         >
           {isMuted ? "Unmute" : "Mute"}
         </Text>
