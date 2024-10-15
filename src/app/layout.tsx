@@ -2,8 +2,8 @@ import './globals.css'
 import { Metadata } from 'next'
 import { UserProvider } from './context/UserContext'
 
-// Use a smaller, optimized image for the frame
-const frameImageUrl = 'https://i.imgur.com/YourOptimizedImage.png' // Replace with your actual optimized image URL
+// Use the provided IPFS image
+const frameImageUrl = 'https://bafybeicodlej4oiq6fq5lfztym5tvgndslczfqyvquvpamdloqvjrf7lly.ipfs.w3s.link/image%2019.png'
 
 export const metadata: Metadata = {
   title: 'POD Play Tic-Tac-Toe',
