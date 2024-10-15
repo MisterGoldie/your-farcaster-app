@@ -133,17 +133,30 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
     }
 
     // For medium and hard difficulties, use a more strategic approach
-    const corners = [0, 2, 6, 8].filter(i => !board[i])
-    const sides = [1, 3, 5, 7].filter(i => !board[i])
-
     if (difficulty === 'medium') {
-      // Prefer corners, then center, then sides
+      const winningMove = findWinningMove(board, 'X');
+      const blockingMove = findWinningMove(board, 'O');
+      
+      // 90% chance to make an optimal move
+      if (Math.random() < 0.9) {
+        if (winningMove !== -1) {
+          return winningMove; // Make a winning move if available
+        }
+        if (blockingMove !== -1) {
+          return blockingMove; // Block player's winning move
+        }
+      }
+      
+      // If no winning/blocking move or 10% chance, use strategic placement
+      const corners = [0, 2, 6, 8].filter(i => !board[i]);
+      const sides = [1, 3, 5, 7].filter(i => !board[i]);
+      
       if (corners.length > 0) {
-        return corners[Math.floor(Math.random() * corners.length)]
+        return corners[Math.floor(Math.random() * corners.length)];
       } else if (!board[4]) {
-        return 4 // center
-      } else {
-        return sides[Math.floor(Math.random() * sides.length)]
+        return 4; // center
+      } else if (sides.length > 0) {
+        return sides[Math.floor(Math.random() * sides.length)];
       }
     }
 
@@ -170,6 +183,10 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
       // If center is available, 70% chance to take it
       if (!board[4] && Math.random() < 0.7) return 4
 
+      // Define corners and sides for hard difficulty
+      const corners = [0, 2, 6, 8].filter(i => !board[i]);
+      const sides = [1, 3, 5, 7].filter(i => !board[i]);
+
       // Prefer corners, then sides
       if (corners.length > 0) {
         return corners[Math.floor(Math.random() * corners.length)]
@@ -180,6 +197,24 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
     // Fallback: choose a random empty spot
     return emptySpots[Math.floor(Math.random() * emptySpots.length)]
+  }
+
+  // Helper function to find a winning move for a given player
+  const findWinningMove = (board: (string | null)[], player: 'X' | 'O') => {
+    const winPatterns = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+      [0, 4, 8], [2, 4, 6]             // Diagonals
+    ];
+
+    for (const pattern of winPatterns) {
+      const [a, b, c] = pattern;
+      if (board[a] === player && board[b] === player && !board[c]) return c;
+      if (board[a] === player && board[c] === player && !board[b]) return b;
+      if (board[b] === player && board[c] === player && !board[a]) return a;
+    }
+
+    return -1; // No winning move found
   }
 
   const winner = checkWinner(board)
