@@ -139,39 +139,6 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
           ))}
         </>
       )}
-      {/* Modify the mute button */}
-      <group
-        position={[viewport.width * 0.4, viewport.height * 0.4, 0]}
-        onPointerOver={() => {
-          document.body.style.cursor = 'pointer'
-          if (!isMuted) playHover()
-        }}
-        onPointerOut={() => {
-          document.body.style.cursor = 'default'
-        }}
-        onClick={() => {
-          toggleMute()
-          if (!isMuted) playClick()
-        }}
-      >
-        <RoundedRectangle
-          width={viewport.width * 0.1}
-          height={viewport.width * 0.1}
-          radius={cornerRadius}
-          color={isMuted ? "#ff0000" : "#00ff00"}
-        />
-        <Text
-          position={[0, 0, 0.01]}
-          fontSize={viewport.width * 0.03}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-          outlineWidth={2}
-          outlineColor="black"
-        >
-          {isMuted ? "Unmute" : "Mute"}
-        </Text>
-      </group>
     </group>
   )
 }
@@ -200,9 +167,17 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} />
             </Canvas>
           </div>
-          <div className="flex justify-center gap-4 py-3 bg-orange-700">
+          <div className="flex justify-between items-center py-3 px-4 bg-orange-700">
             <button onClick={onGoBack} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Go Back
+            </button>
+            <button 
+              onClick={toggleMute} 
+              className={`px-4 py-2 rounded text-sm sm:text-base transition-colors text-shadow-custom ${
+                isMuted ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
+              }`}
+            >
+              {isMuted ? 'Unmute' : 'Mute'}
             </button>
           </div>
         </div>
