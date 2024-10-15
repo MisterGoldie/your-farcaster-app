@@ -4,7 +4,19 @@ import { UserProvider } from './context/UserContext'
 
 export const metadata: Metadata = {
   title: 'POD Play Tic-Tac-Toe',
-  description: 'A Tic-Tac-Toe game presented by /thepod',
+  description: 'Play Tic-Tac-Toe with POD Play',
+  openGraph: {
+    title: 'POD Play Tic-Tac-Toe',
+    description: 'Play Tic-Tac-Toe with POD Play',
+    images: ['https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF'],
+  },
+  other: {
+    'fc:frame': 'vNext',
+    'fc:frame:image': 'https://bafybeiemb5ddkibe2hl4z5iqd5x2wzrkskf5swqu6gksp7yub4lqtczlhu.ipfs.w3s.link/IMG_8500.GIF',
+    'fc:frame:button:1': 'Enter',
+    'fc:frame:post_url': 'https://your-farcaster-app.vercel.app/api/howtoplay',
+    'frames.js:version': '0.19.3',
+  },
 }
 
 export default function RootLayout({
