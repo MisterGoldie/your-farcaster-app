@@ -248,7 +248,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
       }
     }
 
-    // Fallback: choose a random empty spot
+    // Fallback: choose a random empty spots
     return emptySpots[Math.floor(Math.random() * emptySpots.length)]
   }
 
