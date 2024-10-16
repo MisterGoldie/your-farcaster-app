@@ -235,3 +235,4 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
     </div>
   )
 }
+
