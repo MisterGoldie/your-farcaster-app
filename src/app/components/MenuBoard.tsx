@@ -3,7 +3,6 @@ import { Canvas, useThree } from '@react-three/fiber'
 import { Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
 import useSound from 'use-sound';
-import Image from 'next/image'
 
 function RoundedRectangle({ width, height, radius, color }: { width: number; height: number; radius: number; color: string }) {
   const shape = useMemo(() => {
@@ -155,14 +154,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
-          <div className="bg-orange-700 py-2 flex items-center justify-center">
-            <Image 
-              src="/pumpkin.png"  // This path assumes the image is directly in the public folder
-              alt="Pumpkin"
-              width={40}
-              height={40}
-              className="mr-2"
-            />
+          <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
               Main Menu
             </h1>
