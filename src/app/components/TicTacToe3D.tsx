@@ -70,6 +70,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   const [playWinSound] = useSound('/sounds/winning.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playDrawSound] = useSound('/sounds/drawing.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playChooseSound] = useSound('/sounds/choose.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playCountdownSound, { stop: stopCountdownSound }] = useSound('/sounds/countdown.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -82,18 +83,25 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
     if (timerStarted && !gameOver) {
       const timer = setInterval(() => {
         setTimeLeft((prevTime) => {
-          if (prevTime <= 1) {
-            clearInterval(timer)
-            setGameOver(true)
-            return 0
+          if (prevTime <= 6 && prevTime > 1) {
+            playCountdownSound();
           }
-          return prevTime - 1
-        })
-      }, 1000)
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            stopCountdownSound();
+            setGameOver(true);
+            return 0;
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
 
-      return () => clearInterval(timer)
+      return () => {
+        clearInterval(timer);
+        stopCountdownSound();
+      };
     }
-  }, [timerStarted, gameOver])
+  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound]);
 
   useEffect(() => {
     if (!isONext && !gameOver) {
@@ -113,6 +121,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
       return () => clearTimeout(timer);
     } else if (gameOver) {
+      stopCountdownSound();
       const winner = checkWinner(board);
       if (winner === 'X') {
         playLoseSound();
@@ -122,7 +131,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         playDrawSound();
       }
     }
-  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound]);
+  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound, stopCountdownSound]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -146,6 +155,8 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
   const handleCellClick = (index: number) => {
     if (board[index] || gameOver || !isONext) return
+
+    stopCountdownSound();
 
     if (!timerStarted) {
       setTimerStarted(true)
