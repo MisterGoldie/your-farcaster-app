@@ -11,6 +11,7 @@ type CellProps = {
 }
 
 function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'podplaylogo' }) {
+  console.log('Piece in Cell:', piece);
   return (
     <group position={position}>
       <mesh onClick={onClick}>
@@ -335,7 +336,7 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
             0
           ]}
           onClick={() => handleCellClick(index)}
-          value={value} piece={piece}        />
+          value={value} piece={piece} />
       ))}
 
       {/* Timer */}
