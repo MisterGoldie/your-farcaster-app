@@ -58,6 +58,8 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
   const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
+  console.log('Selected piece in MenuBoard:', selectedPiece);
+
   return (
     <group>
       {menuStep === 'game' && (
@@ -95,7 +97,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
             />
             <Text
               position={[0, 0, 0.01]}
-              fontSize={viewport.width * 0.06}  // Adjusted font size
+              fontSize={viewport.width * 0.06}  // Adjusted font sizes
               color="white"
               anchorX="center"
               anchorY="middle"

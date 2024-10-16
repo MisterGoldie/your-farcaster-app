@@ -37,6 +37,12 @@ export default function Game() {
     router.push('/')
   }
 
+  function toggleMute(): void {
+    throw new Error('Function not implemented.')
+  }
+
+  console.log('Piece set in Game component:', piece);
+
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
       <TicTacToe3D 
@@ -44,10 +50,13 @@ export default function Game() {
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
         difficulty={difficulty}
+        piece={piece}
         isMuted={isMuted}
-        toggleMute={() => setIsMuted(prevMuted => !prevMuted)} piece={'pumpkin'}        />
+        toggleMute={toggleMute}
+      />
     </main>
   )
 }
 
 ////
+
