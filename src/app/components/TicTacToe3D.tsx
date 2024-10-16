@@ -90,6 +90,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
             clearInterval(timer);
             stopCountdownSound();
             setGameOver(true);
+            playLoseSound();
             return 0;
           }
           return prevTime - 1;
@@ -101,7 +102,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         stopCountdownSound();
       };
     }
-  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound]);
+  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound, playLoseSound]);
 
   useEffect(() => {
     if (!isONext && !gameOver) {
