@@ -62,7 +62,7 @@ function MaxiSprite({ position }: { position: [number, number, number] }) {
 function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', isMuted: boolean, toggleMute: () => void }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isPlayerTurn, setIsPlayerTurn] = useState(false)
+  const [isONext, setIsONext] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
@@ -71,7 +71,11 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   const [playDrawSound] = useSound('/sounds/drawing.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playChooseSound] = useSound('/sounds/choose.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playCountdownSound, { stop: stopCountdownSound }] = useSound('/sounds/countdown.mp3', { volume: 0.5, soundEnabled: !isMuted });
-  const [playJingle, { stop: stopJingle }] = useSound('/sounds/jingle.mp3', { volume: 0.3, loop: true, soundEnabled: !isMuted });
+  const [playJingle, { stop: stopJingle }] = useSound('/sounds/jingle.mp3', { 
+    volume: 0.3, 
+    loop: true, 
+    soundEnabled: !isMuted 
+  });
   const [jingleStarted, setJingleStarted] = useState(false);
 
   useFrame((state) => {
@@ -107,10 +111,28 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound, playLoseSound]);
 
   useEffect(() => {
-    if (!gameOver) {
+    if (!gameOver && !jingleStarted) {
       playJingle();
       setJingleStarted(true);
-    } else {
+    }
+
+    if (!isONext && !gameOver) {
+      const timer = setTimeout(() => {
+        const cpuMove = getCPUMove(board);
+        if (cpuMove !== -1) {
+          playChooseSound();
+          const newBoard = [...board];
+          newBoard[cpuMove] = 'X';
+          setBoard(newBoard);
+          setIsONext(true);
+          if (checkWinner(newBoard) || newBoard.every(Boolean)) {
+            setGameOver(true);
+          }
+        }
+      }, 500);
+
+      return () => clearTimeout(timer);
+    } else if (gameOver) {
       stopJingle();
       setJingleStarted(false);
       stopCountdownSound();
@@ -123,11 +145,17 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         playDrawSound();
       }
     }
+  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound, stopCountdownSound, playJingle, stopJingle, jingleStarted]);
+
+  useEffect(() => {
+    if (!gameOver) {
+      playJingle();
+    }
 
     return () => {
       stopJingle();
     };
-  }, [gameOver, board, playJingle, stopJingle, playLoseSound, playWinSound, playDrawSound, stopCountdownSound]);
+  }, [gameOver, playJingle, stopJingle]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -150,7 +178,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   }
 
   const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isPlayerTurn) return
+    if (board[index] || gameOver || !isONext) return
 
     stopCountdownSound();
 
@@ -161,9 +189,9 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
     playChooseSound()
 
     const newBoard = [...board]
-    newBoard[index] = 'Player'
+    newBoard[index] = 'O'
     setBoard(newBoard)
-    setIsPlayerTurn(false)
+    setIsONext(false)
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
@@ -273,17 +301,6 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
   return (
     <group ref={boardRef} scale={[1.1, 1.1, 1]}>
-      {/* Debug information */}
-      <Text
-        position={[0, 2.2, 0]}
-        fontSize={0.2}
-        color="#000000"
-        anchorX="center"
-        anchorY="middle"
-      >
-        Board state: {JSON.stringify(board)}
-      </Text>
-
       {/* Grid lines */}
       <Line points={[-1.6, -0.53, 0, 1.6, -0.53, 0]} color="#000000" lineWidth={7} />
       <Line points={[-1.6, 0.53, 0, 1.6, 0.53, 0]} color="#000000" lineWidth={7} />
