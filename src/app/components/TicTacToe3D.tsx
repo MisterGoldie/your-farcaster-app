@@ -351,7 +351,7 @@ const backgroundColors = [
   '#A0A0A0', // Gray
   '#6B8CD4', // Blue
   '#C5C840', // Dirty yellow
-  '#46A136',// Green
+  '#46A136', // Green
   '#FFED00', // Yellow yellow
   '#FFFFFF', // White
   '#BAA364', // Tan
