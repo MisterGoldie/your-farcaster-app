@@ -10,7 +10,7 @@ type CellProps = {
   value: string | null
 }
 
-function Cell({ position, onClick, value }: CellProps) {
+function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'scarygary' }) {
   return (
     <group position={position}>
       <mesh onClick={onClick}>
@@ -24,7 +24,11 @@ function Cell({ position, onClick, value }: CellProps) {
       )}
       {value === 'O' && (
         <group position={[0, 0, 0.06]}>
-          <PumpkinSprite position={[0, 0, 0]} />
+          {piece === 'pumpkin' ? (
+            <PumpkinSprite position={[0, 0, 0]} />
+          ) : (
+            <ScaryGarySprite position={[0, 0, 0]} />
+          )}
         </group>
       )}
     </group>
@@ -47,6 +51,20 @@ function PumpkinSprite({ position }: { position: [number, number, number] }) {
 
 function MaxiSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(THREE.TextureLoader, '/maxi.png')
+  return (
+    <group position={position}>
+      <Plane args={[0.8, 0.8]}>
+        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
+      </Plane>
+      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
+        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
+      </Plane>
+    </group>
+  )
+}
+
+function ScaryGarySprite({ position }: { position: [number, number, number] }) {
+  const texture = useLoader(THREE.TextureLoader, '/scarygary.png')
   return (
     <group position={position}>
       <Plane args={[0.8, 0.8]}>
@@ -317,8 +335,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
             0
           ]}
           onClick={() => handleCellClick(index)}
-          value={value}
-        />
+          value={value} piece={'pumpkin'}        />
       ))}
 
       {/* Timer */}

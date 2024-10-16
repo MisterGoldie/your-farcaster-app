@@ -32,22 +32,24 @@ function RoundedRectangle({ width, height, radius, color }: { width: number; hei
 }
 
 type MenuBoardProps = {
-  onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void
+  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary') => void
   onGoBack: () => void
   isMuted: boolean
   toggleMute: () => void
 }
 
 function MenuText({ onStartGame, isMuted, toggleMute }: { 
-  onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void,
+  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary') => void,
   isMuted: boolean,
   toggleMute: () => void
 }) {
   const { viewport } = useThree()
-  const [showDifficulty, setShowDifficulty] = useState(false)
+  const [menuStep, setMenuStep] = useState<'game' | 'piece' | 'difficulty'>('game')
+  const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'scarygary'>('pumpkin')
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
+  const pieceOptions = ['pumpkin', 'scarygary'] as const
 
   const buttonWidth = viewport.width * 0.6
   const buttonHeight = viewport.height * 0.15
@@ -58,7 +60,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
 
   return (
     <group>
-      {!showDifficulty ? (
+      {menuStep === 'game' && (
         <>
           <Text
             position={[0, viewport.height * 0.1, 0]}
@@ -81,7 +83,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
               setHoveredButton(null)
             }}
             onClick={() => {
-              setShowDifficulty(true)
+              setMenuStep('piece')
               playClick()
             }}
           >
@@ -102,7 +104,53 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
             </Text>
           </group>
         </>
-      ) : (
+      )}
+      {menuStep === 'piece' && (
+        <>
+          <Text
+            position={[0, viewport.height * 0.1, 0]}
+            fontSize={viewport.width * 0.06}
+            color="black"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Select Piece:
+          </Text>
+          <group
+            position={[0, -viewport.height * 0.05, 0]}
+            onPointerOver={() => {
+              document.body.style.cursor = 'pointer'
+              setHoveredButton(selectedPiece)
+              playHover()
+            }}
+            onPointerOut={() => {
+              document.body.style.cursor = 'default'
+              setHoveredButton(null)
+            }}
+            onClick={() => {
+              setMenuStep('difficulty')
+              playClick()
+            }}
+          >
+            <RoundedRectangle
+              width={buttonWidth}
+              height={buttonHeight}
+              radius={cornerRadius}
+              color={hoveredButton === selectedPiece ? "#333333" : "#000000"}
+            />
+            <Text
+              position={[0, 0, 0.01]}
+              fontSize={viewport.width * 0.06}  // Adjusted font size
+              color="white"
+              anchorX="center"
+              anchorY="middle"
+            >
+              {selectedPiece.charAt(0).toUpperCase() + selectedPiece.slice(1)}
+            </Text>
+          </group>
+        </>
+      )}
+      {menuStep === 'difficulty' && (
         <>
           {difficultyOptions.map((difficulty, index) => (
             <group
@@ -118,7 +166,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
                 setHoveredButton(null)
               }}
               onClick={() => {
-                onStartGame(difficulty)
+                onStartGame(difficulty, selectedPiece)
                 playClick()
               }}
             >
