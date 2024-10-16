@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Line, Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
+import useSound from 'use-sound';
 
 type CellProps = {
   position: [number, number, number]
@@ -65,6 +66,7 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
+  const [playLoseSound] = useSound('/sounds/losing.mp3', { volume: 0.5 });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -92,9 +94,11 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
 
   useEffect(() => {
     if (!isONext && !gameOver) {
-      setTimeout(makeCPUMove, 500)
+      setTimeout(makeCPUMove, 500);
+    } else if (gameOver && checkWinner(board) === 'X') {
+      playLoseSound();
     }
-  }, [isONext, gameOver])
+  }, [isONext, gameOver, board, playLoseSound]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
