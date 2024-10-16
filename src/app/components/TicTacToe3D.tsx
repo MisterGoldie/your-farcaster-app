@@ -313,7 +313,7 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
       if (board[b] === player && board[c] === player && !board[a]) return a;
     }
 
-    return -1; // No winning move found
+    return -1; // No winning move foundS
   }
 
   const winner = checkWinner(board)
