@@ -10,8 +10,8 @@ export default function HowToPlay() {
   const router = useRouter()
   const [isMuted, setIsMuted] = useState(false)
 
-  const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard') => {
-    router.push(`/game?difficulty=${difficulty}&muted=${isMuted}`)
+  const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary') => {
+    router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`)
   }
 
   const handleGoBack = () => {

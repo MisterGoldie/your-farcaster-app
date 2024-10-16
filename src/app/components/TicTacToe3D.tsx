@@ -10,8 +10,7 @@ type CellProps = {
   value: string | null
 }
 
-function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'podplaylogo' }) {
-  console.log('Piece in Cell:', piece);
+function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'scarygary' }) {
   return (
     <group position={position}>
       <mesh onClick={onClick}>
@@ -28,7 +27,7 @@ function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin
           {piece === 'pumpkin' ? (
             <PumpkinSprite position={[0, 0, 0]} />
           ) : (
-            <PodPlayLogoSprite position={[0, 0, 0]} />
+            <ScaryGarySprite position={[0, 0, 0]} />
           )}
         </group>
       )}
@@ -64,8 +63,8 @@ function MaxiSprite({ position }: { position: [number, number, number] }) {
   )
 }
 
-function PodPlayLogoSprite({ position }: { position: [number, number, number] }) {
-  const texture = useLoader(THREE.TextureLoader, '/podplaylogo.png')
+function ScaryGarySprite({ position }: { position: [number, number, number] }) {
+  const texture = useLoader(THREE.TextureLoader, '/scarygary.png')
   return (
     <group position={position}>
       <Plane args={[0.8, 0.8]}>
@@ -78,8 +77,7 @@ function PodPlayLogoSprite({ position }: { position: [number, number, number] })
   )
 }
 
-function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'podplaylogo', isMuted: boolean, toggleMute: () => void }) {
-  console.log('Piece in Board:', piece);
+function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary', isMuted: boolean, toggleMute: () => void }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -313,7 +311,7 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
       if (board[b] === player && board[c] === player && !board[a]) return a;
     }
 
-    return -1; // No winning move foundS
+    return -1; // No winning move found
   }
 
   const winner = checkWinner(board)
@@ -337,7 +335,7 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
             0
           ]}
           onClick={() => handleCellClick(index)}
-          value={value} piece={piece} />
+          value={value} piece={piece}        />
       ))}
 
       {/* Timer */}
@@ -389,7 +387,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
   onRestart: () => void, 
   onBackToHome: () => void,
   difficulty: 'easy' | 'medium' | 'hard',
-  piece: 'pumpkin' | 'podplaylogo',
+  piece: 'pumpkin' | 'scarygary',
   isMuted: boolean,
   toggleMute: () => void
 }) {
