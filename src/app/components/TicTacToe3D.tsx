@@ -62,7 +62,7 @@ function MaxiSprite({ position }: { position: [number, number, number] }) {
 function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', isMuted: boolean, toggleMute: () => void }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
-  const [isONext, setIsONext] = useState(false)
+  const [isPlayerTurn, setIsPlayerTurn] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
@@ -150,7 +150,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   }
 
   const handleCellClick = (index: number) => {
-    if (board[index] || gameOver || !isONext) return
+    if (board[index] || gameOver || !isPlayerTurn) return
 
     stopCountdownSound();
 
@@ -161,9 +161,9 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
     playChooseSound()
 
     const newBoard = [...board]
-    newBoard[index] = 'O'
+    newBoard[index] = 'Player'
     setBoard(newBoard)
-    setIsONext(false)
+    setIsPlayerTurn(false)
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
