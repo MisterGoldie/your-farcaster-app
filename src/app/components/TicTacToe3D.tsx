@@ -71,6 +71,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   const [playDrawSound] = useSound('/sounds/drawing.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playChooseSound] = useSound('/sounds/choose.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playCountdownSound, { stop: stopCountdownSound }] = useSound('/sounds/countdown.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playJingle, { stop: stopJingle }] = useSound('/sounds/jingle.mp3', { volume: 0.3, loop: true, soundEnabled: !isMuted });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -102,9 +103,13 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         stopCountdownSound();
       };
     }
-  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound, playLoseSound]);
+  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound, playLoseSound, stopJingle]);
 
   useEffect(() => {
+    if (!gameOver) {
+      playJingle();
+    }
+
     if (!isONext && !gameOver) {
       const timer = setTimeout(() => {
         const cpuMove = getCPUMove(board);
@@ -122,6 +127,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
       return () => clearTimeout(timer);
     } else if (gameOver) {
+      stopJingle();
       stopCountdownSound();
       const winner = checkWinner(board);
       if (winner === 'X') {
@@ -132,7 +138,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         playDrawSound();
       }
     }
-  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound, stopCountdownSound]);
+  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound, stopCountdownSound, playJingle, stopJingle]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
