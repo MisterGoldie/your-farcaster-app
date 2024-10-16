@@ -71,10 +71,11 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   const [playDrawSound] = useSound('/sounds/drawing.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playChooseSound] = useSound('/sounds/choose.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playCountdownSound, { stop: stopCountdownSound }] = useSound('/sounds/countdown.mp3', { volume: 0.5, soundEnabled: !isMuted });
-  const [playJingle, { stop: stopJingle }] = useSound('/sounds/jingle.mp3', { 
+  const [playJingle, { sound: jingleSound }] = useSound('/sounds/jingle.mp3', { 
     volume: 0.3, 
     loop: true, 
-    soundEnabled: !isMuted
+    soundEnabled: !isMuted,
+    preload: true
   });
   const [jingleStarted, setJingleStarted] = useState(false);
 
@@ -108,28 +109,25 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         stopCountdownSound();
       };
     }
-  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound, playLoseSound, stopJingle]);
+  }, [timerStarted, gameOver, playCountdownSound, stopCountdownSound, playLoseSound]);
 
   useEffect(() => {
-    if (!gameOver && !jingleStarted) {
-      playJingle();
-      setJingleStarted(true);
-    } else if (gameOver && jingleStarted) {
-      stopJingle();
-      setJingleStarted(false);
+    if (jingleSound && !isMuted) {
+      jingleSound.play();
     }
     return () => {
-      stopJingle();
-      setJingleStarted(false);
+      if (jingleSound) {
+        jingleSound.stop();
+      }
     };
-  }, [gameOver, jingleStarted, playJingle, stopJingle]);
+  }, [jingleSound, isMuted]);
 
   useEffect(() => {
     if (!isMuted) {
-      playJingle();
+      jingleSound.play();
       setJingleStarted(true);
     }
-  }, [isMuted, playJingle]);
+  }, [isMuted, jingleSound]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
