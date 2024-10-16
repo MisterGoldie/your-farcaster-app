@@ -150,7 +150,9 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
                 anchorX="center"
                 anchorY="middle"
               >
-                {piece.charAt(0).toUpperCase() + piece.slice(1)}
+                {piece === 'scarygary' ? 'Scary Gary' :
+                 piece === 'podplaylogo' ? 'Pod Play Logo' :
+                 piece.charAt(0).toUpperCase() + piece.slice(1)}
               </Text>
             </group>
           ))}
