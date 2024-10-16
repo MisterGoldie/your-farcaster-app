@@ -301,7 +301,10 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
           outlineWidth={0.03}
           outlineColor="#ffffff"
         >
-          {winner ? `${winner} wins!` : isDraw ? 'Draw!' : 'Time\'s up! Sorry!'}
+          {winner === 'X' ? 'Maxi wins!' : 
+           winner === 'O' ? 'You win!' : 
+           isDraw ? 'Draw!' : 
+           'Time\'s up! Sorry!'}
         </Text>
       )}
     </group>
