@@ -95,7 +95,20 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
   useEffect(() => {
     if (!isONext && !gameOver) {
-      setTimeout(makeCPUMove, 500);
+      const timer = setTimeout(() => {
+        const cpuMove = getCPUMove(board);
+        if (cpuMove !== -1) {
+          const newBoard = [...board];
+          newBoard[cpuMove] = 'X';
+          setBoard(newBoard);
+          setIsONext(true);
+          if (checkWinner(newBoard) || newBoard.every(Boolean)) {
+            setGameOver(true);
+          }
+        }
+      }, 500);
+
+      return () => clearTimeout(timer);
     } else if (gameOver) {
       const winner = checkWinner(board);
       if (winner === 'X') {
@@ -140,19 +153,6 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
-    }
-  }
-
-  const makeCPUMove = () => {
-    const cpuMove = getCPUMove(board)
-    if (cpuMove !== -1) {
-      const newBoard = [...board]
-      newBoard[cpuMove] = 'X'
-      setBoard(newBoard)
-      setIsONext(true)
-      if (checkWinner(newBoard) || newBoard.every(Boolean)) {
-        setGameOver(true)
-      }
     }
   }
 
