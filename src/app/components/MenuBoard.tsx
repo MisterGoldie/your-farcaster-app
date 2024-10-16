@@ -98,7 +98,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
               anchorX="center"
               anchorY="middle"
             >
-              Tic-Tac-Toe
+              Tic-Tac-Maxi
             </Text>
           </group>
         </>
