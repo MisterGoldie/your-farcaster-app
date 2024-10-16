@@ -59,15 +59,15 @@ function MaxiSprite({ position }: { position: [number, number, number] }) {
   )
 }
 
-function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
+function Board({ difficulty, isMuted }: { difficulty: 'easy' | 'medium' | 'hard', isMuted: boolean }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
-  const [playLoseSound] = useSound('/sounds/losing.mp3', { volume: 0.5 });
-  const [playWinSound] = useSound('/sounds/winning.mp3', { volume: 0.5 });
+  const [playLoseSound] = useSound('/sounds/losing.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playWinSound] = useSound('/sounds/winning.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -319,10 +319,12 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: { 
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMuted, toggleMute }: { 
   onRestart: () => void, 
   onBackToHome: () => void,
-  difficulty: 'easy' | 'medium' | 'hard'
+  difficulty: 'easy' | 'medium' | 'hard',
+  isMuted: boolean,
+  toggleMute: () => void
 }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
 
@@ -355,7 +357,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: {
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               <React.Suspense fallback={null}>
-                <Board difficulty={difficulty} />
+                <Board difficulty={difficulty} isMuted={isMuted} />
               </React.Suspense>
             </Canvas>
           </div>

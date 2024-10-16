@@ -34,12 +34,13 @@ function RoundedRectangle({ width, height, radius, color }: { width: number; hei
 type MenuBoardProps = {
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void
   onGoBack: () => void
+  isMuted: boolean
+  toggleMute: () => void
 }
 
-function MenuText({ onStartGame, isMuted, toggleMute }: { 
+function MenuText({ onStartGame, isMuted }: { 
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void,
-  isMuted: boolean,
-  toggleMute: () => void
+  isMuted: boolean
 }) {
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
@@ -143,13 +144,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
   )
 }
 
-export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
-  const [isMuted, setIsMuted] = useState(false)
-
-  const toggleMute = () => {
-    setIsMuted(prev => !prev)
-  }
-
+export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }: MenuBoardProps) {
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -164,7 +159,7 @@ export default function MenuBoard({ onStartGame, onGoBack }: MenuBoardProps) {
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} />
+              <MenuText onStartGame={onStartGame} isMuted={isMuted} />
             </Canvas>
           </div>
           <div className="flex justify-between items-center py-3 px-4 bg-orange-700">
