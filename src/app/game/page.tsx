@@ -32,10 +32,6 @@ export default function Game() {
     router.push('/')
   }
 
-  const toggleMute = () => {
-    setIsMuted(prev => !prev)
-  }
-
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
       <TicTacToe3D 
@@ -43,9 +39,9 @@ export default function Game() {
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
         difficulty={difficulty}
-        isMuted={isMuted}
-        toggleMute={toggleMute}
-      />
+        isMuted={isMuted} toggleMute={function (): void {
+          throw new Error('Function not implemented.')
+        } }      />
     </main>
   )
 }

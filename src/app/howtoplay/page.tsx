@@ -24,9 +24,7 @@ export default function HowToPlay() {
 
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
-      <MenuBoard onStartGame={handleStartGame} onGoBack={handleGoBack} isMuted={false} toggleMute={function (): void {
-        throw new Error('Function not implemented.')
-      } } />
+      <MenuBoard onStartGame={handleStartGame} onGoBack={handleGoBack} isMuted={isMuted} toggleMute={toggleMute} />
     </main>
   )
 }

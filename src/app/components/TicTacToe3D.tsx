@@ -368,14 +368,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMut
             <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Home
             </button>
-            <button 
-              onClick={toggleMute} 
-              className={`px-4 py-2 rounded text-sm sm:text-base transition-colors text-shadow-custom ${
-                isMuted ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
-              }`}
-            >
-              {isMuted ? 'Unmute' : 'Mute'}
-            </button>
           </div>
         </div>
       </div>
