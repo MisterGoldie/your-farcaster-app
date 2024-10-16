@@ -32,24 +32,24 @@ function RoundedRectangle({ width, height, radius, color }: { width: number; hei
 }
 
 type MenuBoardProps = {
-  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary') => void
+  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'podplaylogo') => void
   onGoBack: () => void
   isMuted: boolean
   toggleMute: () => void
 }
 
 function MenuText({ onStartGame, isMuted, toggleMute }: { 
-  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary') => void,
+  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'podplaylogo') => void,
   isMuted: boolean,
   toggleMute: () => void
 }) {
   const { viewport } = useThree()
   const [menuStep, setMenuStep] = useState<'game' | 'piece' | 'difficulty'>('game')
-  const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'scarygary'>('pumpkin')
+  const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'podplaylogo'>('pumpkin')
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
 
   const difficultyOptions = ['easy', 'medium', 'hard'] as const
-  const pieceOptions = ['pumpkin', 'scarygary'] as const
+  const pieceOptions = ['pumpkin', 'podplaylogo'] as const
 
   const buttonWidth = viewport.width * 0.6
   const buttonHeight = viewport.height * 0.15
@@ -235,4 +235,6 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
     </div>
   )
 }
+
+
 
