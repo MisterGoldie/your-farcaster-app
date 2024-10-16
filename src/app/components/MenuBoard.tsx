@@ -108,7 +108,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
       {menuStep === 'piece' && (
         <>
           <Text
-            position={[0, viewport.height * 0.1, 0]}
+            position={[0, viewport.height * 0.3, 0]}
             fontSize={viewport.width * 0.06}
             color="black"
             anchorX="center"
@@ -116,38 +116,42 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
           >
             Select Piece:
           </Text>
-          <group
-            position={[0, -viewport.height * 0.05, 0]}
-            onPointerOver={() => {
-              document.body.style.cursor = 'pointer'
-              setHoveredButton(selectedPiece)
-              playHover()
-            }}
-            onPointerOut={() => {
-              document.body.style.cursor = 'default'
-              setHoveredButton(null)
-            }}
-            onClick={() => {
-              setMenuStep('difficulty')
-              playClick()
-            }}
-          >
-            <RoundedRectangle
-              width={buttonWidth}
-              height={buttonHeight}
-              radius={cornerRadius}
-              color={hoveredButton === selectedPiece ? "#333333" : "#000000"}
-            />
-            <Text
-              position={[0, 0, 0.01]}
-              fontSize={viewport.width * 0.06}  // Adjusted font size
-              color="white"
-              anchorX="center"
-              anchorY="middle"
+          {pieceOptions.map((piece, index) => (
+            <group
+              key={piece}
+              position={[0, viewport.height * 0.1 - index * viewport.height * 0.2, 0]}
+              onPointerOver={() => {
+                document.body.style.cursor = 'pointer'
+                setHoveredButton(piece)
+                playHover()
+              }}
+              onPointerOut={() => {
+                document.body.style.cursor = 'default'
+                setHoveredButton(null)
+              }}
+              onClick={() => {
+                setSelectedPiece(piece)
+                setMenuStep('difficulty')
+                playClick()
+              }}
             >
-              {selectedPiece.charAt(0).toUpperCase() + selectedPiece.slice(1)}
-            </Text>
-          </group>
+              <RoundedRectangle
+                width={buttonWidth}
+                height={buttonHeight}
+                radius={cornerRadius}
+                color={hoveredButton === piece ? "#333333" : "#000000"}
+              />
+              <Text
+                position={[0, 0, 0.01]}
+                fontSize={viewport.width * 0.05}
+                color="white"
+                anchorX="center"
+                anchorY="middle"
+              >
+                {piece.charAt(0).toUpperCase() + piece.slice(1)}
+              </Text>
+            </group>
+          ))}
         </>
       )}
       {menuStep === 'difficulty' && (
