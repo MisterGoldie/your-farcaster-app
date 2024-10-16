@@ -348,12 +348,12 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 const backgroundColors = [
   '#CC5500', // Original orange
   '#FF0000', // Red
-  '#8B0000', // Dark Red
-  '#B22222', // Firebrick
+  '#2B87C4', // Blue
+  '#BFAE7B', // Sand
   '#C5C840', // Dirty yellow
   '#46A136',// Green
   '#DC143C', // Crimson
-  '#C840B1', // Purple
+  '#BE62D8', // Purple
 ]
 
 export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMuted, toggleMute }: { 
