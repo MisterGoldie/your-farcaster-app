@@ -9,15 +9,20 @@ const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { ssr: fa
 export default function Game() {
   const [key, setKey] = useState(0)
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'hard'>('easy')
+  const [piece, setPiece] = useState<'pumpkin' | 'scarygary'>('pumpkin')
   const [isMuted, setIsMuted] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
     const difficultyFromURL = searchParams.get('difficulty') as 'easy' | 'medium' | 'hard';
+    const pieceFromURL = searchParams.get('piece') as 'pumpkin' | 'scarygary';
     const mutedFromURL = searchParams.get('muted');
     if (difficultyFromURL) {
       setDifficulty(difficultyFromURL);
+    }
+    if (pieceFromURL) {
+      setPiece(pieceFromURL);
     }
     if (mutedFromURL) {
       setIsMuted(mutedFromURL === 'true');
@@ -39,9 +44,8 @@ export default function Game() {
         onRestart={handleRestart}
         onBackToHome={handleBackToHome}
         difficulty={difficulty}
-        isMuted={isMuted} toggleMute={function (): void {
-          throw new Error('Function not implemented.')
-        } }      />
+        isMuted={isMuted}
+        toggleMute={() => setIsMuted(prevMuted => !prevMuted)} piece={'pumpkin'}        />
     </main>
   )
 }

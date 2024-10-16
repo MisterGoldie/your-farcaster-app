@@ -77,7 +77,7 @@ function ScaryGarySprite({ position }: { position: [number, number, number] }) {
   )
 }
 
-function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', isMuted: boolean, toggleMute: () => void }) {
+function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary', isMuted: boolean, toggleMute: () => void }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -335,7 +335,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
             0
           ]}
           onClick={() => handleCellClick(index)}
-          value={value} piece={'pumpkin'}        />
+          value={value} piece={piece}        />
       ))}
 
       {/* Timer */}
@@ -383,10 +383,11 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMuted, toggleMute }: { 
+export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece, isMuted, toggleMute }: { 
   onRestart: () => void, 
   onBackToHome: () => void,
   difficulty: 'easy' | 'medium' | 'hard',
+  piece: 'pumpkin' | 'scarygary',
   isMuted: boolean,
   toggleMute: () => void
 }) {
@@ -421,7 +422,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMut
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               <React.Suspense fallback={null}>
-                <Board difficulty={difficulty} isMuted={isMuted} toggleMute={toggleMute} />
+                <Board difficulty={difficulty} piece={piece} isMuted={isMuted} toggleMute={toggleMute} />
               </React.Suspense>
             </Canvas>
           </div>
