@@ -28,7 +28,9 @@ function Cell({ position, onClick, value }: CellProps) {
         </Text>
       )}
       {value === 'O' && (
-        <PumpkinSprite position={[0, 0, 0.06]} />
+        <group position={[0, 0, 0.06]}>
+          <PumpkinSprite position={[0, 0, 0]} />
+        </group>
       )}
     </group>
   )
@@ -37,9 +39,14 @@ function Cell({ position, onClick, value }: CellProps) {
 function PumpkinSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(THREE.TextureLoader, '/pumpkin.png')
   return (
-    <Plane position={position} args={[0.8, 0.8]}>
-      <meshBasicMaterial map={texture} transparent />
-    </Plane>
+    <group position={position}>
+      <Plane args={[0.8, 0.8]}>
+        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
+      </Plane>
+      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
+        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
+      </Plane>
+    </group>
   )
 }
 
