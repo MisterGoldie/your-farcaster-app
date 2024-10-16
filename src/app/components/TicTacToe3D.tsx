@@ -348,11 +348,11 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 const backgroundColors = [
   '#CC5500', // Original orange
   '#FF0000', // Red
-  '#8B0000', // Dark Red
-  '#B22222', // Firebrick
+  '#A0A0A0', // Gray
+  '#6B8CD4', // Blue
   '#C5C840', // Dirty yellow
   '#46A136',// Green
-  '#DC143C', // Crimson
+  '#BAA364', // Tan
   '#C840B1', // Purple
 ]
 
