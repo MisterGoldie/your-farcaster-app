@@ -71,7 +71,12 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   const [playDrawSound] = useSound('/sounds/drawing.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playChooseSound] = useSound('/sounds/choose.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playCountdownSound, { stop: stopCountdownSound }] = useSound('/sounds/countdown.mp3', { volume: 0.5, soundEnabled: !isMuted });
-  const [playJingle, { stop: stopJingle }] = useSound('/sounds/jingle.mp3', { volume: 0.3, loop: true, soundEnabled: !isMuted });
+  const [playJingle, { stop: stopJingle }] = useSound('/sounds/jingle.mp3', { 
+    volume: 0.3, 
+    loop: true, 
+    soundEnabled: !isMuted,
+    interrupt: true
+  });
   const [jingleStarted, setJingleStarted] = useState(false);
 
   useFrame((state) => {
@@ -111,43 +116,11 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
       playJingle();
       setJingleStarted(true);
     }
-
-    if (!isONext && !gameOver) {
-      const timer = setTimeout(() => {
-        const cpuMove = getCPUMove(board);
-        if (cpuMove !== -1) {
-          playChooseSound();
-          const newBoard = [...board];
-          newBoard[cpuMove] = 'X';
-          setBoard(newBoard);
-          setIsONext(true);
-          if (checkWinner(newBoard) || newBoard.every(Boolean)) {
-            setGameOver(true);
-          }
-        }
-      }, 500);
-
-      return () => clearTimeout(timer);
-    } else if (gameOver) {
-      stopJingle();
-      setJingleStarted(false);
-      stopCountdownSound();
-      const winner = checkWinner(board);
-      if (winner === 'X') {
-        playLoseSound();
-      } else if (winner === 'O') {
-        playWinSound();
-      } else if (board.every(Boolean)) {
-        playDrawSound();
-      }
-    }
-  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound, stopCountdownSound, playJingle, stopJingle, jingleStarted]);
-
-  useEffect(() => {
     return () => {
       stopJingle();
+      setJingleStarted(false);
     };
-  }, [stopJingle]);
+  }, []);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
