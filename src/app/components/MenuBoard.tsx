@@ -161,7 +161,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
       {menuStep === 'difficulty' && (
         <>
           <Text
-            position={[0, viewport.height * 0.4, 0]}
+            position={[0, viewport.height * 0.3, 0]}
             fontSize={viewport.width * 0.06}
             color="black"
             anchorX="center"
@@ -172,7 +172,7 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
           {difficultyOptions.map((difficulty, index) => (
             <group
               key={difficulty}
-              position={[0, viewport.height * 0.2 - index * viewport.height * 0.2, 0]}
+              position={[0, viewport.height * 0.1 - index * viewport.height * 0.2, 0]}
               onPointerOver={() => {
                 document.body.style.cursor = 'pointer'
                 setHoveredButton(difficulty)
