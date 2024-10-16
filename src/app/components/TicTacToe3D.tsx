@@ -273,6 +273,17 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
 
   return (
     <group ref={boardRef} scale={[1.1, 1.1, 1]}>
+      {/* Debug information */}
+      <Text
+        position={[0, 2.2, 0]}
+        fontSize={0.2}
+        color="#000000"
+        anchorX="center"
+        anchorY="middle"
+      >
+        Board state: {JSON.stringify(board)}
+      </Text>
+
       {/* Grid lines */}
       <Line points={[-1.6, -0.53, 0, 1.6, -0.53, 0]} color="#000000" lineWidth={7} />
       <Line points={[-1.6, 0.53, 0, 1.6, 0.53, 0]} color="#000000" lineWidth={7} />
