@@ -67,6 +67,7 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
   const [playLoseSound] = useSound('/sounds/losing.mp3', { volume: 0.5 });
+  const [playWinSound] = useSound('/sounds/winning.mp3', { volume: 0.5 });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -95,10 +96,15 @@ function Board({ difficulty }: { difficulty: 'easy' | 'medium' | 'hard' }) {
   useEffect(() => {
     if (!isONext && !gameOver) {
       setTimeout(makeCPUMove, 500);
-    } else if (gameOver && checkWinner(board) === 'X') {
-      playLoseSound();
+    } else if (gameOver) {
+      const winner = checkWinner(board);
+      if (winner === 'X') {
+        playLoseSound();
+      } else if (winner === 'O') {
+        playWinSound();
+      }
     }
-  }, [isONext, gameOver, board, playLoseSound]);
+  }, [isONext, gameOver, board, playLoseSound, playWinSound]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
