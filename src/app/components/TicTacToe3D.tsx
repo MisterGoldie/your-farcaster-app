@@ -69,6 +69,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
   const [playLoseSound] = useSound('/sounds/losing.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playWinSound] = useSound('/sounds/winning.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playDrawSound] = useSound('/sounds/drawing.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playChooseSound] = useSound('/sounds/choose.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -99,6 +100,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
       const timer = setTimeout(() => {
         const cpuMove = getCPUMove(board);
         if (cpuMove !== -1) {
+          playChooseSound();
           const newBoard = [...board];
           newBoard[cpuMove] = 'X';
           setBoard(newBoard);
@@ -120,7 +122,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         playDrawSound();
       }
     }
-  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound]);
+  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound]);
 
   const checkWinner = (board: (string | null)[]) => {
     const lines = [
@@ -148,6 +150,8 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
     if (!timerStarted) {
       setTimerStarted(true)
     }
+
+    playChooseSound()
 
     const newBoard = [...board]
     newBoard[index] = 'O'
