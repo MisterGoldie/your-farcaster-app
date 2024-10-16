@@ -38,9 +38,10 @@ type MenuBoardProps = {
   toggleMute: () => void
 }
 
-function MenuText({ onStartGame, isMuted }: { 
+function MenuText({ onStartGame, isMuted, toggleMute }: { 
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard') => void,
-  isMuted: boolean
+  isMuted: boolean,
+  toggleMute: () => void
 }) {
   const { viewport } = useThree()
   const [showDifficulty, setShowDifficulty] = useState(false)
@@ -159,7 +160,7 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} isMuted={isMuted} />
+              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} />
             </Canvas>
           </div>
           <div className="flex justify-between items-center py-3 px-4 bg-orange-700">

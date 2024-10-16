@@ -59,7 +59,7 @@ function MaxiSprite({ position }: { position: [number, number, number] }) {
   )
 }
 
-function Board({ difficulty, isMuted }: { difficulty: 'easy' | 'medium' | 'hard', isMuted: boolean }) {
+function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', isMuted: boolean, toggleMute: () => void }) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -357,7 +357,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMut
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               <React.Suspense fallback={null}>
-                <Board difficulty={difficulty} isMuted={isMuted} />
+                <Board difficulty={difficulty} isMuted={isMuted} toggleMute={toggleMute} />
               </React.Suspense>
             </Canvas>
           </div>
@@ -367,6 +367,14 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, isMut
             </button>
             <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Home
+            </button>
+            <button 
+              onClick={toggleMute} 
+              className={`px-4 py-2 rounded text-sm sm:text-base transition-colors text-shadow-custom ${
+                isMuted ? 'bg-red-600 hover:bg-red-700' : 'bg-green-600 hover:bg-green-700'
+              }`}
+            >
+              {isMuted ? 'Unmute' : 'Mute'}
             </button>
           </div>
         </div>
