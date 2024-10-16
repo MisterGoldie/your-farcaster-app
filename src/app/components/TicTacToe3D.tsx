@@ -287,7 +287,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
         anchorX="center"
         anchorY="middle"
       >
-        {timerStarted ? `Time: ${timeLeft}s` : 'X goes first'}
+        {timerStarted ? `Time: ${timeLeft}s` : 'Maxi goes first'}
       </Text>
 
       {/* Game over text */}
