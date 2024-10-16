@@ -79,6 +79,7 @@ function PodPlayLogoSprite({ position }: { position: [number, number, number] })
 }
 
 function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'podplaylogo', isMuted: boolean, toggleMute: () => void }) {
+  console.log('Piece in Board:', piece);
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
