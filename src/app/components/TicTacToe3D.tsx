@@ -301,7 +301,7 @@ function Board({ difficulty, isMuted, toggleMute }: { difficulty: 'easy' | 'medi
           outlineWidth={0.03}
           outlineColor="#ffffff"
         >
-          {winner === 'X' ? 'Maxi wins!' : 
+          {winner === 'X' ? 'Maxi won' : 
            winner === 'O' ? 'You win!' : 
            isDraw ? 'Draw!' : 
            'Time\'s up! Sorry!'}
