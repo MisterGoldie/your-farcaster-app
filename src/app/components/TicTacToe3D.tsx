@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { Line, Text } from '@react-three/drei'
+import React, { useRef, useState, useEffect, useMemo } from 'react'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
+import { Line, Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
 
 type CellProps = {
@@ -16,7 +16,7 @@ function Cell({ position, onClick, value }: CellProps) {
         <boxGeometry args={[0.95, 0.95, 0.1]} />
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
-      {value && (
+      {value === 'X' && (
         <Text
           position={[0, 0, 0.06]}
           fontSize={0.7}
@@ -27,7 +27,19 @@ function Cell({ position, onClick, value }: CellProps) {
           {value}
         </Text>
       )}
+      {value === 'O' && (
+        <PumpkinSprite position={[0, 0, 0.06]} />
+      )}
     </group>
+  )
+}
+
+function PumpkinSprite({ position }: { position: [number, number, number] }) {
+  const texture = useLoader(THREE.TextureLoader, '/pumpkin.png')
+  return (
+    <Plane position={position} args={[0.8, 0.8]}>
+      <meshBasicMaterial map={texture} transparent />
+    </Plane>
   )
 }
 
@@ -317,7 +329,9 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty }: {
               <color attach="background" args={[backgroundColor]} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <Board difficulty={difficulty} />
+              <React.Suspense fallback={null}>
+                <Board difficulty={difficulty} />
+              </React.Suspense>
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
