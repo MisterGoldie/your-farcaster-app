@@ -17,15 +17,9 @@ function Cell({ position, onClick, value }: CellProps) {
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
       {value === 'X' && (
-        <Text
-          position={[0, 0, 0.06]}
-          fontSize={0.7}
-          color="#000000"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {value}
-        </Text>
+        <group position={[0, 0, 0.06]}>
+          <MaxiSprite position={[0, 0, 0]} />
+        </group>
       )}
       {value === 'O' && (
         <group position={[0, 0, 0.06]}>
@@ -38,6 +32,20 @@ function Cell({ position, onClick, value }: CellProps) {
 
 function PumpkinSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(THREE.TextureLoader, '/pumpkin.png')
+  return (
+    <group position={position}>
+      <Plane args={[0.8, 0.8]}>
+        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
+      </Plane>
+      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
+        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
+      </Plane>
+    </group>
+  )
+}
+
+function MaxiSprite({ position }: { position: [number, number, number] }) {
+  const texture = useLoader(THREE.TextureLoader, '/maxi.png')
   return (
     <group position={position}>
       <Plane args={[0.8, 0.8]}>
