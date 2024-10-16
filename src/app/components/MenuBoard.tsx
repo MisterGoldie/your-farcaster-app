@@ -160,6 +160,15 @@ function MenuText({ onStartGame, isMuted, toggleMute }: {
       )}
       {menuStep === 'difficulty' && (
         <>
+          <Text
+            position={[0, viewport.height * 0.4, 0]}
+            fontSize={viewport.width * 0.06}
+            color="black"
+            anchorX="center"
+            anchorY="middle"
+          >
+            Choose Difficulty:
+          </Text>
           {difficultyOptions.map((difficulty, index) => (
             <group
               key={difficulty}
