@@ -44,9 +44,6 @@ function PumpkinSprite({ position }: { position: [number, number, number] }) {
       <Plane args={[0.8, 0.8]}>
         <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
       </Plane>
-      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
-        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
-      </Plane>
     </group>
   )
 }
@@ -56,9 +53,6 @@ function MaxiSprite({ position }: { position: [number, number, number] }) {
   return (
     <group position={position}>
       <Plane args={[0.8, 0.8]}>
-        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
-      </Plane>
-      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
         <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
       </Plane>
     </group>
@@ -72,9 +66,6 @@ function ScaryGarySprite({ position }: { position: [number, number, number] }) {
       <Plane args={[0.8, 0.8]}>
         <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
       </Plane>
-      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
-        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
-      </Plane>
     </group>
   )
 }
@@ -84,9 +75,6 @@ function PodPlayLogoSprite({ position }: { position: [number, number, number] })
   return (
     <group position={position}>
       <Plane args={[0.8, 0.8]}>
-        <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
-      </Plane>
-      <Plane args={[0.8, 0.8]} rotation={[0, Math.PI, 0]}>
         <meshBasicMaterial map={texture} transparent side={THREE.DoubleSide} />
       </Plane>
     </group>
