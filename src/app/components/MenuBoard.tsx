@@ -39,14 +39,14 @@ type MenuBoardProps = {
   handleBackButton: () => void // Add this new prop
 }
 
-function MenuText({ onStartGame, isMuted, toggleMute, handleBackButton }: { 
+function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: { 
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => void,
   isMuted: boolean,
   toggleMute: () => void,
-  handleBackButton: () => void
+  setMenuStep: (value: 'game' | 'piece' | 'difficulty') => void,
+  menuStep: 'game' | 'piece' | 'difficulty'
 }) {
   const { viewport } = useThree()
-  const [menuStep, setMenuStep] = useState<'game' | 'piece' | 'difficulty'>('game')
   const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'scarygary' | 'podplaylogo'>('pumpkin')
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
 
@@ -67,8 +67,6 @@ function MenuText({ onStartGame, isMuted, toggleMute, handleBackButton }: {
       setMenuStep('piece')
     } else if (menuStep === 'piece') {
       setMenuStep('game')
-    } else {
-      handleBackButton()
     }
   }
 
@@ -223,8 +221,16 @@ function MenuText({ onStartGame, isMuted, toggleMute, handleBackButton }: {
 }
 
 export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }: MenuBoardProps) {
+  const [menuStep, setMenuStep] = useState<'game' | 'piece' | 'difficulty'>('game')
+
   const handleBackButton = () => {
-    onGoBack()
+    if (menuStep === 'difficulty') {
+      setMenuStep('piece')
+    } else if (menuStep === 'piece') {
+      setMenuStep('game')
+    } else {
+      onGoBack()
+    }
   }
 
   return (
@@ -241,11 +247,11 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} handleBackButton={handleBackButton} />
+              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} setMenuStep={setMenuStep} menuStep={menuStep} />
             </Canvas>
           </div>
           <div className="flex justify-between items-center py-3 px-4 bg-orange-700">
-            <button onClick={onGoBack} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button onClick={handleBackButton} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Go Back
             </button>
             <button 
