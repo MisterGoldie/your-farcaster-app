@@ -25,13 +25,12 @@ export default function HowToPlay() {
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
       <MenuBoard 
-        onStartGame={(difficulty, piece) => 
-          handleStartGame(difficulty, piece as 'pumpkin' | 'scarygary')
-        } 
-        onGoBack={handleGoBack} 
-        isMuted={isMuted} 
-        toggleMute={toggleMute} 
-      />
+        onStartGame={(difficulty, piece) => handleStartGame(difficulty, piece as 'pumpkin' | 'scarygary')}
+        onGoBack={handleGoBack}
+        isMuted={isMuted}
+        toggleMute={toggleMute} handleBackButton={function (): void {
+          throw new Error('Function not implemented.')
+        } }      />
     </main>
   )
 }
