@@ -81,7 +81,13 @@ function PodPlayLogoSprite({ position }: { position: [number, number, number] })
   )
 }
 
-function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo', isMuted: boolean, toggleMute: () => void }) {
+function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
+  difficulty: 'easy' | 'medium' | 'hard',
+  piece: 'pumpkin' | 'scarygary' | 'podplaylogo',
+  isMuted: boolean,
+  toggleMute: () => void,
+  onRestart: () => void
+}) {
   const boardRef = useRef<THREE.Group>(null)
   const [board, setBoard] = useState<(string | null)[]>(Array(9).fill(null))
   const [isONext, setIsONext] = useState(false)
@@ -217,6 +223,7 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
+      onRestart() // Call onRestart when the game is over
     }
   }
 
@@ -410,6 +417,12 @@ export default function TicTacToe3D({ onRestart, onBackToMenu, difficulty, piece
   const handleRestart = () => {
     changeBackgroundColor()
     playClick()
+    setBoard(Array(9).fill(null))
+    setIsONext(false)
+    setGameOver(false)
+    setTimeLeft(15)
+    setTimerStarted(false)
+    setJingleStarted(false)
     onRestart()
   }
 
@@ -428,7 +441,7 @@ export default function TicTacToe3D({ onRestart, onBackToMenu, difficulty, piece
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
               <React.Suspense fallback={null}>
-                <Board difficulty={difficulty} piece={piece} isMuted={isMuted} toggleMute={toggleMute} />
+                <Board difficulty={difficulty} piece={piece} isMuted={isMuted} toggleMute={toggleMute} onRestart={handleRestart} />
               </React.Suspense>
             </Canvas>
           </div>
@@ -445,3 +458,27 @@ export default function TicTacToe3D({ onRestart, onBackToMenu, difficulty, piece
     </div>
   )
 }
+function setBoard(arg0: any[]) {
+  throw new Error('Function not implemented.');
+}
+
+function setIsONext(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
+function setGameOver(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
+function setTimeLeft(arg0: number) {
+  throw new Error('Function not implemented.');
+}
+
+function setTimerStarted(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
+function setJingleStarted(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
