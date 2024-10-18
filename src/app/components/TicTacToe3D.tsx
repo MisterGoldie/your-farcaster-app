@@ -99,6 +99,8 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
     soundEnabled: !isMuted 
   });
   const [jingleStarted, setJingleStarted] = useState(false);
+  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -411,6 +413,14 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
     onRestart()
   }
 
+  function playClick() {
+    throw new Error('Function not implemented.');
+  }
+
+  function playHover(): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -431,10 +441,24 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
-            <button onClick={handleRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button 
+              onClick={() => {
+                playClick();
+                handleRestart();
+              }} 
+              onMouseEnter={() => playHover()}
+              className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom"
+            >
               Play Again
             </button>
-            <button onClick={onBackToHome} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button 
+              onClick={() => {
+                playClick();
+                onBackToHome();
+              }}
+              onMouseEnter={() => playHover()}
+              className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom"
+            >
               Home
             </button>
           </div>

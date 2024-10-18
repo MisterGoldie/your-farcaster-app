@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import useSound from 'use-sound'
 
 export default function Share() {
   const [playerData, setPlayerData] = useState({
@@ -43,6 +44,10 @@ export default function Share() {
 
   const router = useRouter()
 
+  const [isMuted, setIsMuted] = useState(false);
+  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
+
   return (
     <main className="p-4">
       <h1 className="text-4xl font-bold mb-4">Player Stats</h1>
@@ -57,13 +62,30 @@ export default function Share() {
         <p>/thepod Fan Tokens owned: {playerData.thepodTokens.toFixed(2)}</p>
       </div>
       <div className="flex flex-wrap gap-4 mt-4">
-        <Link href="/game" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom">
+        <Link 
+          href="/game" 
+          className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom"
+          onClick={() => playClick()}
+          onMouseEnter={() => playHover()}
+        >
           Play Again
         </Link>
-        <a href="https://moxie-frames.airstack.xyz/stim?t=cid_thepod" className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom">
+        <a 
+          href="https://moxie-frames.airstack.xyz/stim?t=cid_thepod" 
+          className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom"
+          onClick={() => playClick()}
+          onMouseEnter={() => playHover()}
+        >
           /thepod FT
         </a>
-        <button onClick={shareGame} className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom">
+        <button 
+          onClick={() => {
+            playClick();
+            shareGame();
+          }} 
+          onMouseEnter={() => playHover()}
+          className="bg-purple-500 text-white px-6 py-3 rounded text-center text-lg hover:bg-purple-600 transition-colors text-shadow-custom"
+        >
           Share Game
         </button>
       </div>
