@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@farcaster/auth-kit": "^0.6.0",
+    "@headlessui/react": "^2.1.10",
     "@napi-rs/canvas": "^0.1.58",
     "@react-three/drei": "^9.114.3",
     "@react-three/fiber": "^8.17.10",
@@ -17,6 +18,7 @@
     "graphql": "^16.9.0",
     "graphql-request": "^7.1.0",
     "next": "^14.2.15",
+    "next-auth": "^4.24.8",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "three": "^0.169.0",
