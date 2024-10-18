@@ -30,6 +30,10 @@ export default function HowToPlay() {
         isMuted={isMuted}
         toggleMute={toggleMute} handleBackButton={function (): void {
           throw new Error('Function not implemented.')
+        } } playHalloweenMusic={function (): void {
+          throw new Error('Function not implemented.')
+        } } stopHalloweenMusic={function (): void {
+          throw new Error('Function not implemented.')
         } }      />
     </main>
   )

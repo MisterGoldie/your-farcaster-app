@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useMemo, useEffect } from 'react'
 import { Canvas, useThree } from '@react-three/fiber'
 import { Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
@@ -37,6 +37,8 @@ type MenuBoardProps = {
   isMuted: boolean
   toggleMute: () => void
   handleBackButton: () => void // Add this new prop
+  playHalloweenMusic: () => void
+  stopHalloweenMusic: () => void
 }
 
 function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: { 
@@ -44,7 +46,9 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
   isMuted: boolean,
   toggleMute: () => void,
   setMenuStep: (value: 'game' | 'piece' | 'difficulty') => void,
-  menuStep: 'game' | 'piece' | 'difficulty'
+  menuStep: 'game' | 'piece' | 'difficulty',
+  playHalloweenMusic: () => void,
+  stopHalloweenMusic: () => void
 }) {
   const { viewport } = useThree()
   const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'scarygary' | 'podplaylogo'>('pumpkin')
@@ -59,6 +63,11 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
 
   const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playHalloweenMusic, { stop: stopHalloweenMusic }] = useSound('/sounds/halloween.mp3', { 
+    volume: 0.3, 
+    loop: true, 
+    soundEnabled: !isMuted 
+  });
 
   console.log('Selected piece in MenuBoard:', selectedPiece);
 
@@ -69,6 +78,11 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
       setMenuStep('game')
     }
   }
+
+  useEffect(() => {
+    playHalloweenMusic();
+    return () => stopHalloweenMusic();
+  }, [playHalloweenMusic, stopHalloweenMusic]);
 
   return (
     <group>
@@ -193,6 +207,7 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
                 setHoveredButton(null)
               }}
               onClick={() => {
+                stopHalloweenMusic();
                 onStartGame(difficulty, selectedPiece)
                 playClick()
               }}
@@ -233,6 +248,10 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
     }
   }
 
+  function playHalloweenMusic(): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -247,7 +266,9 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} setMenuStep={setMenuStep} menuStep={menuStep} />
+              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} setMenuStep={setMenuStep} menuStep={menuStep} playHalloweenMusic={playHalloweenMusic} stopHalloweenMusic={function (): void {
+                throw new Error('Function not implemented.');
+              } } />
             </Canvas>
           </div>
           <div className="flex justify-between items-center py-3 px-4 bg-orange-700">
