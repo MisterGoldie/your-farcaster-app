@@ -5,7 +5,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    //NOTE - only use trustedData to be sure that incoming data is true
+    //NOTE - only use trustedData to be sure that incoming data is true //
     const { trustedData } = body
     console.log('[home route.ts] - Trusted data:', trustedData)
 
