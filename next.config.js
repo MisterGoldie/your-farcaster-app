@@ -40,12 +40,16 @@ const nextConfig = {
       },
     ]
   },
-  webpack: (config) => {
-    config.externals.push({
-      'react-native-config': 'react-native-config',
-      canvas: 'canvas',
-    })
-    return config
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+    return config;
   },
 }
 
