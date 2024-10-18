@@ -18,7 +18,7 @@ export default function Share() {
   useEffect(() => {
     const fetchPlayerData = async () => {
       // Fetch FID from your authentication system
-      const fid = 'YOUR_FID_HERE'; // Replace with actual FID
+      const fid = 'YOUR_FID_HERE'; // Replace with your actual FID
 
       try {
         const response = await fetch(`/api/player?fid=${fid}`);

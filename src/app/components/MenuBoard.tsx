@@ -165,7 +165,7 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
                 width={buttonWidth}
                 height={buttonHeight}
                 radius={cornerRadius}
-                color={hoveredButton === piece ? "#333333" : "#000000"}
+                color={hoveredButton === piece ? "#8B0D18" : "#000000"}
               />
               <Text
                 position={[0, 0, 0.01]}
@@ -216,7 +216,7 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
                 width={buttonWidth}
                 height={buttonHeight}
                 radius={cornerRadius}
-                color={hoveredButton === difficulty ? "#333333" : "#000000"}
+                color={hoveredButton === difficulty ? "#8B0D18" : "#000000"}
               />
               <Text
                 position={[0, 0, 0.01]}
@@ -279,7 +279,7 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
             </Canvas>
           </div>
           <div className="flex justify-between items-center py-3 px-4 bg-orange-700">
-            <button onClick={handleBackButton} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button onClick={handleBackButton} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
               Go Back
             </button>
             <button 
