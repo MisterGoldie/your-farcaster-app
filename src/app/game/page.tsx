@@ -34,7 +34,7 @@ export default function Game() {
   }
 
   const handleBackToMenu = () => {
-    router.push('/menu')  // Assuming '/menu' is the route for the main menu
+    router.push('/howtoplay')
   }
 
   function toggleMute(): void {
