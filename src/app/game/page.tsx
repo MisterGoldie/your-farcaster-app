@@ -33,8 +33,8 @@ export default function Game() {
     setKey(prevKey => prevKey + 1)
   }
 
-  const handleBackToHome = () => {
-    router.push('/')
+  const handleBackToMenu = () => {
+    router.push('/menu')  // Assuming '/menu' is the route for the main menu
   }
 
   function toggleMute(): void {
@@ -45,10 +45,9 @@ export default function Game() {
 
   return (
     <main className="h-[100svh] bg-black text-white overflow-hidden">
-      <TicTacToe3D 
-        key={key}
+      <TicTacToe3D
         onRestart={handleRestart}
-        onBackToHome={handleBackToHome}
+        onBackToMenu={handleBackToMenu}
         difficulty={difficulty}
         piece={piece}
         isMuted={isMuted}

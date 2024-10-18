@@ -387,9 +387,9 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece, isMuted, toggleMute }: { 
+export default function TicTacToe3D({ onRestart, onBackToMenu, difficulty, piece, isMuted, toggleMute }: { 
   onRestart: () => void, 
-  onBackToHome: () => void,
+  onBackToMenu: () => void,
   difficulty: 'easy' | 'medium' | 'hard',
   piece: 'pumpkin' | 'scarygary' | 'podplaylogo',
   isMuted: boolean,
@@ -436,7 +436,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
             <button onClick={handleRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
               Play Again
             </button>
-            <button onClick={() => { playClick(); onBackToHome(); }} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
+            <button onClick={() => { playClick(); onBackToMenu(); }} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
               Main Menu
             </button>
           </div>
