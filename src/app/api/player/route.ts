@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getFarcasterAddressesFromFID, getVestingContractAddress, getOwnedFanTokens, checkFanTokenOwnership, getUserRecord, getTotalGamesPlayed, getUserProfilePicture, getUsername } from '../../utils/farcasterUtils';
+import { getFarcasterAddressesFromFID, getVestingContractAddress, getOwnedFanTokens, checkFanTokenOwnership, getUserRecord, getTotalGamesPlayed, getUserProfilePicture, getUsername } from '../../../utils/farcasterUtils';
 
 function calculatePODScore(wins: number, ties: number, losses: number, totalGames: number, tokenBalance: number): number {
   const baseScore = (wins * 2) + ties + (losses * 0.5);
