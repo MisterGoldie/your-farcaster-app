@@ -237,8 +237,16 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
 
 export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }: MenuBoardProps) {
   const [menuStep, setMenuStep] = useState<'game' | 'piece' | 'difficulty'>('game')
+  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playHalloweenMusic, { stop: stopHalloweenMusic }] = useSound('/sounds/halloween.mp3', { 
+    volume: 0.3, 
+    loop: true, 
+    soundEnabled: !isMuted 
+  });
 
   const handleBackButton = () => {
+    playClick();
     if (menuStep === 'difficulty') {
       setMenuStep('piece')
     } else if (menuStep === 'piece') {
@@ -248,9 +256,10 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
     }
   }
 
-  function playHalloweenMusic(): void {
-    throw new Error('Function not implemented.');
-  }
+  useEffect(() => {
+    playHalloweenMusic();
+    return () => stopHalloweenMusic();
+  }, [playHalloweenMusic, stopHalloweenMusic]);
 
   return (
     <div className="h-[100svh] w-full bg-black flex items-center justify-center p-4">
@@ -266,9 +275,7 @@ export default function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }
               <color attach="background" args={['#f97316']} />
               <ambientLight intensity={0.3} />
               <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
-              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} setMenuStep={setMenuStep} menuStep={menuStep} playHalloweenMusic={playHalloweenMusic} stopHalloweenMusic={function (): void {
-                throw new Error('Function not implemented.');
-              } } />
+              <MenuText onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} setMenuStep={setMenuStep} menuStep={menuStep} playHalloweenMusic={playHalloweenMusic} stopHalloweenMusic={stopHalloweenMusic} />
             </Canvas>
           </div>
           <div className="flex justify-between items-center py-3 px-4 bg-orange-700">
