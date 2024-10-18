@@ -433,10 +433,10 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
-            <button onClick={handleRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button onClick={handleRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
               Play Again
             </button>
-            <button onClick={() => { playClick(); onBackToHome(); }} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
+            <button onClick={() => { playClick(); onBackToHome(); }} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
               Home
             </button>
           </div>
