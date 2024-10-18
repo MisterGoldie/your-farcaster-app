@@ -10,10 +10,16 @@ type CellProps = {
   value: string | null
 }
 
-function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'scarygary' | 'podplaylogo' }) {
+function Cell({ position, onClick, value, piece, playHover, playClick }: CellProps & { piece: 'pumpkin' | 'scarygary' | 'podplaylogo', playHover: () => void, playClick: () => void }) {
   return (
     <group position={position}>
-      <mesh onClick={onClick}>
+      <mesh 
+        onClick={() => {
+          playClick();
+          onClick();
+        }}
+        onPointerEnter={() => playHover()}
+      >
         <boxGeometry args={[0.95, 0.95, 0.1]} />
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
@@ -341,7 +347,11 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
             0
           ]}
           onClick={() => handleCellClick(index)}
-          value={value} piece={piece}        />
+          value={value} piece={piece} playHover={function (): void {
+            throw new Error('Function not implemented.');
+          } } playClick={function (): void {
+            throw new Error('Function not implemented.');
+          } }        />
       ))}
 
       {/* Timer */}
@@ -398,6 +408,8 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
   toggleMute: () => void
 }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
+  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
+  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   const changeBackgroundColor = () => {
     const newColor = backgroundColors[Math.floor(Math.random() * backgroundColors.length)]
@@ -411,14 +423,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
   const handleRestart = () => {
     changeBackgroundColor()
     onRestart()
-  }
-
-  function playClick() {
-    throw new Error('Function not implemented.');
-  }
-
-  function playHover(): void {
-    throw new Error('Function not implemented.');
   }
 
   return (
