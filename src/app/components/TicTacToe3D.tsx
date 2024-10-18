@@ -235,7 +235,16 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
     if (emptySpots.length === 0) return -1 // No move available
 
     if (difficulty === 'easy') {
-      // For easy difficulty, just choose a random empty spot
+      // Check for winning move
+      for (let i = 0; i < emptySpots.length; i++) {
+        const testBoard = [...board]
+        testBoard[emptySpots[i]] = 'X'
+        if (checkWinner(testBoard) === 'X') {
+          return emptySpots[i]
+        }
+      }
+
+      // If no winning move, choose a random empty spot
       return emptySpots[Math.floor(Math.random() * emptySpots.length)]
     }
 
