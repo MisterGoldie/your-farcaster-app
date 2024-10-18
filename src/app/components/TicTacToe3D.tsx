@@ -437,7 +437,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
               Play Again
             </button>
             <button onClick={() => { playClick(); onBackToHome(); }} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-red-900 transition-colors text-shadow-custom">
-              Home
+              Main Menu
             </button>
           </div>
         </div>
