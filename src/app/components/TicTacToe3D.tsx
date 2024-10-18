@@ -10,16 +10,10 @@ type CellProps = {
   value: string | null
 }
 
-function Cell({ position, onClick, value, piece, playHover, playClick }: CellProps & { piece: 'pumpkin' | 'scarygary' | 'podplaylogo', playHover: () => void, playClick: () => void }) {
+function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'scarygary' | 'podplaylogo' }) {
   return (
     <group position={position}>
-      <mesh 
-        onClick={() => {
-          playClick();
-          onClick();
-        }}
-        onPointerEnter={() => playHover()}
-      >
+      <mesh onClick={onClick}>
         <boxGeometry args={[0.95, 0.95, 0.1]} />
         <meshStandardMaterial color="#ff6600" opacity={0} transparent />
       </mesh>
@@ -105,8 +99,6 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
     soundEnabled: !isMuted 
   });
   const [jingleStarted, setJingleStarted] = useState(false);
-  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
-  const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   useFrame((state) => {
     if (boardRef.current && difficulty === 'hard') {
@@ -347,11 +339,7 @@ function Board({ difficulty, piece, isMuted, toggleMute }: { difficulty: 'easy' 
             0
           ]}
           onClick={() => handleCellClick(index)}
-          value={value} piece={piece} playHover={function (): void {
-            throw new Error('Function not implemented.');
-          } } playClick={function (): void {
-            throw new Error('Function not implemented.');
-          } }        />
+          value={value} piece={piece}        />
       ))}
 
       {/* Timer */}
@@ -408,7 +396,6 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
   toggleMute: () => void
 }) {
   const [backgroundColor, setBackgroundColor] = useState(backgroundColors[0])
-  const [playHover] = useSound('/sounds/hover.mp3', { volume: 0.5, soundEnabled: !isMuted });
   const [playClick] = useSound('/sounds/click.mp3', { volume: 0.5, soundEnabled: !isMuted });
 
   const changeBackgroundColor = () => {
@@ -422,6 +409,7 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
 
   const handleRestart = () => {
     changeBackgroundColor()
+    playClick()
     onRestart()
   }
 
@@ -445,24 +433,10 @@ export default function TicTacToe3D({ onRestart, onBackToHome, difficulty, piece
             </Canvas>
           </div>
           <div className="flex justify-center gap-4 py-3 bg-orange-700">
-            <button 
-              onClick={() => {
-                playClick();
-                handleRestart();
-              }} 
-              onMouseEnter={() => playHover()}
-              className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom"
-            >
+            <button onClick={handleRestart} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Play Again
             </button>
-            <button 
-              onClick={() => {
-                playClick();
-                onBackToHome();
-              }}
-              onMouseEnter={() => playHover()}
-              className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom"
-            >
+            <button onClick={() => { playClick(); onBackToHome(); }} className="bg-orange-800 text-white px-4 py-2 rounded text-sm sm:text-base hover:bg-orange-900 transition-colors text-shadow-custom">
               Home
             </button>
           </div>
