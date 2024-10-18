@@ -36,9 +36,13 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ type: "form", title: `${process.env.NEXT_PUBLIC_APP_NAME}`, url: authLink, }, { status: 200 })
 
   } catch (error: any) {
-    // Return a fallback error response
-    console.log(`[launcher route.ts] - Error in launcher:`, error?.response ? error.response.data : error.message)
-    return NextResponse.json({ type: "form", title: "Error", url: `${process.env.NEXT_PUBLIC_URL}`, }, { status: 500 })
+    console.error('[launcher route.ts] - Detailed error:', error);
+    return NextResponse.json({ 
+        type: "form", 
+        title: "Error", 
+        url: `${process.env.NEXT_PUBLIC_URL}`, 
+        error: error.message 
+    }, { status: 500 });
   }
 }
 
