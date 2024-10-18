@@ -4,9 +4,9 @@ import { getFarcasterAddressesFromFID, getVestingContractAddress, getOwnedFanTok
 function calculatePODScore(wins: number, ties: number, losses: number, totalGames: number, tokenBalance: number): number {
   const baseScore = (wins * 2) + ties + (losses * 0.5);
   const gamesBonusScore = totalGames >= 25 ? 10 : 0;
-  const tokenBonusScore = Math.floor(tokenBalance) * 25; // 25 points for each whole token
+  const tokenBonusScore = Math.floor(tokenBalance) * 25;
   const totalScore = baseScore + gamesBonusScore + tokenBonusScore;
-  return Math.round(totalScore * 10) / 10; // Round to one decimal place.
+  return Math.round(totalScore * 10) / 10;
 }
 
 export async function GET(req: NextRequest) {

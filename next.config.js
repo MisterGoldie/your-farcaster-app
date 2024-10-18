@@ -40,6 +40,12 @@ const nextConfig = {
       },
     ]
   },
+  webpack: (config, { isServer }) => {
+    // Add your custom webpack configuration here
+    // https://webpack.js.org/configuration/
+    // https://nextjs.org/docs/api-reference/next.config.js/webpack
+    return config
+  },
 }
 
 module.exports = nextConfig;
