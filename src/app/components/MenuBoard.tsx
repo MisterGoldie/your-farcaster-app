@@ -117,7 +117,7 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
               width={buttonWidth}
               height={buttonHeight}
               radius={cornerRadius}
-              color={hoveredButton === 'tic-tac-toe' ? "#333333" : "#000000"}
+              color={hoveredButton === 'tic-tac-toe' ? "#8B0D18" : "#000000"}
             />
             <Text
               position={[0, 0, 0.01]}
