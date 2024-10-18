@@ -7,7 +7,7 @@ import '@farcaster/auth-kit/styles.css'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import Image from 'next/image'
 import FarcasterShare from './FarcasterShare'
-import { devLog } from '@/app/helpers/devLog'
+import { devLog } from '../helpers/devLog'
 import { useAuthContext } from '../context/AuthContext'
 
 interface Props { }

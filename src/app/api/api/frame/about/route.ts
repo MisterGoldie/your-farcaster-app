@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { validateWithNeynar, createFrame } from '@/helpers/frames'
+import { validateWithNeynar, createFrame } from '@/app/helpers/frames'
 
 export async function POST(request: NextRequest) {
   try {

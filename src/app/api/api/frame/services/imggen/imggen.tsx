@@ -1,4 +1,4 @@
-import { fetchUser } from '@/helpers/frames'
+import { fetchUser } from '@/app/helpers/frames'
 import { ImageResponse } from 'next/og'
 
 interface GenerateImageParams {
