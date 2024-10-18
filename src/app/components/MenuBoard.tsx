@@ -121,7 +121,7 @@ function MenuText({ onStartGame, isMuted, toggleMute, setMenuStep, menuStep }: {
             />
             <Text
               position={[0, 0, 0.01]}
-              fontSize={viewport.width * 0.06}  // Adjusted font sizes
+              fontSize={viewport.width * 0.06}  // Adjusted font size
               color="white"
               anchorX="center"
               anchorY="middle"
