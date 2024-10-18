@@ -223,7 +223,6 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
 
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
-      onRestart() // Call onRestart when the game is over
     }
   }
 
@@ -417,12 +416,6 @@ export default function TicTacToe3D({ onRestart, onBackToMenu, difficulty, piece
   const handleRestart = () => {
     changeBackgroundColor()
     playClick()
-    setBoard(Array(9).fill(null))
-    setIsONext(false)
-    setGameOver(false)
-    setTimeLeft(15)
-    setTimerStarted(false)
-    setJingleStarted(false)
     onRestart()
   }
 
@@ -458,27 +451,3 @@ export default function TicTacToe3D({ onRestart, onBackToMenu, difficulty, piece
     </div>
   )
 }
-function setBoard(arg0: any[]) {
-  throw new Error('Function not implemented.');
-}
-
-function setIsONext(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}
-
-function setGameOver(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}
-
-function setTimeLeft(arg0: number) {
-  throw new Error('Function not implemented.');
-}
-
-function setTimerStarted(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}
-
-function setJingleStarted(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}
-
