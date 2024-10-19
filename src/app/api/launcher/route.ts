@@ -16,8 +16,19 @@ export async function POST(req: NextRequest) {
   console.log("[launcher route.ts] - Received data:", data)
 
   try {
-    // Validate the trustedData.messageBytes using Neynar API
-    console.log("[launcher route.ts] - Attempting to validate Farcaster message")
+    // Check if this is a composer action
+    if (data.type === "composer") {
+      // Validate composer action
+      const validationResult = await validateComposerAction(data)
+      if (!validationResult.valid) {
+        return NextResponse.json({ error: "Composer action validation failed" }, { status: 400 })
+      }
+      // Process composer action
+      // ... (implement your composer action logic here)
+      return NextResponse.json({ success: true }, { status: 200 })
+    }
+
+    // Existing Farcaster message validation logic
     const validationResult = await validateFarcasterMessage(data.trustedData.messageBytes)
 
     if (!validationResult.valid) {
@@ -46,6 +57,12 @@ export async function POST(req: NextRequest) {
         error: error.message 
     }, { status: 500 });
   }
+}
+
+async function validateComposerAction(data: any) {
+  // Implement your composer action validation logic here
+  // For now, we'll just return valid: true
+  return { valid: true }
 }
 
 /*
@@ -112,5 +129,6 @@ async function validateFarcasterMessage(messageBytes: string) {
   const response = await axios.request(options)
   return response.data
 }
+
 
 

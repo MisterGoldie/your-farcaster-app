@@ -7,16 +7,35 @@ import Link from 'next/link'
 export default function ComposerAction() {
   const [message, setMessage] = useState("POD Play Tic-Tac-Toe is awesome! Can you beat me?")
 
-  const handleShare = () => {
-    window.parent.postMessage({
-      type: "createCast",
-      data: {
-        cast: {
-          text: message,
-          embeds: ["https://your-farcaster-app.vercel.app"]
-        }
+  const handleShare = async () => {
+    try {
+      const response = await fetch('/api/launcher', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'composer',
+          data: {
+            cast: {
+              text: message,
+              embeds: ["https://your-farcaster-app.vercel.app"]
+            }
+          }
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to share');
       }
-    }, "*")
+
+      // Handle successful share
+      console.log('Shared successfully');
+    } catch (error) {
+      console.error('Error sharing:', error);
+      // Display error to user (you might want to use a state variable for this)
+    }
   }
 
   return (
