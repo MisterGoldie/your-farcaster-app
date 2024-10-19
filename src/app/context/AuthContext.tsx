@@ -38,10 +38,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await handleSignIn(key);
     router.refresh(); // Use refresh() instead of replace(pathname)
   };
-
   useEffect(() => {
-    const key = searchParams.get("key");
-    const mini = searchParams.get("mini");
+    const key = searchParams?.get("key");
+    const mini = searchParams?.get("mini");
 
     if (key) {
       scheduling(key);
