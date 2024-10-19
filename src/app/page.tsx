@@ -23,7 +23,6 @@ export default function Home() {
                 priority
               />
             </div>
-            
             <Link 
               href="/howtoplay" 
               className="bg-orange-800 text-white px-6 py-3 rounded text-lg sm:text-xl hover:bg-red-900 transition-colors text-shadow-custom"

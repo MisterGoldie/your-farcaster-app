@@ -6,35 +6,47 @@ import Link from 'next/link'
 
 export default function ComposerAction() {
   const [message, setMessage] = useState("POD Play Tic-Tac-Toe is awesome! Can you beat me?")
+  const [shareStatus, setShareStatus] = useState<string | null>(null)
 
   const handleShare = async () => {
+    console.log('handleShare function called');
+    setShareStatus('Sharing...');
     try {
+      const payload = {
+        type: 'composer',
+        name: "POD Play",
+        description: "Play Tic-Tac-Toe on Farcaster!",
+        action: {
+          type: "post",
+        },
+        cast: {
+          text: message,
+          embeds: [`${process.env.NEXT_PUBLIC_URL}`]
+        }
+      };
+      console.log('Payload:', JSON.stringify(payload, null, 2));
+
       const response = await fetch('/api/launcher', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          type: 'composer',
-          data: {
-            cast: {
-              text: message,
-              embeds: ["https://your-farcaster-app.vercel.app"]
-            }
-          }
-        }),
+        body: JSON.stringify(payload),
       });
 
+      console.log('Response status:', response.status);
+      const responseData = await response.json();
+      console.log('Response data:', responseData);
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to share');
+        throw new Error(responseData.error || 'Failed to share');
       }
 
-      // Handle successful share
       console.log('Shared successfully');
+      setShareStatus('Shared successfully!');
     } catch (error) {
-      console.error('Error sharing:', error);
-      // Display error to user (you might want to use a state variable for this)
+      console.error('Error in handleShare:', error);
+      setShareStatus(`Error: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
@@ -62,7 +74,7 @@ export default function ComposerAction() {
           onChange={(e) => setMessage(e.target.value)}
         />
 
-        <div className="flex justify-between">
+        <div className="flex flex-col space-y-4">
           <button 
             className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600 transition-colors"
             onClick={handleShare}
@@ -71,10 +83,17 @@ export default function ComposerAction() {
           </button>
           <Link 
             href="/game"
-            className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors"
+            className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 transition-colors text-center"
           >
             Play Game
           </Link>
+          {shareStatus && (
+            <div className={`text-center p-2 rounded ${
+              shareStatus.startsWith('Error') ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700'
+            }`}>
+              {shareStatus}
+            </div>
+          )}
         </div>
       </div>
     </main>
