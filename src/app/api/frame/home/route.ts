@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { validateWithNeynar, createFrame } from '@/app/helpers/helpers'
+import { validateWithNeynar, createFrame } from '@/app/helpers/frames'
 
 export async function POST(request: NextRequest) {
   try {
@@ -25,9 +25,12 @@ export async function POST(request: NextRequest) {
 
     let frameHtml = await createFrame(`
       <meta property="fc:frame:image" content="${generatedImage}"/> 
-      <meta property="fc:frame:button:1" content="🕹️ Play" />
-      <meta property="fc:frame:button:1:action" content="post_redirect" />
-      <meta property="fc:frame:button:1:target" content="${process.env.NEXT_PUBLIC_URL}/api/launcher" />
+      <meta property="fc:frame:button:1" content="️ Play" />
+      <meta property="fc:frame:button:1:action" content="link" />
+      <meta property="fc:frame:button:1:target" content="https://warpcast.com/~/composer-action?url=https%3A%2F%2F${process.env.NEXT_PUBLIC_URL_SHORT}%2Fapi%2Flauncher" />
+      <meta property="fc:frame:button:2" content="🕹️ Play" />
+      <meta property="fc:frame:button:2:action" content="link" />
+      <meta property="fc:frame:button:2:target" content="https://warpcast.com/~/composer-action?url=https%3A%2F%2F${process.env.NEXT_PUBLIC_URL_SHORT}%2Fapi%2Flauncher" />
     `)
     console.log('[home route.ts] - Generated Frame HTML:', frameHtml)
 
@@ -39,3 +42,4 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: "Error processing frame" }, { status: 400 })
   }
 }
+

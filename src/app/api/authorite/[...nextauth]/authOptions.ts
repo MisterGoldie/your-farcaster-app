@@ -20,6 +20,10 @@ export const authOptions: AuthOptions = {
                 csrfToken: { label: "CSRF Token", type: "hidden" },
             },
             async authorize(credentials, req) {
+                console.log("[authOptions.ts] - Authorize function called");
+                console.log("[authOptions.ts] - Credentials:", credentials);
+                console.log("[authOptions.ts] - Request:", req);
+
                 // Ensure required credentials and CSRF token are present
                 if (!credentials || !credentials.key || !credentials.csrfToken) {
                     console.log("[authOptions.ts] - Missing Credentials or CSRF token")

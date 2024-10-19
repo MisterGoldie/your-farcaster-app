@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ message: "Invalid frame message" }, { status: 400 })
     }
 
-    //NOTE - Extract relevant information from the validation result
+    //NOTE - Extract relevant information from the validation resulto
     const { fid, verifications } = validationResult.action.interactor
 
     console.log('[about route.ts] - trustedData', trustedData)
@@ -26,11 +26,8 @@ export async function POST(request: NextRequest) {
     let frameHtml = await createFrame(`
       <meta property="fc:frame:image" content="${generatedImage}"/> 
       <meta property="fc:frame:button:1" content="🕹️ Play" />
-      <meta property="fc:frame:button:1:action" content="link" />
-      <meta property="fc:frame:button:1:target" content="https://warpcast.com/~/composer-action?url=https%3A%2F%2F${process.env.NEXT_PUBLIC_URL_SHORT}%2Fapi%2Flauncher" />
-      <meta property="fc:frame:button:2" content="🕹️ Play" />
-      <meta property="fc:frame:button:2:action" content="link" />
-      <meta property="fc:frame:button:2:target" content="https://warpcast.com/~/composer-action?url=https%3A%2F%2F${process.env.NEXT_PUBLIC_URL_SHORT}%2Fapi%2Flauncher" />
+      <meta property="fc:frame:button:1:action" content="post_redirect" />
+      <meta property="fc:frame:button:1:target" content="${process.env.NEXT_PUBLIC_URL}/api/launcher" />
     `)
     console.log('[about route.ts] - Generated Frame HTML:', frameHtml)
 

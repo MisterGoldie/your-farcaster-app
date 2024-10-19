@@ -50,6 +50,7 @@ export async function POST(req: NextRequest) {
   Handle the GET request, return metadata about the mini-app
 */
 export async function GET(req: NextRequest) {
+  console.log('GET request received at /api/launcher');
   try {
     const host = req.headers.get('host') || 'localhost:3000';
     const protocol = req.headers.get('x-forwarded-proto') || 'http';

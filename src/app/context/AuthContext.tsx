@@ -36,7 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const scheduling = async (key: string) => {
     await handleSignIn(key);
-    router.refresh(); // Use refresh() instead of replace(pathname)
+    router.refresh(); // use refresh() instead of replace(pathname)
   };
   useEffect(() => {
     const key = searchParams?.get("key");

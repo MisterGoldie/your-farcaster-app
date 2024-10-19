@@ -21,7 +21,7 @@ qrcode.generate(LAUNCHER_URL, { small: true }, (qrcode) => {
 
                               I N C.
 
-      ███    ███ ██ ███    ██ ██      █████  ██████  ██████  ███████ 
+      ███    ███ ██ ███    ██ ██      ████  ██████  ���█████  ███████ 
       ████  ████ ██ ████   ██ ██     ██   ██ ██   ██ ██   ██ ██      
       ██ ████ ██ ██ ██ ██  ██ ██     ███████ ██████  ██████  ███████ 
       ██  ██  ██ ██ ██  ██ ██ ██     ██   ██ ██      ██           ██ 
@@ -48,3 +48,5 @@ const devProcess = exec('next dev', (error, stdout, stderr) => {
 
 devProcess.stdout.pipe(process.stdout)
 devProcess.stderr.pipe(process.stderr)
+
+
