@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import axios from "axios"
 import CryptoJS from 'crypto-js'
+// Remove the import for validateFarcasterMessage as it's not exported from the module
+// import { validateFarcasterMessage } from '@/app/helpers/frames'
 
 //NOTE - you might want to remove the console logs in production
 
@@ -110,3 +112,5 @@ async function validateFarcasterMessage(messageBytes: string) {
   const response = await axios.request(options)
   return response.data
 }
+
+

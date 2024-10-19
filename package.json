@@ -2,12 +2,14 @@
   "name": "your-farcaster-app",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "dev:ngrok": "ngrok http 3000 & next dev"
+    "dev:ngrok": "ngrok http 3000 & next dev",
+    "clean": "rm -rf .next && rm -rf node_modules/.cache"
   },
   "dependencies": {
     "@farcaster/auth-kit": "^0.6.0",
