@@ -49,21 +49,40 @@ export async function POST(req: NextRequest) {
 /*
   Handle the GET request, return metadata about the mini-app
 */
-export async function GET() {
-  return NextResponse.json(
-    {
+export async function GET(req: NextRequest) {
+  try {
+    const host = req.headers.get('host') || 'localhost:3000';
+    const protocol = req.headers.get('x-forwarded-proto') || 'http';
+    const baseUrl = `${protocol}://${host}`;
+
+    console.log('Request headers:', req.headers);
+    console.log('Calculated base URL:', baseUrl);
+
+    console.log('Environment variables:', {
+      NEXT_PUBLIC_APP_NAME: process.env.NEXT_PUBLIC_APP_NAME,
+      NEXT_PUBLIC_APP_DESCRIPTION_SHORT: process.env.NEXT_PUBLIC_APP_DESCRIPTION_SHORT,
+      NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL
+    });
+
+    const response = {
       type: "composer",
-      name: `${process.env.NEXT_PUBLIC_APP_NAME}`,
+      name: process.env.NEXT_PUBLIC_APP_NAME || 'Default App Name',
       icon: "zap",
-      description: `${process.env.NEXT_PUBLIC_APP_DESCRIPTION_SHORT}`,
-      aboutUrl: `${process.env.NEXT_PUBLIC_URL}`,
-      imageUrl: `${process.env.NEXT_PUBLIC_URL}/imgUrl.png`,
+      description: process.env.NEXT_PUBLIC_APP_DESCRIPTION_SHORT || 'Default Description',
+      aboutUrl: baseUrl,
+      imageUrl: `${baseUrl}/imgUrl.png`,
       action: {
         type: "post",
       },
-    },
-    { status: 200 }
-  )
+    };
+
+    console.log('Response:', response);
+
+    return NextResponse.json(response, { status: 200 });
+  } catch (error) {
+    console.error('Error in GET /api/launcher:', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+  }
 }
 
 /**
