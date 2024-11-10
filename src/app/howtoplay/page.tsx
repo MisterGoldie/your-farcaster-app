@@ -1,12 +1,14 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
+import { useUserContext } from '../context/userContext'
 
-const MenuBoard = dynamic(() => import('../components/MenuBoard'), { ssr: false })
+const MenuBoard = dynamic(() => import('../../components/MenuBoard'), { ssr: false })
 
 export default function HowToPlay() {
+  const { userProfile } = useUserContext()
   const router = useRouter()
   const [isMuted, setIsMuted] = useState(false)
 
@@ -22,19 +24,20 @@ export default function HowToPlay() {
     setIsMuted(prev => !prev)
   }
 
+  // Default no-op functions to avoid errors
+  const handleBackButton = () => {}
+  const playHalloweenMusic = () => {}
+  const stopHalloweenMusic = () => {}
+
   return (
-    <main className="h-[100svh] bg-black text-white overflow-hidden">
+    <main className="h-[100svh] bg-transparent text-white overflow-hidden">
       <MenuBoard 
         onStartGame={(difficulty, piece) => handleStartGame(difficulty, piece as 'pumpkin' | 'scarygary')}
         onGoBack={handleGoBack}
         isMuted={isMuted}
-        toggleMute={toggleMute} handleBackButton={function (): void {
-          throw new Error('Function not implemented.')
-        } } playHalloweenMusic={function (): void {
-          throw new Error('Function not implemented.')
-        } } stopHalloweenMusic={function (): void {
-          throw new Error('Function not implemented.')
-        } }      />
+        toggleMute={toggleMute}
+        username={userProfile?.username}
+      />
     </main>
   )
 }

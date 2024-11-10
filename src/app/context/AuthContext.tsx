@@ -36,8 +36,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const scheduling = async (key: string) => {
     await handleSignIn(key);
-    router.refresh(); // use refresh() instead of replace(pathname)
+    router.refresh(); // You're already using refresh instead of replace
   };
+
   useEffect(() => {
     const key = searchParams?.get("key");
     const mini = searchParams?.get("mini");
@@ -57,9 +58,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
+// **Exported Hook**
 export function useAuthContext() {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useAuthContext must be used within an AuthProvider');
   }
   return context;

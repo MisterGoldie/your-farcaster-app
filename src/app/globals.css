@@ -1,4 +1,6 @@
 /* eslint-disable */
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,19 +21,18 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-  font-family: 'Frijole', cursive;
+  background-image: url('/mainbg.png'); /* Ensure this path is correct */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  font-family: 'Nosifer', sans-serif;
 }
 
-/* Ensure all text uses the Frijole font */
+/* Ensure all text uses the Nosifer font */
 * {
-  font-family: 'Frijole', cursive !important;
+  font-family: 'Nosifer', sans-serif !important; /* Use Nosifer as a regular font */
 }
 
 @media (max-width: 640px) {
@@ -68,4 +69,10 @@ body {
 
 .text-shadow-custom {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.nosifer-regular {
+  font-family: "Nosifer", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }

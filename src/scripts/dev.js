@@ -1,7 +1,6 @@
 const { exec } = require('child_process')
 const qrcode = require('qrcode-terminal')
 const dotenv = require('dotenv')
-const path = require('path')
 
 // NOTE: helper script to generate a QR code/link to interact with your Mini App
 dotenv.config({ path: '.env.local' })
@@ -22,8 +21,7 @@ qrcode.generate(LAUNCHER_URL, { small: true }, (qrcode) => {
 
                               I N C.
 
-      ███    ███ ██ ███    ██ ██      ███  ██████  █████  ███████ 
-      ███    ███ ██ ███    ██ ██      ███  ██████  █████  ███████ 
+      ███    ███ ██ ███    ██ ██      █████  ██████  ██████  ███████ 
       ████  ████ ██ ████   ██ ██     ██   ██ ██   ██ ██   ██ ██      
       ██ ████ ██ ██ ██ ██  ██ ██     ███████ ██████  ██████  ███████ 
       ██  ██  ██ ██ ██  ██ ██ ██     ██   ██ ██      ██           ██ 
@@ -39,16 +37,14 @@ qrcode.generate(LAUNCHER_URL, { small: true }, (qrcode) => {
 })
 
 // Run Next.js dev server
-const nextBinPath = path.join(__dirname, '..', '..', 'node_modules', '.bin', 'next');
-
-exec(`"${nextBinPath}" dev`, (error, stdout, stderr) => {
+const devProcess = exec('next dev', (error, stdout, stderr) => {
   if (error) {
-    console.log(`exec error: ${error}`);
-    return;
+    console.log(`exec error: ${error}`)
+    return
   }
-  console.log('Next.js server output:');
-  process.stdout.write(stdout);
-  process.stderr.write(stderr);
-});
+  console.log(stdout)
+  console.log(stderr)
+})
 
-console.log('Starting Next.js development server...')
+devProcess.stdout.pipe(process.stdout)
+devProcess.stderr.pipe(process.stderr)
