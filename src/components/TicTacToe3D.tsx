@@ -101,7 +101,7 @@ function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin
       {value === 'X' && (
         <group position={[0, 0, 0.06]}>
           <React.Suspense fallback={<LoadingSprite position={[0, 0, 0]} />}>
-            <MaxiSprite position={[0, 0, 0]} />
+            <JokerSprite position={[0, 0, 0]} />
           </React.Suspense>
         </group>
       )}
@@ -141,7 +141,7 @@ function PumpkinSprite({ position }: { position: [number, number, number] }) {
   )
 }
 
-function MaxiSprite({ position }: { position: [number, number, number] }) {
+function JokerSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(
     THREE.TextureLoader, 
     `${process.env.NEXT_PUBLIC_URL || ''}/joker.png`,
@@ -476,7 +476,7 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
         anchorX="center"
         anchorY="middle"
       >
-        {timerStarted ? `Time: ${timeLeft}s` : 'Maxi goes first'}
+        {timerStarted ? `Time: ${timeLeft}s` : 'Joker goes first'}
       </Text>
 
       {(winner || isDraw || timeLeft === 0) && (
@@ -489,7 +489,7 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
           outlineWidth={0.03}
           outlineColor="#ffffff"
         >
-          {winner === 'X' ? 'Maxi won' : 
+          {winner === 'X' ? 'Joker won' : 
            winner === 'O' ? 'You win!' : 
            isDraw ? 'Draw!' : 
            'Time\'s up! Sorry!'}
@@ -605,7 +605,7 @@ export default function TicTacToe3D({
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
           <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-              TIC-TAC-MAXI
+              TIC-TAC-JOKER
             </h1>
           </div>
           <div className="flex-grow relative">
