@@ -6,7 +6,7 @@ const nextConfig = {
     appDir: true,
   },
   webpack: (config) => {
-    config.externals = [...config.externals, { canvas: 'canvas' }]  // required for three.js
+    config.externals = [...config.externals, { canvas: 'canvas' }]
     return config
   },
 }

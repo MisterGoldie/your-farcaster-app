@@ -16,13 +16,23 @@ function MenuPage() {
   const [isMuted, setIsMuted] = useState(false)
 
   const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => {
-    console.log('Starting game with:', difficulty, piece)
-    router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`)
+    try {
+      console.log('Starting game with:', difficulty, piece)
+      const url = `/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`
+      console.log('Navigating to:', url)
+      router.push(url)
+    } catch (error) {
+      console.error('Navigation error:', error)
+    }
   }
 
   const handleGoBack = () => {
-    console.log('Going back to home')
-    router.push('/')
+    try {
+      console.log('Going back to home')
+      router.push('/')
+    } catch (error) {
+      console.error('Navigation error:', error)
+    }
   }
 
   return (

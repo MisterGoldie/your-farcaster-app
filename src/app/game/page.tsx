@@ -13,7 +13,7 @@ export default function GamePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   
-  const difficulty = (searchParams?.get('difficulty') as 'easy' | 'medium' | 'hard') || 'easy'
+  const difficulty = (searchParams.get('difficulty') as 'easy' | 'medium' | 'hard') || 'easy'
   const piece = (searchParams?.get('piece') as 'pumpkin' | 'scarygary' | 'podplaylogo') || 'pumpkin'
   const isMuted = searchParams?.get('muted') === 'true'
 

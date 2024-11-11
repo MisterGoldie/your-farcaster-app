@@ -85,6 +85,7 @@ const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, t
           key={difficulty}
           className="bg-orange-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-orange-900 transition-colors"
           onClick={() => {
+            console.log(`Clicked ${difficulty} difficulty`)
             playClick()
             onStartGame(
               difficulty as 'easy' | 'medium' | 'hard',
