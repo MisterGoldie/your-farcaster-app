@@ -271,4 +271,4 @@ const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, t
   );
 };
 
-export default dynamic(() => Promise.resolve(MenuBoard), { ssr: false });
+export default MenuBoard;
