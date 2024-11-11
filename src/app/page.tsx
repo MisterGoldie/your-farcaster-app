@@ -3,7 +3,7 @@
 import React, { useState, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 
-const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), { 
+const TicTacToe3D = dynamic(() => import('../components/TicTacToe3D'), { 
   ssr: false,
   loading: () => (
     <div className="h-[100svh] w-full flex items-center justify-center">
