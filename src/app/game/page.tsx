@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/views/Loading'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import useSound from 'use-sound'
 
 const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), {
   ssr: false,
@@ -13,7 +14,8 @@ const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), {
 export default function GamePage() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  
+  const [playClick] = useSound('/click.mp3', { volume: 0.5 })
+
   try {
     const difficulty = (searchParams?.get('difficulty') as 'easy' | 'medium' | 'hard') || 'easy'
     const piece = (searchParams?.get('piece') as 'pumpkin' | 'scarygary' | 'podplaylogo') || 'pumpkin'
@@ -24,7 +26,10 @@ export default function GamePage() {
         fallback={
           <div className="min-h-screen w-full flex items-center justify-center">
             <button
-              onClick={() => router.push('/menu')}
+              onClick={() => {
+                playClick()
+                router.push('/menu')
+              }}
               className="bg-blue-800 text-white px-8 py-4 rounded-lg"
             >
               Return to Menu
@@ -38,17 +43,16 @@ export default function GamePage() {
             piece={piece}
             isMuted={isMuted}
             toggleMute={() => {
-              setTimeout(() => {
-                window.location.replace(`/game?difficulty=${difficulty}&piece=${piece}&muted=${!isMuted}`)
-              }, 100)
+              playClick()
+              router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${!isMuted}`)
             }}
             onRestart={() => {
-              window.location.reload()
+              playClick()
+              router.refresh()
             }}
             onBackToMenu={() => {
-              setTimeout(() => {
-                window.location.replace('/menu')
-              }, 100)
+              playClick()
+              router.push('/menu')
             }}
           />
         </div>
@@ -59,7 +63,10 @@ export default function GamePage() {
     return (
       <div className="min-h-screen w-full flex items-center justify-center">
         <button
-          onClick={() => router.push('/menu')}
+          onClick={() => {
+            playClick()
+            router.push('/menu')
+          }}
           className="bg-blue-800 text-white px-8 py-4 rounded-lg"
         >
           Return to Menu
