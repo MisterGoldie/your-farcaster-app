@@ -21,13 +21,27 @@
 }
 
 body {
-  background-image: url('/mainbg.png'); /* Ensure this path is correct */
+  background-image: url('/mainbg.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
   color: white;
   font-family: 'Nosifer', sans-serif;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Add this to ensure proper stacking context */
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3); /* Optional overlay */
+  z-index: 1;
 }
 
 /* Ensure all text uses the Nosifer font */

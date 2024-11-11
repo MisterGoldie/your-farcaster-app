@@ -490,8 +490,8 @@ export default function TicTacToe3D({
   }
 
   return (
-    <div className="h-[100svh] w-full bg-transparent flex items-center justify-center p-4">
-      <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
+    <div className="h-[100svh] w-full bg-transparent flex items-center justify-center p-4 relative z-10">
+      <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1 shadow-lg">
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
           <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Frijole, cursive', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
@@ -500,7 +500,7 @@ export default function TicTacToe3D({
           </div>
           <div className="flex-grow relative">
             <ErrorBoundary fallback={<ErrorFallback error={new Error("An error occurred in the game")} />}>
-              <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+              <Canvas camera={{ position: [0, 0, 5], fov: 75 }} style={{ background: 'transparent' }}>
                 <color attach="background" args={[backgroundColor]} />
                 <ambientLight intensity={0.3} />
                 <pointLight position={[10, 10, 10]} color="#ff6600" intensity={0.8} />
