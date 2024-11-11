@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo, ErrorInfo, ReactNode } from 'react'
+import React, { useState, useEffect, useRef, type ReactNode, type ErrorInfo } from 'react'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Line, Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
@@ -132,6 +132,70 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
   const [gameOver, setGameOver] = useState(false)
   const [timeLeft, setTimeLeft] = useState(15)
   const [timerStarted, setTimerStarted] = useState(false)
+  const [jingleStarted, setJingleStarted] = useState(false)
+
+  const getCPUMove = (currentBoard: (string | null)[]) => {
+    const emptySpots = currentBoard.reduce((acc, cell, index) => {
+      if (!cell) acc.push(index)
+      return acc
+    }, [] as number[])
+
+    if (emptySpots.length === 0) return -1
+
+    // First, check if CPU can win
+    let winningMove: number = -1
+    for (const spot of emptySpots) {
+      const testBoard = [...currentBoard]
+      testBoard[spot] = 'X'
+      if (checkWinner(testBoard) === 'X') {
+        winningMove = spot
+        break
+      }
+    }
+
+    if (winningMove !== -1) return winningMove
+
+    // Then, block player from winning
+    let blockingMove: number = -1
+    for (const spot of emptySpots) {
+      const testBoard = [...currentBoard]
+      testBoard[spot] = 'O'
+      if (checkWinner(testBoard) === 'O') {
+        blockingMove = spot
+        break
+      }
+    }
+
+    if (blockingMove !== -1) return blockingMove
+
+    // If no winning or blocking move, choose randomly based on difficulty
+    if (difficulty === 'easy') {
+      const randomIndex = Math.floor(Math.random() * emptySpots.length)
+      return emptySpots[randomIndex]
+    }
+
+    // For medium/hard difficulty, prefer center and corners
+    const center = 4
+    const corners = [0, 2, 6, 8]
+    const edges = [1, 3, 5, 7]
+
+    if (!currentBoard[center]) return center
+
+    const availableCorners = corners.filter(corner => !currentBoard[corner])
+    if (availableCorners.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableCorners.length)
+      return availableCorners[randomIndex]
+    }
+
+    const availableEdges = edges.filter(edge => !currentBoard[edge])
+    if (availableEdges.length > 0) {
+      const randomIndex = Math.floor(Math.random() * availableEdges.length)
+      return availableEdges[randomIndex]
+    }
+
+    return emptySpots[0]
+  }
+
   const [playLoseSound] = useSound('/losing.mp3', { 
     volume: 0.5, 
     soundEnabled: !isMuted 
@@ -156,9 +220,8 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
     '/jingle.mp3', 
     { volume: 0.3, loop: true, soundEnabled: !isMuted }
   );
-  const [jingleStarted, setJingleStarted] = useState(false)
 
-  useFrame((state) => {
+  useFrame((_state) => {
     if (boardRef.current && difficulty === 'hard') {
       const rotationSpeed = 0.01 + (board.filter(Boolean).length * 0.002)
       boardRef.current.rotation.y += rotationSpeed
@@ -225,7 +288,7 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
         playDrawSound()
       }
     }
-  }, [isONext, gameOver, board, playLoseSound, playWinSound, playDrawSound, playChooseSound, stopCountdownSound, playJingle, stopJingle, jingleStarted])
+  }, [isONext, gameOver, board, getCPUMove, playChooseSound])
 
   useEffect(() => {
     if (!gameOver) {
@@ -276,100 +339,6 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
     if (checkWinner(newBoard) || newBoard.every(Boolean)) {
       setGameOver(true)
     }
-  }
-
-  const getCPUMove = (board: (string | null)[]) => {
-    const emptySpots = board.reduce((acc, cell, index) => {
-      if (!cell) acc.push(index)
-      return acc
-    }, [] as number[])
-
-    if (emptySpots.length === 0) return -1
-
-    if (difficulty === 'easy') {
-      for (let i = 0; i < emptySpots.length; i++) {
-        const testBoard = [...board]
-        testBoard[emptySpots[i]] = 'X'
-        if (checkWinner(testBoard) === 'X') {
-          return emptySpots[i]
-        }
-      }
-
-      return emptySpots[Math.floor(Math.random() * emptySpots.length)]
-    }
-
-    if (difficulty === 'medium') {
-      const winningMove = findWinningMove(board, 'X')
-      const blockingMove = findWinningMove(board, 'O')
-      
-      if (Math.random() < 0.9) {
-        if (winningMove !== -1) {
-          return winningMove
-        }
-        if (blockingMove !== -1) {
-          return blockingMove
-        }
-      }
-      
-      const corners = [0, 2, 6, 8].filter(i => !board[i])
-      const sides = [1, 3, 5, 7].filter(i => !board[i])
-      
-      if (corners.length > 0) {
-        return corners[Math.floor(Math.random() * corners.length)]
-      } else if (!board[4]) {
-        return 4
-      } else if (sides.length > 0) {
-        return sides[Math.floor(Math.random() * sides.length)]
-      }
-    }
-
-    if (difficulty === 'hard') {
-      for (let i = 0; i < emptySpots.length; i++) {
-        const testBoard = [...board]
-        testBoard[emptySpots[i]] = 'X'
-        if (checkWinner(testBoard) === 'X') {
-          return emptySpots[i]
-        }
-      }
-
-      for (let i = 0; i < emptySpots.length; i++) {
-        const testBoard = [...board]
-        testBoard[emptySpots[i]] = 'O'
-        if (checkWinner(testBoard) === 'O') {
-          return emptySpots[i]
-        }
-      }
-
-      if (!board[4] && Math.random() < 0.7) return 4
-
-      const corners = [0, 2, 6, 8].filter(i => !board[i])
-      const sides = [1, 3, 5, 7].filter(i => !board[i])
-
-      if (corners.length > 0) {
-        return corners[Math.floor(Math.random() * corners.length)]
-      } else if (sides.length > 0) {
-        return sides[Math.floor(Math.random() * sides.length)]
-      }
-    }
-
-    return emptySpots[Math.floor(Math.random() * emptySpots.length)]
-  }
-
-  const findWinningMove = (board: (string | null)[], player: 'X' | 'O') => {
-    const winPatterns = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8],
-      [0, 3, 6], [1, 4, 7], [2, 5, 8],
-      [0, 4, 8], [2, 4, 6]
-    ]
-
-    for (const pattern of winPatterns) {
-      const [a, b, c] = pattern
-      if (board[a] === player && board[b] === player && !board[c]) return c
-      if (board[a] === player && board[c] === player && !board[b]) return b
-      if (board[b] === player && board[c] === player && !board[a]) return a
-    }
-
-    return -1
   }
 
   const winner = checkWinner(board)
@@ -439,35 +408,29 @@ const backgroundColors = [
   '#C840B1', // Purple
 ]
 
-interface ErrorBoundaryProps {
-  children: ReactNode;
-  fallback: ReactNode;
-}
-
-interface ErrorBoundaryState {
-  hasError: boolean;
-}
-
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  constructor(props: ErrorBoundaryProps) {
-    super(props);
-    this.state = { hasError: false };
+class ErrorBoundary extends React.Component<
+  { children: ReactNode; fallback: ReactNode },
+  { hasError: boolean }
+> {
+  constructor(props: { children: ReactNode; fallback: ReactNode }) {
+    super(props)
+    this.state = { hasError: false }
   }
 
-  static getDerivedStateFromError(_: Error): ErrorBoundaryState {
-    return { hasError: true };
+  static getDerivedStateFromError(_: Error) {
+    return { hasError: true }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    console.error('Error:', error, errorInfo)
   }
 
   render() {
     if (this.state.hasError) {
-      return this.props.fallback;
+      return this.props.fallback
     }
 
-    return this.props.children;
+    return this.props.children
   }
 }
 
