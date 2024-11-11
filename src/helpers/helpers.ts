@@ -1,36 +1,29 @@
-import axios from 'axios';
-
 export function sleep(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-export function createFrame(content: string) {
-    return `
-        <!DOCTYPE html>
-        <html>
-        <head>
-            ${content}
-        </head>
-        <body></body>
-        </html>
-    `;
+export function getRandomInt(min: number, max: number) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export async function validateWithNeynar(messageBytes: string) {
-    try {
-        const response = await axios.post(
-            'https://api.neynar.com/v2/farcaster/frame/validate',
-            { message_bytes_in_hex: messageBytes },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'api_key': process.env.NEYNAR_API_KEY
-                }
-            }
-        );
-        return response.data;
-    } catch (error) {
-        console.error('Error validating with Neynar:', error);
-        throw error;
+export function shuffleArray<T>(array: T[]): T[] {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
+export function logError(error: unknown) {
+    // Using type assertion for error
+    if (error instanceof Error) {
+        // eslint-disable-next-line no-console
+        console.error('Error:', error.message);
+    } else {
+        // eslint-disable-next-line no-console
+        console.error('Unknown error:', error);
     }
 }
