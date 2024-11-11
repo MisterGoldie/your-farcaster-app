@@ -38,13 +38,13 @@ export default function GamePage() {
             piece={piece}
             isMuted={isMuted}
             toggleMute={() => {
-              router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${!isMuted}`)
+              window.location.href = `/game?difficulty=${difficulty}&piece=${piece}&muted=${!isMuted}`
             }}
             onRestart={() => {
-              router.refresh()
+              window.location.reload()
             }}
             onBackToMenu={() => {
-              window.location.replace('/menu')
+              window.location.href = '/menu'
             }}
           />
         </div>

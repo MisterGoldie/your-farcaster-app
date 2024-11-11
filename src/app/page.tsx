@@ -1,11 +1,9 @@
 'use client'
 
 import React from 'react'
-import { useRouter } from 'next/navigation'
 import useSound from 'use-sound'
 
 export default function LandingPage() {
-  const router = useRouter()
   const [playClick] = useSound('/click.mp3', { volume: 0.5 })
 
   return (
@@ -18,15 +16,17 @@ export default function LandingPage() {
             </h1>
           </div>
           <div className="flex-grow flex items-center justify-center">
-            <button
-              onClick={() => {
+            <a 
+              href="/menu"
+              onClick={(e) => {
+                e.preventDefault()
                 playClick()
-                window.location.replace('/menu')
+                window.location.href = '/menu'
               }}
-              className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors"
+              className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors cursor-pointer"
             >
               Enter
-            </button>
+            </a>
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import Loading from '@/components/views/Loading'
 import ErrorBoundary from '@/components/ErrorBoundary'
+import useSound from 'use-sound'
 
 const MenuBoard = dynamic(() => import('@/components/MenuBoard'), {
   ssr: false,
@@ -14,25 +15,17 @@ const MenuBoard = dynamic(() => import('@/components/MenuBoard'), {
 function MenuPage() {
   const router = useRouter()
   const [isMuted, setIsMuted] = useState(false)
+  const [playClick] = useSound('/click.mp3', { volume: 0.5 })
 
   const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => {
-    try {
-      console.log('Starting game with:', difficulty, piece)
-      const url = `/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`
-      console.log('Navigating to:', url)
-      window.location.replace(url)
-    } catch (error) {
-      console.error('Navigation error:', error)
-    }
+    playClick()
+    const url = `/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`
+    window.location.href = url
   }
 
   const handleGoBack = () => {
-    try {
-      console.log('Going back to home')
-      router.push('/')
-    } catch (error) {
-      console.error('Navigation error:', error)
-    }
+    playClick()
+    window.location.href = '/'
   }
 
   return (
