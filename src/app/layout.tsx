@@ -1,22 +1,23 @@
-import { Inter } from "next/font/google"
-import "./globals.css"
-import CustomAuthWrapper from "./(AppWrap)/CustomAuthWrapper"
-import UserContextProvider from "@/app/context/userContext" // Correct import path
-import PageWrapper from '../components/layout/PageWrapper'
+import type { Metadata } from 'next'
+import { Inter } from 'next/font/google'
+import './globals.css'
 
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ['latin'] })
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export const metadata: Metadata = {
+  title: 'Tic-Tac-Crude',
+  description: 'A 3D Tic-Tac-Toe game',
+}
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <CustomAuthWrapper>
-          <UserContextProvider>
-            <PageWrapper>
-              {children}
-            </PageWrapper>
-          </UserContextProvider>
-        </CustomAuthWrapper>
+        {children}
       </body>
     </html>
   )

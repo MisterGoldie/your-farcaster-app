@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useContext } from 'react'
+import { useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 
@@ -21,11 +21,6 @@ export default function HowToPlay() {
   const toggleMute = () => {
     setIsMuted(prev => !prev)
   }
-
-  // Default no-op functions to avoid errors
-  const handleBackButton = () => {}
-  const playHalloweenMusic = () => {}
-  const stopHalloweenMusic = () => {}
 
   return (
     <main className="h-[100svh] bg-transparent text-white overflow-hidden">
