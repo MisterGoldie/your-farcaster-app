@@ -31,7 +31,7 @@ export default function Home() {
       <TicTacToe3D 
         key={key}
         onRestart={handleRestart}
-        onBackToMenu={() => setKey(prevKey => prevKey + 1)}
+        onBackToMenu={handleRestart}
         difficulty={difficulty}
         piece={piece}
         isMuted={isMuted}
