@@ -47,6 +47,12 @@ function MenuPage() {
             >
               Return Home
             </button>
+            <button 
+              onClick={() => router.push('/menu')}
+              className="mt-4 bg-orange-800 px-4 py-2 rounded hover:bg-orange-900"
+            >
+              Enter
+            </button>
           </div>
         </div>
       }
