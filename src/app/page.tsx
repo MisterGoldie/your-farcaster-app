@@ -16,17 +16,15 @@ export default function LandingPage() {
             </h1>
           </div>
           <div className="flex-grow flex items-center justify-center">
-            <a 
-              href="/menu"
-              onClick={(e) => {
-                e.preventDefault()
+            <button 
+              onClick={() => {
                 playClick()
-                window.location.href = '/menu'
+                document.location.href = '/menu'
               }}
               className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors cursor-pointer"
             >
               Enter
-            </a>
+            </button>
           </div>
         </div>
       </div>

@@ -19,13 +19,12 @@ function MenuPage() {
 
   const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => {
     playClick()
-    const url = `/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`
-    window.location.href = url
+    document.location.href = `/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`
   }
 
   const handleGoBack = () => {
     playClick()
-    window.location.href = '/'
+    document.location.href = '/'
   }
 
   return (
