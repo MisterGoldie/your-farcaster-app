@@ -9,6 +9,25 @@ const nextConfig = {
     config.externals = [...config.externals, { canvas: 'canvas' }]
     return config
   },
+  async redirects() {
+    return [
+      {
+        source: '/game',
+        missing: [
+          {
+            type: 'query',
+            key: 'difficulty'
+          },
+          {
+            type: 'query',
+            key: 'piece'
+          }
+        ],
+        permanent: false,
+        destination: '/menu'
+      }
+    ]
+  }
 }
 
 module.exports = nextConfig
