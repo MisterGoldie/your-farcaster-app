@@ -10,7 +10,7 @@ export default function Home() {
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
           <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Nosifer, sans-serif', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
-              POD Play 🕹️
+              Tic-Tac-Crude
             </h1>
           </div>
           <div className="flex-grow flex flex-col items-center justify-center p-4">
