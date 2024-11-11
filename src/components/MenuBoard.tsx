@@ -4,26 +4,21 @@ import React, { useState, useEffect, useMemo, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import useSound from 'use-sound'
 import * as THREE from 'three'
+import { Canvas } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 
-const Scene3D = dynamic(() => 
-  import('@react-three/fiber').then((mod) => {
-    const { Canvas } = mod
-    return function Scene({ children }: { children: React.ReactNode }) {
-      return (
-        <Canvas
-          camera={{ position: [0, 0, 5], fov: 75 }}
-          style={{ width: '100%', height: '100%' }}
-        >
-          <Suspense fallback={null}>
-            {children}
-          </Suspense>
-        </Canvas>
-      )
-    }
-  }),
-  { ssr: false }
-)
+function Scene3D({ children }: { children: React.ReactNode }) {
+  return (
+    <Canvas
+      camera={{ position: [0, 0, 5], fov: 75 }}
+      style={{ width: '100%', height: '100%' }}
+    >
+      <Suspense fallback={null}>
+        {children}
+      </Suspense>
+    </Canvas>
+  )
+}
 
 export function RoundedRectangle({ width, height, radius, color }: { width: number; height: number; radius: number; color: string }) {
   const shape = useMemo(() => {
@@ -271,4 +266,8 @@ const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, t
   );
 };
 
-export default MenuBoard;
+const DynamicMenuBoard = dynamic(() => Promise.resolve(MenuBoard), {
+  ssr: false
+})
+
+export default DynamicMenuBoard
