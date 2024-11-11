@@ -25,7 +25,7 @@ export default function LandingPage() {
               }}
               className="bg-orange-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors"
             >
-              Enter Game
+              Enter
             </button>
           </div>
         </div>
