@@ -1,8 +1,7 @@
 'use client'
 
-import React from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import { useSearchParams } from 'next/navigation'
 import Loading from '@/components/views/Loading'
 
 const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), {
@@ -11,6 +10,7 @@ const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), {
 })
 
 export default function GamePage() {
+  const router = useRouter()
   const searchParams = useSearchParams()
   
   const difficulty = (searchParams?.get('difficulty') as 'easy' | 'medium' | 'hard') || 'easy'
@@ -23,9 +23,15 @@ export default function GamePage() {
         difficulty={difficulty}
         piece={piece}
         isMuted={isMuted}
-        toggleMute={() => {}}
-        onRestart={() => {}}
-        onBackToMenu={() => window.location.href = '/menu'}
+        toggleMute={() => {
+          router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${!isMuted}`)
+        }}
+        onRestart={() => {
+          router.refresh()
+        }}
+        onBackToMenu={() => {
+          router.push('/menu')
+        }}
       />
     </div>
   )

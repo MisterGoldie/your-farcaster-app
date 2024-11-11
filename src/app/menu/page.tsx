@@ -16,15 +16,13 @@ function MenuPage() {
   const [isMuted, setIsMuted] = useState(false)
 
   const handleStartGame = (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => {
+    console.log('Starting game with:', difficulty, piece)
     router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`)
   }
 
   const handleGoBack = () => {
+    console.log('Going back to home')
     router.push('/')
-  }
-
-  const handleToggleMute = () => {
-    setIsMuted(prev => !prev)
   }
 
   return (
@@ -48,7 +46,7 @@ function MenuPage() {
           onStartGame={handleStartGame}
           onGoBack={handleGoBack}
           isMuted={isMuted}
-          toggleMute={handleToggleMute}
+          toggleMute={() => setIsMuted(prev => !prev)}
         />
       </Suspense>
     </ErrorBoundary>
