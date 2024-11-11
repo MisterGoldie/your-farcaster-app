@@ -19,7 +19,9 @@ export default function LandingPage() {
             <button 
               onClick={() => {
                 playClick()
-                document.location.href = '/menu'
+                setTimeout(() => {
+                  window.location.replace('/menu')
+                }, 100)
               }}
               className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors cursor-pointer"
             >
