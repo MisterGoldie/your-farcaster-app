@@ -19,7 +19,12 @@ export default function LandingPage() {
           </div>
           <div className="flex-grow flex items-center justify-center">
             <button
-              onClick={() => router.push('/menu')}
+              onClick={() => {
+                console.log('Enter button clicked')
+                playClick()
+                console.log('Navigating to /menu')
+                router.push('/menu')
+              }}
               className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors"
             >
               Enter
