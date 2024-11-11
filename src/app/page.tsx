@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
 
 const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), { 
