@@ -1,30 +1,32 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ['three', '@react-three/fiber', '@react-three/drei'],
-  reactStrictMode: false,
-  experimental: {
-    appDir: true,
-  },
+  reactStrictMode: true,
   webpack: (config) => {
-    config.externals = [...config.externals, { canvas: 'canvas' }]
+    // Add file-loader for audio files
+    config.module.rules.push({
+      test: /\.(mp3)$/,
+      type: 'asset/resource',
+      generator: {
+        filename: 'static/sounds/[name][ext]'
+      }
+    })
+
+    // Add externals for three.js
+    config.externals = [...(config.externals || []), { canvas: 'canvas' }]
+
     return config
   },
-  async redirects() {
+  // Add custom headers for audio files
+  async headers() {
     return [
       {
-        source: '/game',
-        missing: [
+        source: '/static/sounds/:path*',
+        headers: [
           {
-            type: 'query',
-            key: 'difficulty'
-          },
-          {
-            type: 'query',
-            key: 'piece'
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable'
           }
-        ],
-        permanent: false,
-        destination: '/menu'
+        ]
       }
     ]
   }
