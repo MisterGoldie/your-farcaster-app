@@ -20,13 +20,8 @@ export default function LandingPage() {
           <div className="flex-grow flex items-center justify-center">
             <button
               onClick={() => {
-                console.log('Enter button clicked')
-                try {
-                  playClick()
-                  window.location.href = '/menu'
-                } catch (error) {
-                  console.error('Navigation error:', error)
-                }
+                playClick()
+                window.location.replace('/menu')
               }}
               className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors"
             >

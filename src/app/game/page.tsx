@@ -44,7 +44,7 @@ export default function GamePage() {
               router.refresh()
             }}
             onBackToMenu={() => {
-              router.push('/menu')
+              window.location.replace('/menu')
             }}
           />
         </div>

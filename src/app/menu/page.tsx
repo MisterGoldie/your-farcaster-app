@@ -20,7 +20,7 @@ function MenuPage() {
       console.log('Starting game with:', difficulty, piece)
       const url = `/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`
       console.log('Navigating to:', url)
-      router.push(url)
+      window.location.replace(url)
     } catch (error) {
       console.error('Navigation error:', error)
     }
