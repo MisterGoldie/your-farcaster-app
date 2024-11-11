@@ -17,6 +17,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link 
+          rel="icon" 
+          href="data:image/x-icon;base64,AA..." 
+          type="image/x-icon"
+        />
+      </head>
       <body className={inter.className}>
         <div className="min-h-screen w-full bg-black">
           {children}
