@@ -3,12 +3,10 @@
 import { useState, useContext } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import { useUserContext } from '../context/userContext'
 
 const MenuBoard = dynamic(() => import('../../components/MenuBoard'), { ssr: false })
 
 export default function HowToPlay() {
-  const { userProfile } = useUserContext()
   const router = useRouter()
   const [isMuted, setIsMuted] = useState(false)
 
@@ -36,7 +34,6 @@ export default function HowToPlay() {
         onGoBack={handleGoBack}
         isMuted={isMuted}
         toggleMute={toggleMute}
-        username={userProfile?.username}
       />
     </main>
   )

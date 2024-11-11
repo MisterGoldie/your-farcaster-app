@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
-import GameComponent from './GameComponent'; // Import the GameComponent
 
 // Correct the import path using the @ alias
 const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), { ssr: false })
@@ -42,18 +41,12 @@ export default function Game() {
     router.push('/howtoplay')
   }
 
-  // Implement proper toggleMute function instead of throwing error
   const toggleMute = () => {
     setIsMuted(prev => !prev)
   }
 
-  console.log('Piece set in Game component:', piece)
-
-  const fid = 'USER_FID_HERE'; // Replace with actual FID retrieval logic
-
   return (
     <main className="h-[100svh] bg-transparent text-white overflow-hidden">
-      <GameComponent fid={fid} /> {/* Include the GameComponent */}
       <TicTacToe3D 
         key={key}
         onRestart={handleRestart}

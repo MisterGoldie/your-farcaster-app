@@ -3,7 +3,6 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { Line, Text, Plane } from '@react-three/drei'
 import * as THREE from 'three'
 import useSound from 'use-sound'
-import { useSession } from 'next-auth/react'
 
 type CellProps = {
   position: [number, number, number]
@@ -21,77 +20,7 @@ function LoadingSprite({ position }: { position: [number, number, number] }) {
   )
 }
 
-// Custom hook to handle profile image loading
-function useProfileImage() {
-  const { data: session, status } = useSession()
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
-  const [error, setError] = useState<boolean>(false)
-
-  useEffect(() => {
-    const loadImage = async () => {
-      try {
-        if (status === 'authenticated' && session?.user?.image) {
-          // Try to pre-fetch the image to verify it's accessible
-          const response = await fetch(session.user.image, { method: 'HEAD' })
-          if (response.ok) {
-            setImageUrl(session.user.image)
-          } else {
-            throw new Error('Failed to load profile image')
-          }
-        }
-      } catch (err) {
-        console.error('Profile image load error:', err)
-        setError(true)
-        // Fall back to default image
-        setImageUrl(`${process.env.NEXT_PUBLIC_URL || ''}/default-avatar.png`)
-      }
-    }
-
-    loadImage()
-  }, [session, status])
-
-  return { imageUrl, error }
-}
-
-function ProfileSprite({ position }: { position: [number, number, number] }) {
-  const { imageUrl, error } = useProfileImage()
-  const [textureLoaded, setTextureLoaded] = useState(false)
-
-  // Use a default texture for loading and error states
-  const defaultTexture = useMemo(() => {
-    const texture = new THREE.Texture()
-    const canvas = document.createElement('canvas')
-    canvas.width = 1
-    canvas.height = 1
-    const context = canvas.getContext('2d')
-    if (context) {
-      context.fillStyle = '#666666'
-      context.fillRect(0, 0, 1, 1)
-      texture.image = canvas
-      texture.needsUpdate = true
-    }
-    return texture
-  }, [])
-
-  const texture = useLoader(
-    THREE.TextureLoader,
-    imageUrl || '',
-    (loader) => {
-      loader.crossOrigin = 'anonymous'
-      setTextureLoaded(true)
-    }
-  )
-
-  return (
-    <group position={position}>
-      <Plane args={[0.8, 0.8]}>
-        <meshBasicMaterial map={textureLoaded ? texture : defaultTexture} transparent side={THREE.DoubleSide} />
-      </Plane>
-    </group>
-  )
-}
-
-function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'scarygary' | 'podplaylogo' | 'profile' }) {
+function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin' | 'scarygary' | 'podplaylogo' }) {
   return (
     <group position={position}>
       <mesh onClick={onClick}>
@@ -108,9 +37,7 @@ function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin
       {value === 'O' && (
         <group position={[0, 0, 0.06]}>
           <React.Suspense fallback={<LoadingSprite position={[0, 0, 0]} />}>
-            {piece === 'profile' ? (
-              <ProfileSprite position={[0, 0, 0]} />
-            ) : piece === 'pumpkin' ? (
+            {piece === 'pumpkin' ? (
               <PumpkinSprite position={[0, 0, 0]} />
             ) : piece === 'scarygary' ? (
               <ScaryGarySprite position={[0, 0, 0]} />
@@ -194,7 +121,7 @@ function PodPlayLogoSprite({ position }: { position: [number, number, number] })
 
 function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
   difficulty: 'easy' | 'medium' | 'hard',
-  piece: 'pumpkin' | 'scarygary' | 'podplaylogo' | 'profile',
+  piece: 'pumpkin' | 'scarygary' | 'podplaylogo',
   isMuted: boolean,
   toggleMute: () => void,
   onRestart: () => void
@@ -564,7 +491,7 @@ export default function TicTacToe3D({
   onRestart: () => void
   onBackToMenu: () => void
   difficulty: 'easy' | 'medium' | 'hard'
-  piece: 'pumpkin' | 'scarygary' | 'podplaylogo' | 'profile'
+  piece: 'pumpkin' | 'scarygary' | 'podplaylogo'
   isMuted: boolean
   toggleMute: () => void
 }) {

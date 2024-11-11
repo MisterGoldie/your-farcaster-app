@@ -77,7 +77,6 @@ interface MenuBoardProps {
   onGoBack: () => void;
   isMuted: boolean;
   toggleMute: () => void;
-  username?: string;
 }
 
 function MenuContent({ onStartGame, isMuted, toggleMute }: { 
@@ -245,7 +244,7 @@ function MenuContent({ onStartGame, isMuted, toggleMute }: {
   )
 }
 
-const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, toggleMute, username }) => {
+const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, toggleMute }) => {
   return (
     <div className="h-[100svh] w-full bg-transparent flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -254,7 +253,6 @@ const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, t
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white" style={{ fontFamily: 'Nosifer, sans-serif', textShadow: '2px 2px 4px rgba(0,0,0,0.5)' }}>
               Main Menu
             </h1>
-            {username && <h2 className="text-lg text-center text-white">Welcome, {username}!</h2>}
           </div>
           <div className="flex-grow relative">
             <MenuContent onStartGame={onStartGame} isMuted={isMuted} toggleMute={toggleMute} />
