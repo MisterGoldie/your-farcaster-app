@@ -155,7 +155,7 @@ function Board({ difficulty, piece, isMuted, toggleMute, onRestart }: {
 
     if (winningMove !== -1) return winningMove
 
-    // Then, block player from winning
+    // Then, block player from winningS
     let blockingMove: number = -1
     for (const spot of emptySpots) {
       const testBoard = [...currentBoard]
