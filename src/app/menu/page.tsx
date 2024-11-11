@@ -1,25 +1,30 @@
 'use client'
 
-import React from 'react'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
-import Loading from '@/components/views/Loading'
 
 const MenuBoard = dynamic(() => import('@/components/MenuBoard'), {
   ssr: false,
-  loading: () => <Loading />
+  loading: () => (
+    <div className="h-[100svh] w-full flex items-center justify-center">
+      <div className="text-white text-2xl">Loading...</div>
+    </div>
+  )
 })
 
 export default function MenuPage() {
+  const router = useRouter()
+  const [isMuted, setIsMuted] = useState(false)
+
   return (
-    <div className="min-h-screen w-full">
-      <MenuBoard 
-        onStartGame={(difficulty, piece) => {
-          window.location.href = `/game?difficulty=${difficulty}&piece=${piece}`
-        }}
-        onGoBack={() => window.location.href = '/'}
-        isMuted={false}
-        toggleMute={() => {}}
-      />
-    </div>
+    <MenuBoard 
+      onStartGame={(difficulty, piece) => {
+        router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${isMuted}`)
+      }}
+      onGoBack={() => router.push('/')}
+      isMuted={isMuted}
+      toggleMute={() => setIsMuted(prev => !prev)}
+    />
   )
 } 
