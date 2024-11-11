@@ -88,17 +88,17 @@ function MenuContent({ onStartGame, isMuted, toggleMute }: {
   const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'scarygary' | 'podplaylogo'>('pumpkin')
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
 
-  const [playHover] = useSound('/sounds/hover.mp3', { 
+  const [playHover] = useSound('/hover.mp3', { 
     volume: 0.5, 
     soundEnabled: !isMuted,
     onplayerror: (id: any, error: any) => console.error('Sound error:', error) 
   });
-  const [playClick] = useSound('/sounds/click.mp3', { 
+  const [playClick] = useSound('/click.mp3', { 
     volume: 0.5, 
     soundEnabled: !isMuted,
     onplayerror: (id: any, error: any) => console.error('Sound error:', error)
   });
-  const [playHalloweenMusic, { stop: stopHalloweenMusic }] = useSound('/sounds/halloween.mp3', { 
+  const [playHalloweenMusic, { stop: stopHalloweenMusic }] = useSound('/halloween.mp3', { 
     volume: 0.3, 
     loop: true, 
     soundEnabled: !isMuted,

@@ -54,7 +54,7 @@ function Cell({ position, onClick, value, piece }: CellProps & { piece: 'pumpkin
 function PumpkinSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(
     THREE.TextureLoader, 
-    `${process.env.NEXT_PUBLIC_URL || ''}/pumpkin.png`,
+    '/pumpkin.png',
     (loader) => {
       loader.crossOrigin = 'anonymous'
     }
@@ -71,7 +71,7 @@ function PumpkinSprite({ position }: { position: [number, number, number] }) {
 function JokerSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(
     THREE.TextureLoader, 
-    `${process.env.NEXT_PUBLIC_URL || ''}/joker.png`,
+    '/joker.png',
     (loader) => {
       loader.crossOrigin = 'anonymous'
     }
@@ -88,7 +88,7 @@ function JokerSprite({ position }: { position: [number, number, number] }) {
 function ScaryGarySprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(
     THREE.TextureLoader, 
-    `${process.env.NEXT_PUBLIC_URL || ''}/scarygary.png`,
+    '/scarygary.png',
     (loader) => {
       loader.crossOrigin = 'anonymous'
     }
@@ -105,7 +105,7 @@ function ScaryGarySprite({ position }: { position: [number, number, number] }) {
 function PodPlayLogoSprite({ position }: { position: [number, number, number] }) {
   const texture = useLoader(
     THREE.TextureLoader, 
-    `${process.env.NEXT_PUBLIC_URL || ''}/podplaylogo.png`,
+    '/podplaylogo.png',
     (loader) => {
       loader.crossOrigin = 'anonymous'
     }
