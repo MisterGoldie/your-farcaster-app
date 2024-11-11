@@ -14,7 +14,7 @@ export default function LandingPage() {
         <div className="w-full h-full bg-orange-600 rounded-lg overflow-hidden flex flex-col relative">
           <div className="bg-orange-700 py-2">
             <h1 className="text-2xl sm:text-3xl font-bold text-center text-white">
-              TIC-TAC-JOKER
+              TIC-TAC-CRUDE
             </h1>
           </div>
           <div className="flex-grow flex items-center justify-center">
