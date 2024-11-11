@@ -1,27 +1,32 @@
 'use client'
 
-import React, { useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import TicTacToe3D from '@/components/TicTacToe3D'
+import React from 'react'
+import dynamic from 'next/dynamic'
+import { useSearchParams } from 'next/navigation'
+import Loading from '@/components/views/Loading'
+
+const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), {
+  ssr: false,
+  loading: () => <Loading />
+})
 
 export default function GamePage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const [key, setKey] = useState(0)
   
-  const difficulty = searchParams.get('difficulty') as 'easy' | 'medium' | 'hard' || 'easy'
-  const piece = searchParams.get('piece') as 'pumpkin' | 'scarygary' | 'podplaylogo' || 'pumpkin'
-  const isMuted = searchParams.get('muted') === 'true'
+  const difficulty = (searchParams?.get('difficulty') as 'easy' | 'medium' | 'hard') || 'easy'
+  const piece = (searchParams?.get('piece') as 'pumpkin' | 'scarygary' | 'podplaylogo') || 'pumpkin'
+  const isMuted = searchParams?.get('muted') === 'true'
 
   return (
-    <TicTacToe3D
-      key={key}
-      onRestart={() => setKey(prev => prev + 1)}
-      onBackToMenu={() => router.push('/menu')}
-      difficulty={difficulty}
-      piece={piece}
-      isMuted={isMuted}
-      toggleMute={() => router.push(`/game?difficulty=${difficulty}&piece=${piece}&muted=${!isMuted}`)}
-    />
+    <div className="min-h-screen w-full">
+      <TicTacToe3D
+        difficulty={difficulty}
+        piece={piece}
+        isMuted={isMuted}
+        toggleMute={() => {}}
+        onRestart={() => {}}
+        onBackToMenu={() => window.location.href = '/menu'}
+      />
+    </div>
   )
 } 
