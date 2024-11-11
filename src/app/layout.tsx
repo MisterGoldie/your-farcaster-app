@@ -20,7 +20,7 @@ export default function RootLayout({
       <head>
         <link 
           rel="icon" 
-          href="data:image/x-icon;base64,AA..." 
+          href="/favicon.ico"
           type="image/x-icon"
         />
       </head>

@@ -21,9 +21,12 @@ export default function LandingPage() {
             <button
               onClick={() => {
                 console.log('Enter button clicked')
-                playClick()
-                console.log('Navigating to /menu')
-                router.push('/menu')
+                try {
+                  playClick()
+                  window.location.href = '/menu'
+                } catch (error) {
+                  console.error('Navigation error:', error)
+                }
               }}
               className="bg-blue-800 text-white px-8 py-4 rounded-lg text-xl hover:bg-red-900 transition-colors"
             >

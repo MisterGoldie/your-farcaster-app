@@ -70,9 +70,5 @@ function MenuPage() {
 }
 
 export default function MenuRoute() {
-  return (
-    <Suspense fallback={<Loading />}>
-      <MenuPage />
-    </Suspense>
-  )
+  return <MenuPage />
 } 
