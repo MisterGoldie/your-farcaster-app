@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import dynamic from 'next/dynamic'
 
 const TicTacToe3D = dynamic(() => import('@/components/TicTacToe3D'), { 
@@ -27,17 +27,23 @@ export default function Home() {
   }
 
   return (
-    <main className="h-[100svh] bg-transparent text-white overflow-hidden">
-      <TicTacToe3D 
-        key={key}
-        onRestart={handleRestart}
-        onBackToMenu={handleRestart}
-        difficulty={difficulty}
-        piece={piece}
-        isMuted={isMuted}
-        toggleMute={toggleMute}
-      />
-    </main>
+    <Suspense fallback={
+      <div className="h-[100svh] w-full flex items-center justify-center">
+        <div className="text-white text-2xl">Loading...</div>
+      </div>
+    }>
+      <main className="h-[100svh] bg-transparent text-white overflow-hidden">
+        <TicTacToe3D 
+          key={key}
+          onRestart={handleRestart}
+          onBackToMenu={handleRestart}
+          difficulty={difficulty}
+          piece={piece}
+          isMuted={isMuted}
+          toggleMute={toggleMute}
+        />
+      </main>
+    </Suspense>
   )
 }
 //////
