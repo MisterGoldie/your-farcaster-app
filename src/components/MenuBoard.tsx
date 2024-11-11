@@ -1,15 +1,18 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import useSound from 'use-sound'
 
-function MenuContent({ onStartGame, isMuted, toggleMute }: { 
+interface MenuBoardProps {
   onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => void;
+  onGoBack: () => void;
   isMuted: boolean;
   toggleMute: () => void;
-}) {
+}
+
+function MenuContent({ onStartGame, isMuted, toggleMute }: Omit<MenuBoardProps, 'onGoBack'>) {
   const [menuStep, setMenuStep] = useState<'game' | 'piece' | 'difficulty'>('game')
   const [selectedPiece, setSelectedPiece] = useState<'pumpkin' | 'scarygary' | 'podplaylogo'>('pumpkin')
   const [hoveredButton, setHoveredButton] = useState<string | null>(null)
@@ -70,14 +73,7 @@ function MenuContent({ onStartGame, isMuted, toggleMute }: {
   )
 }
 
-interface MenuBoardProps {
-  onStartGame: (difficulty: 'easy' | 'medium' | 'hard', piece: 'pumpkin' | 'scarygary' | 'podplaylogo') => void;
-  onGoBack: () => void;
-  isMuted: boolean;
-  toggleMute: () => void;
-}
-
-function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }: MenuBoardProps) {
+const MenuBoard: React.FC<MenuBoardProps> = ({ onStartGame, onGoBack, isMuted, toggleMute }) => {
   return (
     <div className="h-[100svh] w-full bg-transparent flex items-center justify-center p-4">
       <div className="w-full max-w-md aspect-[3/4] bg-white rounded-lg p-1">
@@ -88,13 +84,15 @@ function MenuBoard({ onStartGame, onGoBack, isMuted, toggleMute }: MenuBoardProp
             </h1>
           </div>
           <div className="flex-grow relative">
-            <Canvas>
-              <MenuContent 
-                onStartGame={onStartGame}
-                isMuted={isMuted}
-                toggleMute={toggleMute}
-              />
-            </Canvas>
+            <Suspense fallback={<div>Loading...</div>}>
+              <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+                <MenuContent 
+                  onStartGame={onStartGame}
+                  isMuted={isMuted}
+                  toggleMute={toggleMute}
+                />
+              </Canvas>
+            </Suspense>
           </div>
           <div className="bg-orange-700 py-2">
             <button
